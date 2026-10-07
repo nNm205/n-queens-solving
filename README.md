@@ -1,151 +1,125 @@
 # N-Queens Solving: SAT Encoding and Exact Methods
 
-This project studies the **N-Queens problem** using SAT solving and other exact optimization methods.
+This project studies the **N-Queens problem** using SAT solving and other exact solving approaches.
 
-The project is developed for **Assignment 1 – Modern Problems in Computer Science** and focuses on comparing different SAT cardinality encodings and exact solving approaches such as Constraint Programming, CP-SAT, and Mixed Integer Programming.
+The project is developed for **Assignment 1 – Modern Problems in Computer Science** and focuses on comparing SAT-based solving with Constraint Programming, CP-SAT, and Mixed Integer Programming.
 
 ## Project Objectives
 
 The main objectives are:
 
-- Model the N-Queens problem as a SAT problem.
-- Implement and compare different SAT At-Most-One encodings.
-- Solve SAT instances using solvers provided by PySAT.
+- Model the N-Queens problem using SAT.
+- Compare different SAT At-Most-One encodings.
+- Solve SAT instances using PySAT and Glucose3.
 - Compare SAT solving with:
   - OR-Tools CP-SAT
   - CPLEX CP Optimizer
   - CPLEX MIP
   - Gurobi MIP
-- Evaluate solving performance on increasingly large board sizes.
-- Analyze the effect of SAT encodings on:
-  - Number of variables
-  - Number of clauses
-  - Encoding time
+- Evaluate solver performance on increasingly large N-Queens instances.
+- Compare:
+  - Number of SAT variables
+  - Number of SAT clauses
+  - Model/encoding time
   - Solving time
   - Total execution time
-
----
 
 ## Current Progress
 
 ### Completed
 
 - [x] Project structure initialized.
-- [x] Python virtual environment configured.
-- [x] PySAT + Glucose3 environment verified.
-- [x] OR-Tools CP-SAT environment verified.
-- [x] Gurobi environment verified.
-- [x] CPLEX MIP environment verified.
-- [x] CPLEX CP Optimizer environment verified.
-- [x] Generic SAT encoder implemented.
+- [x] Solver environment configured and verified.
+- [x] PySAT + Glucose3 verified.
+- [x] OR-Tools verified.
+- [x] Gurobi verified.
+- [x] CPLEX MIP verified.
+- [x] CPLEX CP Optimizer verified.
+- [x] Generic SAT encoding architecture implemented.
 - [x] Pairwise AMO encoding implemented.
-- [x] Sequential Counter AMO encoding integrated using PySAT.
-- [x] Bitwise AMO encoding integrated using PySAT.
-- [x] Shared auxiliary-variable management implemented using `IDPool`.
-- [x] N-Queens SAT solver implemented using Glucose3.
-- [x] Command-line selection of SAT encoding implemented.
-- [x] SAT model decoding implemented.
-- [x] Independent solution validator implemented.
-- [x] Encoding, solving, and total execution times recorded separately.
-- [x] Automated tests implemented for all supported SAT encodings.
-- [x] SAT and UNSAT behavior verified for representative N-Queens instances.
+- [x] Sequential Counter AMO encoding implemented.
+- [x] Bitwise AMO encoding implemented.
+- [x] Shared auxiliary-variable management using `IDPool`.
+- [x] SAT solver implemented using Glucose3.
+- [x] SAT model decoding and independent validation implemented.
+- [x] SAT encoding, solving, and total execution times recorded.
+- [x] OR-Tools CP-SAT N-Queens solver implemented.
+- [x] CPLEX CP Optimizer N-Queens solver implemented.
+- [x] CP/CP-SAT model build and solving times recorded.
+- [x] Automated tests covering SAT, CP-SAT, and CPLEX CP.
 
 ### Planned
 
-- [ ] Implement OR-Tools CP-SAT solver.
-- [ ] Implement CPLEX CP solver.
+- [ ] Activate Gurobi Academic License.
 - [ ] Implement CPLEX MIP solver.
 - [ ] Implement Gurobi MIP solver.
-- [ ] Build unified benchmark pipeline.
-- [ ] Compare SAT encodings experimentally.
-- [ ] Compare SAT, CP, CP-SAT, and MIP approaches.
-- [ ] Run experiments on large N-Queens instances.
-- [ ] Generate experimental tables and figures.
+- [ ] Build unified benchmark runner.
+- [ ] Run SAT encoding experiments.
+- [ ] Run SAT vs CP vs CP-SAT vs MIP experiments.
+- [ ] Run large-instance experiments.
+- [ ] Generate result tables and figures.
 - [ ] Prepare the final scientific report.
 
----
+## N-Queens Representation
 
-## SAT Formulation
-
-For an `N x N` chessboard, each board position is represented by a Boolean variable:
+For the SAT formulation, each board position is represented by a Boolean variable:
 
 ```text
 x[row, col]
 ```
 
-where:
-
-```text
-x[row, col] = True
-```
-
-means that a queen is placed at position `(row, col)`.
-
-Each board position is mapped to a positive SAT variable identifier using:
+The SAT variable identifier is:
 
 ```text
 variable_id = row * N + col + 1
 ```
 
-Therefore, the original N-Queens formulation contains:
+For CP and CP-SAT, the project uses:
 
 ```text
-N^2
+queens[row] = column
 ```
 
-board variables.
-
-Additional auxiliary variables may be introduced depending on the selected SAT encoding.
-
----
-
-## N-Queens Constraints
-
-### Row Constraints
-
-Each row must contain exactly one queen.
+where each variable has domain:
 
 ```text
-ExactlyOne(row)
+0 ... N - 1
+```
+
+This representation guarantees exactly one queen for each row.
+
+The following constraints are then enforced:
+
+```text
+AllDifferent(queens)
+AllDifferent(queens[row] + row)
+AllDifferent(queens[row] - row)
+```
+
+These constraints prevent queens from sharing columns or diagonals.
+
+## SAT Formulation
+
+The SAT formulation contains:
+
+- Exactly one queen in every row.
+- Exactly one queen in every column.
+- At most one queen on every main diagonal.
+- At most one queen on every anti-diagonal.
+
+Exactly-One is represented as:
+
+```text
+ExactlyOne
 =
-AtLeastOne(row)
+AtLeastOne
 +
-AtMostOne(row)
+AtMostOne
 ```
 
-### Column Constraints
+## Supported SAT Encodings
 
-Each column must contain exactly one queen.
-
-```text
-ExactlyOne(column)
-```
-
-### Main Diagonal Constraints
-
-Each main diagonal contains at most one queen.
-
-Board positions belong to the same main diagonal when:
-
-```text
-row - col = constant
-```
-
-### Anti-Diagonal Constraints
-
-Each anti-diagonal contains at most one queen.
-
-Board positions belong to the same anti-diagonal when:
-
-```text
-row + col = constant
-```
-
----
-
-# SAT Encodings
-
-The current implementation supports three At-Most-One encodings:
+The current SAT implementation supports:
 
 ```text
 pairwise
@@ -153,53 +127,21 @@ seqcounter
 bitwise
 ```
 
-All encodings use the same N-Queens formulation and the same SAT solver, **Glucose3**, allowing their CNF representations and solving performance to be compared under the same conditions.
+### Pairwise
 
----
-
-## Pairwise Encoding
-
-Pairwise encoding generates one binary clause for every pair of variables participating in an At-Most-One constraint.
-
-For every pair:
-
-```text
-xi, xj
-```
-
-the following clause is generated:
+Pairwise encoding generates:
 
 ```text
 NOT xi OR NOT xj
 ```
 
-In CNF representation:
+for every pair of literals participating in an At-Most-One constraint.
 
-```python
-[-xi, -xj]
-```
+It does not introduce auxiliary variables.
 
-Pairwise encoding does not require auxiliary variables.
+### Sequential Counter
 
-Its AMO representation grows approximately quadratically with the number of literals in a constraint:
-
-```text
-O(k^2)
-```
-
-where `k` is the number of literals.
-
----
-
-## Sequential Counter Encoding
-
-Sequential Counter encoding is implemented using PySAT's cardinality encoding utilities.
-
-The encoding introduces auxiliary variables that represent intermediate states of a sequential counter.
-
-Compared with Pairwise encoding, Sequential Counter can significantly reduce the number of clauses required for large At-Most-One constraints.
-
-The implementation uses:
+Sequential Counter is implemented using PySAT:
 
 ```python
 CardEnc.atmost(
@@ -210,15 +152,11 @@ CardEnc.atmost(
 )
 ```
 
----
+It introduces auxiliary counter variables.
 
-## Bitwise Encoding
+### Bitwise
 
-Bitwise encoding is also implemented using PySAT.
-
-It introduces auxiliary variables that encode the identity of the selected literal using a binary representation.
-
-The implementation uses:
+Bitwise encoding is implemented using:
 
 ```python
 CardEnc.atmost(
@@ -229,15 +167,9 @@ CardEnc.atmost(
 )
 ```
 
-Bitwise encoding provides another trade-off between the number of auxiliary variables and the number of generated clauses.
+It introduces auxiliary variables representing binary selectors.
 
----
-
-# Auxiliary Variable Management
-
-Sequential Counter and Bitwise encodings introduce additional SAT variables.
-
-To prevent different constraints from accidentally reusing the same auxiliary variable identifiers, the project uses a shared PySAT `IDPool`.
+## Auxiliary SAT Variables
 
 Original board variables occupy:
 
@@ -245,7 +177,7 @@ Original board variables occupy:
 1 ... N^2
 ```
 
-while auxiliary variables begin after the original board variables:
+A shared `IDPool` allocates auxiliary variables beginning after the board variables:
 
 ```python
 vpool = IDPool(
@@ -253,97 +185,124 @@ vpool = IDPool(
 )
 ```
 
-The same variable pool is shared across all encoded constraints of a single N-Queens instance.
+This prevents auxiliary-variable collisions between independent cardinality constraints.
 
----
-
-# SAT Solving Pipeline
-
-The current SAT solving pipeline is:
+## SAT Solving Pipeline
 
 ```text
-N
-│
-▼
-Generate board variables
-│
-▼
+N-Queens instance
+        |
+        v
+Generate Boolean variables
+        |
+        v
 Generate N-Queens constraints
-│
-├── Row Exactly-One
-├── Column Exactly-One
-├── Main-diagonal At-Most-One
-└── Anti-diagonal At-Most-One
-│
-▼
-Selected AMO Encoding
-│
-├── Pairwise
-├── Sequential Counter
-└── Bitwise
-│
-▼
-CNF
-│
-▼
-Glucose3
-│
-▼
-SAT / UNSAT
-│
-▼
-Decode SAT model
-│
-▼
-Independent solution validation
+        |
+        v
+Selected AMO encoding
+   /       |       \
+Pairwise  SeqCounter  Bitwise
+        |
+        v
+       CNF
+        |
+        v
+    Glucose3
+        |
+        v
+    SAT / UNSAT
+        |
+        v
+ Decode solution
+        |
+        v
+Independent validator
 ```
 
----
+## CP / CP-SAT Formulation
 
-# Performance Measurements
+Both OR-Tools CP-SAT and CPLEX CP use `N` integer variables:
 
-The SAT solver records three timing measurements.
+```text
+queens[row] = column
+```
 
-### Encoding Time
+Constraints:
 
-Time required to transform the N-Queens instance into CNF:
+```text
+AllDifferent(queens)
+AllDifferent(queens[row] + row)
+AllDifferent(queens[row] - row)
+```
+
+This produces a compact high-level formulation without explicitly generating CNF clauses.
+
+## Implemented Solvers
+
+### PySAT + Glucose3
+
+Supported encodings:
+
+```text
+pairwise
+seqcounter
+bitwise
+```
+
+Example:
+
+```powershell
+python -m src.sat.solver --n 8 --encoding pairwise --show-board
+```
+
+### OR-Tools CP-SAT
+
+Run:
+
+```powershell
+python -m src.cp_sat.solver --n 8 --show-board
+```
+
+### CPLEX CP Optimizer
+
+Run:
+
+```powershell
+python -m src.cp.cplex_cp --n 8 --show-board
+```
+
+## Performance Measurements
+
+### SAT
+
+The SAT implementation records:
 
 ```text
 encoding_time
-```
-
-### Solving Time
-
-Time required by Glucose3 to solve the generated CNF:
-
-```text
 solve_time
-```
-
-### Total Time
-
-Combined encoding and solving time:
-
-```text
 total_time
-=
-encoding_time
-+
-solve_time
-```
-
-The solver also records:
-
-```text
 num_variables
 num_clauses
 ```
 
-These metrics will later be used for the experimental comparison of SAT encodings.
+### CP / CP-SAT
 
----
+The CP-based implementations record:
 
-# Project Structure
+```text
+build_time
+solve_time
+total_time
+```
+
+CP-SAT additionally records:
+
+```text
+num_conflicts
+num_branches
+```
+
+## Project Structure
 
 ```text
 n-queens-solving/
@@ -361,8 +320,14 @@ n-queens-solving/
 │   │   ├── encoder.py
 │   │   └── solver.py
 │   │
-│   ├── cp/
 │   ├── cp_sat/
+│   │   ├── __init__.py
+│   │   └── solver.py
+│   │
+│   ├── cp/
+│   │   ├── __init__.py
+│   │   └── cplex_cp.py
+│   │
 │   └── mip/
 │
 ├── experiments/
@@ -370,43 +335,27 @@ n-queens-solving/
 ├── report/
 │
 ├── tests/
-│   └── test_sat_encodings.py
+│   ├── test_sat_encodings.py
+│   └── test_cp_solvers.py
 │
 ├── pytest.ini
 ├── requirements.txt
 └── README.md
 ```
 
----
-
-# Environment Setup
+## Environment Setup
 
 The project uses Python 3.11.
 
-Create a virtual environment:
-
 ```powershell
 py -3.11 -m venv .venv
-```
-
-Activate it:
-
-```powershell
 .\.venv\Scripts\Activate.ps1
-```
 
-Install dependencies:
-
-```powershell
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
----
-
-# Check Solver Environment
-
-Run:
+## Environment Check
 
 ```powershell
 python scripts/check_env.py
@@ -415,9 +364,6 @@ python scripts/check_env.py
 Expected components:
 
 ```text
-==================================================
-N-QUEENS ENVIRONMENT CHECK
-==================================================
 [OK] PySAT + Glucose3
 [OK] OR-Tools CP-SAT
 [OK] Gurobi
@@ -425,154 +371,38 @@ N-QUEENS ENVIRONMENT CHECK
 [OK] CPLEX CP Optimizer
 ```
 
-## Gurobi License
+## Testing
 
-Gurobi is currently functional with a restricted non-production license.
-
-An Academic License will be activated before running large-scale benchmark experiments.
-
----
-
-# Run the SAT Solver
-
-The general command is:
-
-```powershell
-python -m src.sat.solver --n <N> --encoding <ENCODING>
-```
-
-Supported encodings are:
-
-```text
-pairwise
-seqcounter
-bitwise
-```
-
----
-
-## Pairwise Example
-
-```powershell
-python -m src.sat.solver --n 8 --encoding pairwise --show-board
-```
-
-Expected properties:
-
-```text
-Solver         : glucose3
-Encoding       : pairwise
-Status         : SAT
-Variables      : 64
-Clauses        : 744
-Valid solution : True
-```
-
----
-
-## Sequential Counter Example
-
-```powershell
-python -m src.sat.solver --n 8 --encoding seqcounter --show-board
-```
-
-Expected behavior:
-
-```text
-Solver         : glucose3
-Encoding       : seqcounter
-Status         : SAT
-Valid solution : True
-```
-
-Sequential Counter introduces auxiliary variables, so the total number of SAT variables is expected to be greater than `N^2`.
-
----
-
-## Bitwise Example
-
-```powershell
-python -m src.sat.solver --n 8 --encoding bitwise --show-board
-```
-
-Expected behavior:
-
-```text
-Solver         : glucose3
-Encoding       : bitwise
-Status         : SAT
-Valid solution : True
-```
-
-Bitwise encoding also introduces auxiliary variables.
-
----
-
-# Known N-Queens Results
-
-All currently supported SAT encodings correctly reproduce the standard satisfiability behavior:
-
-|   N | Expected Result |
-| --: | --------------- |
-|   1 | SAT             |
-|   2 | UNSAT           |
-|   3 | UNSAT           |
-|   4 | SAT             |
-|   8 | SAT             |
-
-The Pairwise baseline preserves the following CNF sizes.
-
-For `N = 4`:
-
-```text
-Variables : 16
-Clauses   : 84
-```
-
-For `N = 8`:
-
-```text
-Variables : 64
-Clauses   : 744
-```
-
-These values are used as regression checks to ensure that later refactoring does not accidentally modify the original Pairwise encoding.
-
----
-
-# Testing
-
-Run the complete test suite with:
+Run:
 
 ```powershell
 python -m pytest -q
 ```
 
-The current test suite verifies:
+The current tests verify:
 
-- SAT behavior for `N = 1`.
-- UNSAT behavior for `N = 2`.
-- UNSAT behavior for `N = 3`.
-- SAT behavior for `N = 4`.
-- SAT behavior for `N = 8`.
-- Valid decoded solutions for satisfiable instances.
-- Pairwise encoding correctness.
-- Sequential Counter encoding correctness.
-- Bitwise encoding correctness.
-- Pairwise CNF variable and clause regression values.
-- Rejection of unsupported encoding names.
+- `N = 1` is satisfiable.
+- `N = 2` is unsatisfiable.
+- `N = 3` is unsatisfiable.
+- `N = 4` is satisfiable.
+- `N = 8` is satisfiable.
+- Returned solutions pass an independent validator.
+- Pairwise, Sequential Counter, and Bitwise encodings behave correctly.
+- OR-Tools CP-SAT behaves correctly.
+- CPLEX CP behaves correctly.
+- Pairwise CNF regression values remain unchanged.
 
----
+## Current Experimental Plan
 
-# Current Experimental Design
+### Experiment A — SAT Encoding Comparison
 
-The SAT encoding experiment will keep the SAT solver fixed:
+Keep the SAT solver fixed:
 
 ```text
 Glucose3
 ```
 
-and vary only the At-Most-One encoding:
+Compare:
 
 ```text
 Pairwise
@@ -580,7 +410,7 @@ Sequential Counter
 Bitwise
 ```
 
-The main comparison metrics will be:
+Metrics:
 
 ```text
 Number of variables
@@ -590,46 +420,35 @@ Solving time
 Total time
 ```
 
-This design allows the effect of the SAT encoding itself to be evaluated independently from the choice of SAT solver.
+### Experiment B — Solving Paradigm Comparison
 
----
-
-# Next Milestone
-
-The next milestone is to implement exact solving approaches outside SAT.
-
-## Constraint Programming
-
-Implement:
+Compare:
 
 ```text
-CPLEX CP Optimizer
-```
-
-using an integer representation:
-
-```text
-queen[row] = column
-```
-
-with three `AllDifferent` constraint families.
-
-## CP-SAT
-
-Implement:
-
-```text
+SAT
+CPLEX CP
 OR-Tools CP-SAT
+CPLEX MIP
+Gurobi MIP
 ```
 
-using the same high-level N-Queens formulation.
+The main metric will be solving performance as the board size increases.
 
-After these solvers are validated, the project will continue with:
+## Next Milestone
+
+The next implementation milestone is:
 
 ```text
 CPLEX MIP
 Gurobi MIP
-Unified benchmark runner
-Large-instance experiments
-Experimental figures and tables
 ```
+
+Both will use binary decision variables:
+
+```text
+x[row, col] ∈ {0, 1}
+```
+
+with row, column, and diagonal constraints.
+
+After these solvers are complete, all solving methods will be integrated into a unified benchmark pipeline.
