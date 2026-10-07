@@ -1,4 +1,6 @@
 def check_pysat():
+    """Check whether PySAT and Glucose3 are working correctly."""
+
     from pysat.solvers import Glucose3
 
     with Glucose3(bootstrap_with=[[1]]) as solver:
@@ -8,6 +10,8 @@ def check_pysat():
 
 
 def check_ortools():
+    """Check whether OR-Tools CP-SAT is working correctly."""
+
     from ortools.sat.python import cp_model
 
     model = cp_model.CpModel()
@@ -26,6 +30,8 @@ def check_ortools():
 
 
 def check_gurobi():
+    """Check whether Gurobi can solve a simple optimization model."""
+
     import gurobipy as gp
     from gurobipy import GRB
 
@@ -44,6 +50,8 @@ def check_gurobi():
 
 
 def check_cplex_mip():
+    """Check whether CPLEX MIP can solve a simple optimization model."""
+
     from docplex.mp.model import Model
 
     model = Model(name="environment_test")
@@ -60,6 +68,8 @@ def check_cplex_mip():
 
 
 def check_cplex_cp():
+    """Check whether CPLEX CP Optimizer can solve a simple CP model."""
+
     from docplex.cp.model import CpoModel
 
     model = CpoModel()
@@ -76,6 +86,13 @@ def check_cplex_cp():
 
 
 def run_check(name, fn):
+    """Run an environment check and report any failure.
+
+    Args:
+        name: Name of the library or solver being checked.
+        fn: Check function to execute.
+    """
+    
     try:
         fn()
     except Exception as e:
