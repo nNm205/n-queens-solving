@@ -50,6 +50,7 @@
 - [x] Đưa kết quả pilot hiện tại vào phần Experimental Results.
 - [x] Ghi rõ license limitation và declaration về AI-assisted technologies.
 - [x] Cài/copy bộ CAS template, gồm `cas-sc.cls`, `cas-common.sty` và bibliography style.
+- [x] Chuẩn hóa và đưa các CAS assets cần thiết vào repository để report có thể tái lập.
 - [x] Cấu hình CTAN repository, cập nhật MiKTeX package database và cài các package phụ thuộc.
 - [x] Biên dịch thành công bản thảo CAS thành `report/manuscript.pdf`.
 - [x] Push các commit sửa report và biểu đồ lên GitHub.
