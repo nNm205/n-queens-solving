@@ -28,6 +28,20 @@
 - [x] Ghi nhận `LICENSE_LIMIT` và `TIMEOUT` mà không dừng toàn bộ experiment.
 - [ ] Xác nhận encoding baseline cuối cùng sau khi phân tích đầy đủ pilot.
 
+## Kết quả triển khai mới nhất
+
+- [x] Bổ sung hard timeout theo configuration vào benchmark CLI (`--timeout`, mặc định `600s`).
+- [x] Test suite sau thay đổi timeout: `43 passed`.
+- [x] SAT encoding final-local batch: `45` rows cho `N = 8, 16, 32` với `5` repeats.
+- [x] SAT encoding final-local batch: `9` rows cho `N = 64` với `3` repeats.
+- [x] Cross-solver core batch: `25` rows cho `N = 8, 16, 24, 31, 32`.
+- [x] Cross-solver extended batch: `25` rows cho `N = 44, 45, 64, 100, 128`.
+- [x] Tạo bảng tổng hợp CSV trong `report/`.
+- [x] Tạo biểu đồ SVG cho SAT encoding và cross-solver runtime.
+- [x] Tạo ghi chú phân tích pilot trong `report/pilot_analysis.md`.
+- [ ] Chạy lại core/extended cross-solver sau khi academic license được kích hoạt.
+- [ ] Chốt SAT encoding baseline cuối cùng sau khi đánh giá độ biến thiên runtime.
+
 ## 1. Nền tảng và môi trường
 
 - [x] Khởi tạo cấu trúc project (`src/`, `experiments/`, `tests/`, `results/`, `report/`).

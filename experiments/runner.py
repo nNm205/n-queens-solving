@@ -1,5 +1,6 @@
 from pathlib import Path
 import csv
+import multiprocessing
 from experiments.config import (
     RESULT_FIELDS,
     SAT_ENCODINGS,
@@ -189,9 +190,116 @@ def run_solver(
         )
 
 
+def _solver_process_entry(
+    result_queue,
+    solver_kwargs: dict,
+) -> None:
+    """Execute one solver call in a child process.
+
+    A separate process is used so a timed-out solver can be terminated on
+    Windows as well as on POSIX systems.
+    """
+
+    result_queue.put(run_solver(**solver_kwargs))
+
+
+def build_timeout_result(
+    *,
+    experiment: str,
+    run: int,
+    n: int,
+    method: str,
+    encoding: str | None,
+    timeout_seconds: float,
+) -> dict:
+    """Build a normalized result for a solver that exceeded its timeout."""
+
+    return {
+        "experiment": experiment,
+        "run": run,
+        "n": n,
+        "method": method,
+        "solver": None,
+        "encoding": encoding,
+        "status": "TIMEOUT",
+        "valid": None,
+        "num_variables": None,
+        "num_clauses": None,
+        "num_constraints": None,
+        "encoding_time": None,
+        "build_time": None,
+        "solve_time": timeout_seconds,
+        "total_time": timeout_seconds,
+        "raw_status": None,
+        "error_type": "TIMEOUT",
+        "error_message": (
+            f"Solver exceeded the {timeout_seconds:g}-second time limit"
+        ),
+    }
+
+
+def run_solver_with_timeout(
+    *,
+    experiment: str,
+    run: int,
+    method: str,
+    n: int,
+    encoding: str | None = None,
+    timeout_seconds: float | None = None,
+) -> dict:
+    """Run one solver directly or with a hard process timeout."""
+
+    solver_kwargs = {
+        "experiment": experiment,
+        "run": run,
+        "method": method,
+        "n": n,
+        "encoding": encoding,
+    }
+
+    if timeout_seconds is None:
+        return run_solver(**solver_kwargs)
+
+    context = multiprocessing.get_context("spawn")
+    result_queue = context.Queue()
+    process = context.Process(
+        target=_solver_process_entry,
+        args=(result_queue, solver_kwargs),
+    )
+    process.start()
+    process.join(timeout_seconds)
+
+    if process.is_alive():
+        process.terminate()
+        process.join()
+        return build_timeout_result(
+            experiment=experiment,
+            run=run,
+            n=n,
+            method=method,
+            encoding=encoding,
+            timeout_seconds=timeout_seconds,
+        )
+
+    if not result_queue.empty():
+        return result_queue.get()
+
+    return build_error_result(
+        experiment=experiment,
+        run=run,
+        n=n,
+        method=method,
+        encoding=encoding,
+        error=RuntimeError(
+            f"Solver process exited without returning a result (exit code {process.exitcode})"
+        ),
+    )
+
+
 def run_sat_encoding_experiment(
     sizes: list[int],
     repeats: int,
+    timeout_seconds: float | None = None,
 ) -> list[dict]:
     """Run the SAT encoding comparison experiment.
 
@@ -215,12 +323,13 @@ def run_sat_encoding_experiment(
                     f"run={run}"
                 )
 
-                result = run_solver(
+                result = run_solver_with_timeout(
                     experiment="sat_encodings",
                     run=run,
                     method="sat",
                     n=n,
                     encoding=encoding,
+                    timeout_seconds=timeout_seconds,
                 )
 
                 results.append(result)
@@ -232,20 +341,9 @@ def run_solver_comparison_experiment(
     sizes: list[int],
     repeats: int,
     sat_encoding: str,
+    timeout_seconds: float | None = None,
 ) -> list[dict]:
-    """Run the cross-method solver comparison experiment.
-
-    Args:
-        sizes: Board sizes to benchmark.
-        repeats: Number of runs for each configuration.
-        sat_encoding: SAT encoding used in the comparison.
-
-    Returns:
-        List of normalized benchmark results.
-
-    Raises:
-        ValueError: If the SAT encoding is unsupported.
-    """
+    """Run the cross-method solver comparison experiment."""
 
     if sat_encoding not in SAT_ENCODINGS:
         raise ValueError(f"Unsupported SAT encoding: {sat_encoding}")
@@ -255,11 +353,7 @@ def run_solver_comparison_experiment(
     for n in sizes:
         for method in SOLVER_METHODS:
             for run in range(1, repeats + 1):
-                encoding = (
-                    sat_encoding
-                    if method == "sat"
-                    else None
-                )
+                encoding = sat_encoding if method == "sat" else None
 
                 print(
                     f"[RUN] {method} | "
@@ -267,12 +361,13 @@ def run_solver_comparison_experiment(
                     f"run={run}"
                 )
 
-                result = run_solver(
+                result = run_solver_with_timeout(
                     experiment="solver_comparison",
                     run=run,
                     method=method,
                     n=n,
                     encoding=encoding,
+                    timeout_seconds=timeout_seconds,
                 )
 
                 results.append(result)

@@ -87,6 +87,11 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] Full test suite passes: `43 passed`.
 - [x] Report language, author metadata, deadline, and repository link confirmed.
 - [x] Elsevier-style manuscript structure identified for the final report.
+- [x] Hard per-configuration timeout implemented in the benchmark CLI.
+- [x] Repeated SAT encoding benchmark completed for `N = 8, 16, 32` and `N = 64`.
+- [x] Cross-solver core benchmark completed at `N = 8, 16, 24, 31, 32`.
+- [x] Cross-solver extended benchmark completed at `N = 44, 45, 64, 100, 128`.
+- [x] Pilot summary tables and SVG figures generated under `report/`.
 
 ### In Progress / Remaining
 
@@ -94,7 +99,7 @@ The repository link will be included in the report's **Data Availability** secti
 - [ ] Install or activate an unrestricted CPLEX academic license if available.
 - [ ] Analyze pilot experiments and select the final board-size ranges.
 - [ ] Define final benchmark size ranges and repetition counts.
-- [ ] Define timeout and error-handling policy for final experiments.
+- [x] Define timeout and error-handling policy for final experiments.
 - [ ] Run final SAT encoding comparison experiments.
 - [ ] Select the SAT encoding used for cross-method comparison.
 - [ ] Run SAT vs CP vs CP-SAT vs MIP experiments.
@@ -642,6 +647,10 @@ results/pilot/solver_comparison_round1.csv
 results/pilot/solver_comparison_n32.csv
 results/pilot/solver_comparison_license_boundary.csv
 results/pilot/solver_comparison_large.csv
+results/final_sat_encodings_small.csv
+results/final_sat_encodings_n64.csv
+results/final_solver_comparison_core.csv
+results/final_solver_comparison_extended.csv
 ```
 
 The current pilot coverage is:
@@ -652,6 +661,19 @@ The current pilot coverage is:
 - License-boundary cases where failed solver runs are recorded as `LICENSE_LIMIT` instead of stopping the experiment.
 
 These files are pilot data, not yet the final statistical benchmark. Final sizes, repetition counts, timeout policy, and the baseline SAT encoding still need to be selected after analysis.
+
+The first analysis artifacts are available in `report/`:
+
+```text
+report/pilot_analysis.md
+report/sat_encodings_summary.csv
+report/solver_comparison_summary.csv
+report/benchmark_summary.csv
+report/sat_encoding_runtime.svg
+report/solver_runtime.svg
+```
+
+The current analysis confirms that the solver implementation and benchmark pipeline are functional, but the SAT encoding baseline should not be finalized from a single large-instance run because the observed solving time varies substantially across runs and board sizes.
 
 ---
 
@@ -932,9 +954,9 @@ When a solver cannot run because of the local license, the result remains in the
 
 ## Next Milestone
 
-The solver implementations, validation layer, automated tests, benchmark infrastructure, and initial pilot experiments are complete. The project is now in the **pilot analysis and final-experiment preparation phase**.
+The solver implementations, validation layer, automated tests, benchmark infrastructure, pilot experiments, and first analysis artifacts are complete. The project is now in the **final benchmark and report-writing phase**.
 
-The next milestone is to analyze the existing pilot results and finalize the board-size ranges, repetition counts, timeout policy, and baseline SAT encoding.
+The next milestone is to finalize the SAT baseline, repeat the cross-solver benchmark after license activation when possible, and incorporate the analysis into the scientific report.
 
 The existing pilot runs cover candidate board sizes such as:
 

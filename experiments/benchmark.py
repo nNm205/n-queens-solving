@@ -54,6 +54,13 @@ def parse_args() -> argparse.Namespace:
         help="Output CSV file",
     )
 
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=600.0,
+        help="Hard timeout in seconds per solver configuration; use 0 to disable",
+    )
+
     return parser.parse_args()
 
 def main() -> None:
@@ -67,10 +74,16 @@ def main() -> None:
     if any(n < 1 for n in args.sizes):
         raise ValueError("all board sizes must be >= 1")
 
+    if args.timeout < 0:
+        raise ValueError("timeout must be >= 0")
+
+    timeout_seconds = args.timeout or None
+
     if args.experiment == "sat-encodings":
         results = run_sat_encoding_experiment(
             sizes=args.sizes,
             repeats=args.repeats,
+            timeout_seconds=timeout_seconds,
         )
 
         output = args.output or "results/sat_encoding_results.csv"
@@ -81,6 +94,7 @@ def main() -> None:
                 sizes=args.sizes,
                 repeats=args.repeats,
                 sat_encoding=args.sat_encoding,
+                timeout_seconds=timeout_seconds,
             )
         )
 
