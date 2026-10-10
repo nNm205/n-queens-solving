@@ -19,4 +19,6 @@ MiKTeX Console is configured to install missing packages on the fly. The manuscr
 
 The current draft has been compiled successfully to `manuscript.pdf` with the local MiKTeX installation. Remaining warnings are layout warnings from the draft and should be reviewed during final editing.
 
+The repository tracks only the CAS files required by this manuscript: `cas-sc.cls`, `cas-common.sty`, `cas-model2-names.bst`, and the CAS contact-icon thumbnails. Sample manuscripts, documentation sources, and generated build files are intentionally kept out of the project commit.
+
 The draft uses the current local pilot results. Results that depend on academic licenses are explicitly marked as limitations and should be refreshed after the licenses are activated.
