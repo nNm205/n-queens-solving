@@ -1,4 +1,4 @@
-"""Create lightweight benchmark tables and SVG figures using only the stdlib."""
+"""Create lightweight benchmark tables and vector figures using only the stdlib."""
 
 from __future__ import annotations
 
@@ -151,6 +151,99 @@ def chart(
     output.write_text("\n".join(svg), encoding="utf-8")
 
 
+def pdf_escape(value: str) -> str:
+    return value.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+
+
+def chart_pdf(
+    rows: list[dict],
+    *,
+    title: str,
+    output: Path,
+    series_keys: list[tuple[str, str]],
+) -> None:
+    """Write the same lightweight chart as a PDF accepted by pdfLaTeX."""
+    width, height = 792, 468
+    left, right, top, bottom = 72, 28, 54, 72
+    plot_width = width - left - right
+    plot_height = height - top - bottom
+    values = [
+        float(row["median_total_time"])
+        for row in rows
+        if row["median_total_time"] not in ("", None)
+    ]
+    if not values:
+        return
+    y_min, y_max = -3.0, math.ceil(math.log10(max(values)))
+    ns = sorted({int(row["n"]) for row in rows})
+    x_positions = {
+        n: left + index * plot_width / max(1, len(ns) - 1)
+        for index, n in enumerate(ns)
+    }
+
+    def y_position(value: float) -> float:
+        log_value = math.log10(max(value, 0.001))
+        return bottom + (log_value - y_min) * plot_height / (y_max - y_min)
+
+    colors = [(0.145, 0.388, 0.922), (0.863, 0.149, 0.149), (0.086, 0.639, 0.251), (0.576, 0.141, 0.667), (0.918, 0.345, 0.047)]
+    commands = ["1 1 1 rg", f"0 0 {width} {height} re f", "0 0 0 RG", "0.8 w"]
+    commands += [
+        f"{left} {bottom} m {left} {bottom + plot_height} l S",
+        f"{left} {bottom} m {left + plot_width} {bottom} l S",
+    ]
+
+    def text(x: float, y: float, value: str, size: int = 9) -> None:
+        commands.append(f"BT /F1 {size} Tf {x:.1f} {y:.1f} Td ({pdf_escape(value)}) Tj ET")
+
+    text(width / 2 - len(title) * 3, height - 28, title, 14)
+    text(12, height / 2, "Median total time (seconds, log scale)", 8)
+    for exponent in range(math.floor(y_min), y_max + 1):
+        y = y_position(10**exponent)
+        commands += ["0.9 0.9 0.9 RG", f"{left} {y:.1f} m {left + plot_width} {y:.1f} l S", "0 0 0 RG"]
+        text(left - 28, y - 3, f"10^{exponent}", 8)
+    for n, x in x_positions.items():
+        text(x - 5, bottom - 18, str(n), 8)
+
+    for index, (series_name, encoding) in enumerate(series_keys):
+        points = []
+        for row in rows:
+            if row["method"] != series_name or row["encoding"] != encoding:
+                continue
+            if row["median_total_time"] in ("", None):
+                continue
+            points.append((x_positions[int(row["n"])], y_position(float(row["median_total_time"]))))
+        if not points:
+            continue
+        red, green, blue = colors[index % len(colors)]
+        commands += [f"{red} {green} {blue} RG", "2 w"]
+        for (x1, y1), (x2, y2) in zip(points, points[1:]):
+            commands.append(f"{x1:.1f} {y1:.1f} m {x2:.1f} {y2:.1f} l S")
+        for x, y in points:
+            commands.append(f"{x:.1f} {y:.1f} 3 0 360 arc f")
+        legend_x = left + index * 135
+        commands.append(f"{legend_x} 24 m {legend_x + 18} 24 l S")
+        text(legend_x + 23, 21, series_name + ("/" + encoding if encoding else ""), 8)
+
+    content = "\n".join(commands).encode("latin-1", errors="replace")
+    objects = [
+        b"<< /Type /Catalog /Pages 2 0 R >>",
+        b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+        f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 {width} {height}] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>".encode(),
+        b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+        b"<< /Length " + str(len(content)).encode() + b" >>\nstream\n" + content + b"\nendstream",
+    ]
+    pdf = bytearray(b"%PDF-1.4\n")
+    offsets = [0]
+    for number, obj in enumerate(objects, start=1):
+        offsets.append(len(pdf))
+        pdf += f"{number} 0 obj\n".encode() + obj + b"\nendobj\n"
+    xref = len(pdf)
+    pdf += f"xref\n0 {len(objects) + 1}\n0000000000 65535 f \n".encode()
+    pdf += b"".join(f"{offset:010d} 00000 n \n".encode() for offset in offsets[1:])
+    pdf += f"trailer\n<< /Size {len(objects) + 1} /Root 1 0 R >>\nstartxref\n{xref}\n%%EOF\n".encode()
+    output.write_bytes(pdf)
+
+
 def main() -> None:
     REPORT_DIR.mkdir(exist_ok=True)
     sat_rows = read_rows([
@@ -170,10 +263,28 @@ def main() -> None:
         output=REPORT_DIR / "sat_encoding_runtime.svg",
         series_keys=[("sat", encoding) for encoding in ("pairwise", "seqcounter", "bitwise")],
     )
+    chart_pdf(
+        [row for row in summary if row["experiment"] == "sat_encodings"],
+        title="SAT encoding comparison",
+        output=REPORT_DIR / "sat_encoding_runtime.pdf",
+        series_keys=[("sat", encoding) for encoding in ("pairwise", "seqcounter", "bitwise")],
+    )
     chart(
         [row for row in summary if row["experiment"] == "solver_comparison"],
         title="Cross-solver comparison",
         output=REPORT_DIR / "solver_runtime.svg",
+        series_keys=[
+            ("sat", "bitwise"),
+            ("cp_sat", ""),
+            ("cplex_cp", ""),
+            ("cplex_mip", ""),
+            ("gurobi_mip", ""),
+        ],
+    )
+    chart_pdf(
+        [row for row in summary if row["experiment"] == "solver_comparison"],
+        title="Cross-solver comparison",
+        output=REPORT_DIR / "solver_runtime.pdf",
         series_keys=[
             ("sat", "bitwise"),
             ("cp_sat", ""),

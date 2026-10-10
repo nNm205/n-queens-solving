@@ -13,8 +13,10 @@ pdflatex -interaction=nonstopmode manuscript.tex
 pdflatex -interaction=nonstopmode manuscript.tex
 ```
 
-The Elsevier CAS template files are now present in this directory, including `cas-sc.cls`, `cas-common.sty`, and `cas-model2-names.bst`. The current MiKTeX installation is minimal and still needs dependencies used by `cas-common.sty`, such as `makecell`, `multirow`, `xstring`, `footmisc`, `stfloats`, `moreverb`, and `wrapfig`.
+The Elsevier CAS template files are present in this directory, including `cas-sc.cls`, `cas-common.sty`, and `cas-model2-names.bst`. MiKTeX has been configured with a CTAN repository and the required CAS dependencies are installed in the current User-mode setup.
 
-In MiKTeX Console, enable automatic installation of missing packages (`Always install missing packages on-the-fly`), then run the compilation commands again. The manuscript source intentionally keeps `\documentclass[a4paper,fleqn]{cas-sc}` and should not be changed to a generic class for the final submission.
+MiKTeX Console is configured to install missing packages on the fly. The manuscript source intentionally keeps `\documentclass[a4paper,fleqn]{cas-sc}` and should not be changed to a generic class for the final submission. The figures are generated as PDF files because `pdflatex` does not consume SVG directly.
+
+The current draft has been compiled successfully to `manuscript.pdf` with the local MiKTeX installation. Remaining warnings are layout warnings from the draft and should be reviewed during final editing.
 
 The draft uses the current local pilot results. Results that depend on academic licenses are explicitly marked as limitations and should be refreshed after the licenses are activated.

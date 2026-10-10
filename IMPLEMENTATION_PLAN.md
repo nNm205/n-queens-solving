@@ -37,7 +37,7 @@
 - [x] Cross-solver core batch: `25` rows cho `N = 8, 16, 24, 31, 32`.
 - [x] Cross-solver extended batch: `25` rows cho `N = 44, 45, 64, 100, 128`.
 - [x] Tạo bảng tổng hợp CSV trong `report/`.
-- [x] Tạo biểu đồ SVG cho SAT encoding và cross-solver runtime.
+- [x] Tạo biểu đồ SVG và PDF cho SAT encoding và cross-solver runtime.
 - [x] Tạo ghi chú phân tích pilot trong `report/pilot_analysis.md`.
 - [ ] Chạy lại core/extended cross-solver sau khi academic license được kích hoạt.
 - [ ] Chốt SAT encoding baseline cuối cùng sau khi đánh giá độ biến thiên runtime.
@@ -50,7 +50,8 @@
 - [x] Đưa kết quả pilot hiện tại vào phần Experimental Results.
 - [x] Ghi rõ license limitation và declaration về AI-assisted technologies.
 - [x] Cài/copy bộ CAS template, gồm `cas-sc.cls`, `cas-common.sty` và bibliography style.
-- [ ] Cài các package phụ thuộc còn thiếu của MiKTeX để biên dịch PDF.
+- [x] Cấu hình CTAN repository, cập nhật MiKTeX package database và cài các package phụ thuộc.
+- [x] Biên dịch thành công bản thảo CAS thành `report/manuscript.pdf`.
 - [ ] Rà soát nội dung, citations, figures và bảng sau khi có kết quả license mới.
 - [ ] Hoàn thiện abstract, discussion và conclusion sau benchmark final.
 

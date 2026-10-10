@@ -91,9 +91,11 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] Repeated SAT encoding benchmark completed for `N = 8, 16, 32` and `N = 64`.
 - [x] Cross-solver core benchmark completed at `N = 8, 16, 24, 31, 32`.
 - [x] Cross-solver extended benchmark completed at `N = 44, 45, 64, 100, 128`.
-- [x] Pilot summary tables and SVG figures generated under `report/`.
+- [x] Pilot summary tables and SVG/PDF figures generated under `report/`.
 - [x] English Elsevier-style report draft created in `report/manuscript.tex`.
 - [x] Bibliography and report compilation instructions added.
+- [x] MiKTeX CTAN repository configured and CAS dependencies installed.
+- [x] CAS manuscript compiled successfully to `report/manuscript.pdf`.
 
 ### In Progress / Remaining
 
