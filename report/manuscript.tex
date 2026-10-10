@@ -1,8 +1,6 @@
 \documentclass[a4paper,fleqn]{cas-sc}
 
-\usepackage{booktabs}
 \usepackage{graphicx}
-\usepackage{microtype}
 \usepackage{url}
 
 \begin{document}
@@ -131,14 +129,14 @@ Table~\ref{tab:sat-summary} reports median total times from the repeated local b
 \caption{Median total time in seconds for the repeated SAT encoding batch.}
 \label{tab:sat-summary}
 \begin{tabular}{lrrrr}
-\toprule
+\hline
 $N$ & Pairwise & Sequential counter & Bitwise & Repeats \\
-\midrule
+\hline
 8  & 0.0010 & 0.0015 & 0.0013 & 5 \\
 16 & 0.0158 & 0.0086 & 0.1042 & 5 \\
 32 & 0.0749 & 0.4728 & 15.7860 & 5 \\
 64 & 0.6018 & 10.2342 & 6.2919 & 3 \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 
@@ -152,9 +150,9 @@ Table~\ref{tab:solver-summary} gives selected results from the core and extended
 \caption{Selected cross-solver results from the current local phase. Times are total seconds; a dash denotes a license-limited run.}
 \label{tab:solver-summary}
 \begin{tabular}{lrrrrr}
-\toprule
+\hline
 $N$ & SAT & CP-SAT & CPLEX CP & CPLEX MIP & Gurobi MIP \\
-\midrule
+\hline
 8   & 0.004 & 0.036 & 0.054 & 0.036 & 0.005 \\
 16  & 0.249 & 0.076 & 0.054 & 0.045 & 0.045 \\
 24  & 16.571 & 0.120 & 0.056 & 0.057 & 0.014 \\
@@ -163,7 +161,7 @@ $N$ & SAT & CP-SAT & CPLEX CP & CPLEX MIP & Gurobi MIP \\
 44  & 266.893 & 0.360 & 0.062 & -- & 0.164 \\
 64  & 21.493 & 0.837 & 0.067 & -- & -- \\
 128 & 3.231 & 4.448 & 0.078 & -- & -- \\
-\bottomrule
+\hline
 \end{tabular}
 \end{table}
 

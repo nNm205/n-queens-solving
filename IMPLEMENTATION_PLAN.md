@@ -49,7 +49,8 @@
 - [x] Thêm hướng dẫn biên dịch trong `report/README.md`.
 - [x] Đưa kết quả pilot hiện tại vào phần Experimental Results.
 - [x] Ghi rõ license limitation và declaration về AI-assisted technologies.
-- [ ] Cài/copy `cas-sc.cls` để biên dịch PDF theo đúng template.
+- [x] Cài/copy bộ CAS template, gồm `cas-sc.cls`, `cas-common.sty` và bibliography style.
+- [ ] Cài các package phụ thuộc còn thiếu của MiKTeX để biên dịch PDF.
 - [ ] Rà soát nội dung, citations, figures và bảng sau khi có kết quả license mới.
 - [ ] Hoàn thiện abstract, discussion và conclusion sau benchmark final.
 
