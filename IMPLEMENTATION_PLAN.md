@@ -42,6 +42,17 @@
 - [ ] Chạy lại core/extended cross-solver sau khi academic license được kích hoạt.
 - [ ] Chốt SAT encoding baseline cuối cùng sau khi đánh giá độ biến thiên runtime.
 
+## Tiến độ report
+
+- [x] Tạo bản thảo tiếng Anh theo cấu trúc Elsevier trong `report/manuscript.tex`.
+- [x] Thêm bibliography trong `report/references.bib`.
+- [x] Thêm hướng dẫn biên dịch trong `report/README.md`.
+- [x] Đưa kết quả pilot hiện tại vào phần Experimental Results.
+- [x] Ghi rõ license limitation và declaration về AI-assisted technologies.
+- [ ] Cài/copy `cas-sc.cls` để biên dịch PDF theo đúng template.
+- [ ] Rà soát nội dung, citations, figures và bảng sau khi có kết quả license mới.
+- [ ] Hoàn thiện abstract, discussion và conclusion sau benchmark final.
+
 ## 1. Nền tảng và môi trường
 
 - [x] Khởi tạo cấu trúc project (`src/`, `experiments/`, `tests/`, `results/`, `report/`).
