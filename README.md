@@ -26,6 +26,24 @@ The main objectives are:
   - Total execution time
 - Build a reproducible benchmark pipeline for experimental evaluation.
 
+## Assignment and Report Information
+
+This project is developed for Assignment 1 of the Modern Problems in Computer Science course. The selected topic is **N-Queens Solver** under the SAT Encoding for Logic Puzzles and N-Queens topic.
+
+The final report will be written in English and structured as a scientific manuscript following the Elsevier-style report template provided for the assignment.
+
+```text
+Author      : Nguyen Nhat Minh
+Student ID  : 23021631
+Department  : Faculty of Information Technology
+University  : VNU University of Engineering and Technology (VNU-UET)
+Deadline    : 19 October 2026
+Internal target: 16 October 2026
+Repository  : https://github.com/nNm205/n-queens-solving
+```
+
+The repository link will be included in the report's **Data Availability** section. Experiments run before unrestricted academic licenses are available will explicitly report `LICENSE_LIMIT` and `TIMEOUT` outcomes as experimental limitations.
+
 ---
 
 ## Current Progress
@@ -62,17 +80,25 @@ The main objectives are:
 - [x] Solver errors are captured without terminating the full experiment.
 - [x] CPLEX Community Edition size-limit errors are handled by the benchmark runner.
 - [x] Automated tests cover SAT, CP, CP-SAT, MIP, and benchmark infrastructure.
+- [x] Pilot SAT-encoding experiments completed for `N = 8, 16, 32, 64, 96, 128`.
+- [x] Pilot cross-solver experiments completed for small, medium, large, and license-boundary cases.
+- [x] Benchmark results exported to CSV under `results/`.
+- [x] Environment check passes for all five solver families.
+- [x] Full test suite passes: `43 passed`.
+- [x] Report language, author metadata, deadline, and repository link confirmed.
+- [x] Elsevier-style manuscript structure identified for the final report.
 
-### Planned
+### In Progress / Remaining
 
 - [ ] Activate Gurobi Academic License before large-scale experiments.
 - [ ] Install or activate an unrestricted CPLEX academic license if available.
-- [ ] Run pilot experiments to determine suitable board sizes.
+- [ ] Analyze pilot experiments and select the final board-size ranges.
 - [ ] Define final benchmark size ranges and repetition counts.
-- [ ] Run SAT encoding comparison experiments.
+- [ ] Define timeout and error-handling policy for final experiments.
+- [ ] Run final SAT encoding comparison experiments.
 - [ ] Select the SAT encoding used for cross-method comparison.
 - [ ] Run SAT vs CP vs CP-SAT vs MIP experiments.
-- [ ] Run large-instance experiments.
+- [ ] Re-run large-instance experiments after license upgrades, if available.
 - [ ] Analyze benchmark results.
 - [ ] Generate experimental tables and figures.
 - [ ] Prepare the final scientific report.
@@ -602,6 +628,31 @@ python -m experiments.benchmark `
     --output results/custom_results.csv
 ```
 
+### Existing Pilot Results
+
+Pilot and smoke-test results are already available in the repository:
+
+```text
+results/day12_sat_smoke.csv
+results/day12_solver_smoke.csv
+results/day12_license_test.csv
+results/pilot/sat_encodings_round1.csv
+results/pilot/sat_encodings_round2.csv
+results/pilot/solver_comparison_round1.csv
+results/pilot/solver_comparison_n32.csv
+results/pilot/solver_comparison_license_boundary.csv
+results/pilot/solver_comparison_large.csv
+```
+
+The current pilot coverage is:
+
+- SAT encoding comparison at `N = 8, 16, 32, 64, 96, 128`.
+- Cross-solver comparison at `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`.
+- Repeated and smoke-test runs at smaller board sizes.
+- License-boundary cases where failed solver runs are recorded as `LICENSE_LIMIT` instead of stopping the experiment.
+
+These files are pilot data, not yet the final statistical benchmark. Final sizes, repetition counts, timeout policy, and the baseline SAT encoding still need to be selected after analysis.
+
 ---
 
 ## Benchmark Error Handling
@@ -675,7 +726,7 @@ Variables   : 1024
 Constraints : 186
 ```
 
-An Academic License should be activated before final large-scale benchmark experiments.
+The same restricted license rejects larger tested models such as `N = 64`. An Academic License should be activated before final large-scale benchmark experiments.
 
 ---
 
@@ -858,15 +909,34 @@ Maximum practical board size
 Solver status
 ```
 
+### Agreed Initial Experimental Protocol
+
+The following protocol is used for the current local-laptop phase and can be revised after license activation:
+
+```text
+SAT encoding experiment sizes : 8, 16, 32, 64, 96, 128
+Cross-solver core sizes       : 8, 16, 24, 31, 32
+Cross-solver extended sizes   : 44, 45, 64, 100, 128
+Repeats for N <= 32           : 5
+Repeats for N = 64            : 3
+Repeats for N >= 96           : 1 initially
+Per-run timeout               : 600 seconds
+Cross-solver SAT encoding     : bitwise candidate baseline
+```
+
+The `bitwise` encoding is the current candidate baseline because the pilot results show better scalability at `N = 128` than `seqcounter`. The final choice will be justified using the completed SAT-encoding comparison rather than assumed in advance.
+
+When a solver cannot run because of the local license, the result remains in the CSV with `status = LICENSE_LIMIT`. When a solver exceeds the time limit, the result will be recorded with `status = TIMEOUT`. Neither outcome should terminate the remaining benchmark configurations.
+
 ---
 
 ## Next Milestone
 
-All planned solver implementations and the initial benchmark infrastructure are now complete.
+The solver implementations, validation layer, automated tests, benchmark infrastructure, and initial pilot experiments are complete. The project is now in the **pilot analysis and final-experiment preparation phase**.
 
-The next milestone is the **pilot experiment phase**.
+The next milestone is to analyze the existing pilot results and finalize the board-size ranges, repetition counts, timeout policy, and baseline SAT encoding.
 
-The pilot will evaluate candidate board sizes such as:
+The existing pilot runs cover candidate board sizes such as:
 
 ```text
 8
@@ -886,7 +956,7 @@ The purpose is to determine:
 - Whether explicit solver time limits are necessary.
 - Which SAT encoding should be used as the candidate baseline for the later cross-method comparison.
 
-After the pilot phase, the project will proceed to:
+The remaining workflow is:
 
 ```text
 Final SAT encoding experiments
