@@ -52,8 +52,18 @@
 - [x] Cài/copy bộ CAS template, gồm `cas-sc.cls`, `cas-common.sty` và bibliography style.
 - [x] Cấu hình CTAN repository, cập nhật MiKTeX package database và cài các package phụ thuộc.
 - [x] Biên dịch thành công bản thảo CAS thành `report/manuscript.pdf`.
+- [x] Push các commit sửa report và biểu đồ lên GitHub.
 - [ ] Rà soát nội dung, citations, figures và bảng sau khi có kết quả license mới.
 - [ ] Hoàn thiện abstract, discussion và conclusion sau benchmark final.
+
+## Trạng thái chờ license
+
+- [x] Bản report draft hiện tại đã xem được tại `report/manuscript.pdf`.
+- [x] Các thay đổi report mới nhất đã được push lên GitHub.
+- [ ] Kích hoạt Gurobi Academic License.
+- [ ] Kích hoạt CPLEX Academic License.
+- [ ] Chạy benchmark cuối sau khi license được kích hoạt.
+- [ ] Cập nhật bảng, biểu đồ và kết luận bằng kết quả benchmark cuối.
 
 ## 1. Nền tảng và môi trường
 

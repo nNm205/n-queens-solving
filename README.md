@@ -96,6 +96,7 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] Bibliography and report compilation instructions added.
 - [x] MiKTeX CTAN repository configured and CAS dependencies installed.
 - [x] CAS manuscript compiled successfully to `report/manuscript.pdf`.
+- [x] Latest report fixes pushed to the GitHub repository.
 
 ### In Progress / Remaining
 
@@ -111,6 +112,8 @@ The repository link will be included in the report's **Data Availability** secti
 - [ ] Analyze benchmark results.
 - [ ] Generate experimental tables and figures.
 - [ ] Prepare the final scientific report.
+
+While waiting for the Gurobi and CPLEX academic licenses, the current report draft can be reviewed locally at `report/manuscript.pdf`. The remaining experimental work is to rerun the final benchmark protocol after the licenses are activated, then update the tables, figures, discussion, and conclusion.
 
 ---
 
