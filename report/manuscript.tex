@@ -40,7 +40,7 @@ N-Queens \sep Boolean satisfiability \sep cardinality encoding \sep constraint p
 
 The N-Queens problem is a classical constraint satisfaction problem in which $N$ queens must be placed on an $N \times N$ board so that no two queens attack one another. Although the problem has a simple statement, it is a useful benchmark for comparing exact solving paradigms because the number of possible placements grows rapidly with $N$ and the constraints can be represented using several modelling formalisms.
 
-This study focuses on a SAT formulation and compares it with exact methods based on constraint programming and mixed integer programming. The SAT part is implemented with PySAT and the Glucose3 solver~\citep{ignatiev2018pysat}. Three at-most-one (AMO) encodings are evaluated while the underlying SAT solver and N-Queens constraints remain fixed. This design isolates the effect of the cardinality encoding~\citep{sinz2005cardinality}.
+This study focuses on a SAT formulation and compares it with exact methods based on constraint programming and mixed integer programming. The SAT part is implemented with PySAT and the Glucose3 solver~\cite{ignatiev2018pysat}. Three at-most-one (AMO) encodings are evaluated while the underlying SAT solver and N-Queens constraints remain fixed. This design isolates the effect of the cardinality encoding~\cite{sinz2005cardinality}.
 
 The contributions of this work are:
 \begin{itemize}
@@ -96,7 +96,7 @@ If the SAT instance is satisfiable, the model is decoded into the representation
 
 \section{Compared Exact Solvers}
 
-The study compares the SAT solver with four exact alternatives. OR-Tools CP-SAT~\citep{ortools} uses the integer-variable formulation and records conflicts and branches where available. CPLEX CP Optimizer~\citep{cplex} uses the same high-level all-different formulation. CPLEX MIP and Gurobi MIP~\citep{gurobi} use binary board-position variables and linear row, column, and diagonal constraints.
+The study compares the SAT solver with four exact alternatives. OR-Tools CP-SAT~\cite{ortools} uses the integer-variable formulation and records conflicts and branches where available. CPLEX CP Optimizer~\cite{cplex} uses the same high-level all-different formulation. CPLEX MIP and Gurobi MIP~\cite{gurobi} use binary board-position variables and linear row, column, and diagonal constraints.
 
 The benchmark runner normalizes all solver outputs into a common schema containing status, validity, model-size fields where available, build or encoding time, solve time, total time, raw status, and error information.
 
