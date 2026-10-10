@@ -51,6 +51,7 @@
 - [x] Ghi rõ license limitation và declaration về AI-assisted technologies.
 - [x] Cài/copy bộ CAS template, gồm `cas-sc.cls`, `cas-common.sty` và bibliography style.
 - [x] Chuẩn hóa và đưa các CAS assets cần thiết vào repository để report có thể tái lập.
+- [x] Tạo commit riêng cho CAS assets và tài liệu report: `3aabc20`, `23fb570`.
 - [x] Cấu hình CTAN repository, cập nhật MiKTeX package database và cài các package phụ thuộc.
 - [x] Biên dịch thành công bản thảo CAS thành `report/manuscript.pdf`.
 - [x] Push các commit sửa report và biểu đồ lên GitHub.
@@ -63,6 +64,7 @@
 - [x] Các thay đổi report mới nhất đã được push lên GitHub.
 - [ ] Kích hoạt Gurobi Academic License.
 - [ ] Kích hoạt CPLEX Academic License.
+- [ ] Push hai commit chuẩn hóa CAS report lên GitHub.
 - [ ] Chạy benchmark cuối sau khi license được kích hoạt.
 - [ ] Cập nhật bảng, biểu đồ và kết luận bằng kết quả benchmark cuối.
 

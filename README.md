@@ -97,6 +97,7 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] MiKTeX CTAN repository configured and CAS dependencies installed.
 - [x] CAS manuscript compiled successfully to `report/manuscript.pdf`.
 - [x] Required Elsevier CAS class, bibliography style, thumbnails, and PDF figures tracked in the repository.
+- [x] CAS report assets and reproducibility documentation committed locally; push is pending.
 - [x] Latest report fixes pushed to the GitHub repository.
 
 ### In Progress / Remaining
