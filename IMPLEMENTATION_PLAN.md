@@ -137,6 +137,7 @@
 - [x] Cross-solver test tại `N = 32`.
 - [x] Cross-solver pilot lớn ở `N = 64, 100, 128`.
 - [x] Kiểm tra biên license ở `N = 44, 45`.
+- [x] Chạy lại cross-solver với Pairwise, 3 lần/cấu hình ở `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`.
 - [x] Ghi nhận kết quả SAT/CP/CP-SAT và lỗi license trong cùng schema.
 
 Các artifact hiện có trong `results/` gồm:
@@ -147,12 +148,21 @@ Các artifact hiện có trong `results/` gồm:
 - [x] `pilot/solver_comparison_n32.csv`
 - [x] `pilot/solver_comparison_license_boundary.csv`
 - [x] `pilot/solver_comparison_large.csv`
+- [x] `pairwise_solver_comparison_repeat3.csv` (150 dòng; 3 lần/cấu hình, Pairwise SAT)
 - [x] Các file smoke/license test ở thư mục `results/`.
+- [x] Cập nhật summary CSV và biểu đồ solver theo batch Pairwise lặp.
+- [x] Sửa bản thảo và `report/pilot_analysis.md` để giải thích baseline, dải N, timeout, số lần lặp, giới hạn license và CPLEX CP không khả dụng.
+- [x] Ghi cấu hình phần cứng/phần mềm của batch mới vào report.
+- [x] Cập nhật abstract theo kết quả mới và sửa metadata trích dẫn Sinz/CP-SAT.
+- [ ] Biên dịch lại PDF sau các chỉnh sửa; `report/manuscript.pdf` hiện là bản cũ.
+- [ ] Khôi phục công cụ MiKTeX trong shell: `pdflatex` không có trong PATH/cài đặt được tìm thấy; `miktex-bibtex.exe` không khởi động được (exit `-1073741515`).
 
 ## 6. Giới hạn hiện tại cần lưu ý
 
 - [x] CPLEX Community Edition chạy được model nhỏ nhưng bị giới hạn ở model lớn; ví dụ `N = 32` có `1024` biến và bị `LICENSE_LIMIT`.
 - [x] Gurobi hiện hoạt động với restricted license; các model lớn như `N = 64` và cao hơn có thể bị giới hạn license.
+- [x] Lần chạy lại hiện tại không tìm thấy `cpoptimizer.exe`; các dòng CPLEX CP được ghi `ERROR` và loại khỏi bảng median so sánh lặp.
+- [x] Chọn Pairwise làm baseline SAT tạm thời cho cross-solver: nhanh nhất tại `N = 8, 32, 64`; Sequential Counter nhanh nhất tại `N = 16`.
 - [ ] Kích hoạt Gurobi Academic License trước benchmark chính thức quy mô lớn.
 - [ ] Cài/kích hoạt CPLEX academic license không giới hạn nếu có thể.
 - [ ] Quyết định rõ cách xử lý các phương pháp bị license limit trong bảng so sánh cuối.
@@ -161,10 +171,10 @@ Các artifact hiện có trong `results/` gồm:
 
 ### Chốt thiết kế thực nghiệm
 
-- [ ] Phân tích pilot để chọn dải kích thước board chính thức.
-- [ ] Chốt số lần lặp cho từng thí nghiệm.
-- [ ] Chốt timeout và chính sách xử lý solver timeout/error.
-- [ ] Chọn SAT encoding làm baseline cho cross-solver dựa trên kết quả pilot.
+- [x] Phân tích pilot và chọn dải kích thước board tạm thời cho cross-solver.
+- [x] Chọn 3 lần lặp/cấu hình làm protocol tạm thời; cần xác nhận số lần cuối cho benchmark nộp bài.
+- [x] Giữ timeout 600 giây và chính sách ghi `TIMEOUT`, `LICENSE_LIMIT`, `ERROR` riêng.
+- [x] Chọn Pairwise làm baseline SAT tạm thời dựa trên median repeated.
 - [ ] Xác định bộ metric và quy tắc báo cáo kết quả cuối.
 
 ### Chạy benchmark chính thức
@@ -176,13 +186,12 @@ Các artifact hiện có trong `results/` gồm:
 
 ### Phân tích và báo cáo
 
-- [ ] Làm sạch và tổng hợp dữ liệu benchmark.
+- [x] Tổng hợp dữ liệu benchmark Pairwise mới và giữ raw CSV cho từng run.
+- [x] Cập nhật bảng median và biểu đồ cho batch Pairwise mới; 90 lượt hợp lệ, 30 lượt license limit, 30 lỗi CPLEX CP do thiếu executable, không có timeout.
 - [ ] Phân tích trade-off giữa số biến, số clause, encoding time và solving time.
 - [ ] Phân tích giới hạn thực tế của từng solver.
-- [ ] Tạo các bảng kết quả.
-- [ ] Tạo figures/plots cho báo cáo.
-- [ ] Viết phần methodology và experimental setup.
-- [ ] Viết phần results, discussion và threats/limitations.
+- [x] Tạo/cập nhật bảng kết quả và figures/plots cho batch hiện tại.
+- [x] Cập nhật methodology, experimental setup, results, discussion và limitations trong bản thảo pilot.
 - [ ] Hoàn thiện scientific report trong `report/`.
 - [ ] Rà soát README, lệnh chạy và artifact trước khi nộp.
 
@@ -190,6 +199,6 @@ Các artifact hiện có trong `results/` gồm:
 
 **Đã hoàn thành:** phần triển khai solver, validation, test và benchmark framework; đã có pilot experiments thực tế.
 
-**Đang ở:** pilot analysis và chuẩn bị benchmark chính thức.
+**Đang ở:** chỉnh sửa report theo kết quả Pairwise lặp; cần license học thuật, khôi phục CPLEX CP Optimizer và xác nhận cấu hình thí nghiệm lịch sử.
 
-**Chưa hoàn thành:** chốt protocol cuối, xử lý license cho thí nghiệm lớn, chạy benchmark final, phân tích dữ liệu, tạo bảng/biểu đồ và viết report.
+**Chưa hoàn thành:** chốt protocol cuối, kích hoạt license, chạy matched benchmark đủ năm solver, kiểm tra cấu hình máy/phiên bản cho các batch cũ, biên dịch PDF mới và rà soát report.

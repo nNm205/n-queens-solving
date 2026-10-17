@@ -91,31 +91,34 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] Repeated SAT encoding benchmark completed for `N = 8, 16, 32` and `N = 64`.
 - [x] Cross-solver core benchmark completed at `N = 8, 16, 24, 31, 32`.
 - [x] Cross-solver extended benchmark completed at `N = 44, 45, 64, 100, 128`.
+- [x] Repeated Pairwise cross-solver rerun completed at `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128` with three runs per configuration.
+- [x] Pairwise selected as the provisional cross-solver SAT baseline: it was fastest at `N = 8, 32, 64`; Sequential Counter was fastest at `N = 16`.
 - [x] Pilot summary tables and SVG/PDF figures generated under `report/`.
+- [x] Experimental rationale and current machine/software details added to the manuscript and pilot analysis.
 - [x] English Elsevier-style report draft created in `report/manuscript.tex`.
 - [x] Bibliography and report compilation instructions added.
 - [x] MiKTeX CTAN repository configured and CAS dependencies installed.
-- [x] CAS manuscript compiled successfully to `report/manuscript.pdf`.
+- [x] Earlier CAS manuscript compiled successfully to `report/manuscript.pdf`; the PDF is stale after the latest source edits and must be rebuilt.
 - [x] Required Elsevier CAS class, bibliography style, thumbnails, and PDF figures tracked in the repository.
 - [x] CAS report assets and reproducibility documentation committed locally; push is pending.
-- [x] Latest report fixes pushed to the GitHub repository.
+- [ ] Latest report and repeated benchmark updates committed and pushed.
 
 ### In Progress / Remaining
 
 - [ ] Activate Gurobi Academic License before large-scale experiments.
 - [ ] Install or activate an unrestricted CPLEX academic license if available.
-- [ ] Analyze pilot experiments and select the final board-size ranges.
-- [ ] Define final benchmark size ranges and repetition counts.
+- [x] Analyze pilot experiments and define provisional board-size ranges.
+- [x] Define a provisional three-run cross-solver protocol and 600-second timeout; final repetition count remains to be confirmed.
 - [x] Define timeout and error-handling policy for final experiments.
 - [ ] Run final SAT encoding comparison experiments.
-- [ ] Select the SAT encoding used for cross-method comparison.
-- [ ] Run SAT vs CP vs CP-SAT vs MIP experiments.
+- [x] Select Pairwise as the provisional SAT encoding baseline for cross-method comparison.
+- [x] Run a repeated Pairwise comparison across available solvers; CPLEX CP was unavailable in the current rerun.
 - [ ] Re-run large-instance experiments after license upgrades, if available.
-- [ ] Analyze benchmark results.
-- [ ] Generate experimental tables and figures.
-- [ ] Prepare the final scientific report.
+- [x] Analyze the repeated Pairwise benchmark results.
+- [x] Regenerate experimental tables and figures for the current repeated batch.
+- [ ] Rebuild the PDF and complete final review of the scientific report.
 
-While waiting for the Gurobi and CPLEX academic licenses, the current report draft can be reviewed locally at `report/manuscript.pdf`. The remaining experimental work is to rerun the final benchmark protocol after the licenses are activated, then update the tables, figures, discussion, and conclusion.
+The new source draft is `report/manuscript.tex`; the checked-in local PDF is stale and should be rebuilt before review. The next experimental step is a matched all-five-solver run after unrestricted licenses are activated and CPLEX CP Optimizer is available to DOcplex.
 
 ---
 
