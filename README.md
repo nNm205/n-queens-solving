@@ -2,6 +2,10 @@
 
 An experimental comparison of SAT encodings and exact solving methods for the N-Queens problem, developed for Assignment 1 in Modern Problems in Computer Science.
 
+**Author:** Nguyen Nhat Minh (`23021631`)
+
+Faculty of Information Technology, VNU University of Engineering and Technology (VNU-UET)
+
 ## Methods
 
 - **SAT:** PySAT with Glucose3 and Pairwise, Sequential Counter, or Bitwise at-most-one encodings.
