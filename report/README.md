@@ -21,4 +21,4 @@ The current manuscript was compiled to `manuscript.pdf` on 17 October 2026 using
 
 The repository tracks only the CAS files required by this manuscript: `cas-sc.cls`, `cas-common.sty`, `cas-model2-names.bst`, and the CAS contact-icon thumbnails. Sample manuscripts, documentation sources, and generated build files are intentionally kept out of the project commit.
 
-The draft uses the matched five-method results in `results/cplex_activated_solver_comparison_repeat3.csv`. CPLEX CP and CPLEX MIP solve all tested sizes through `N = 128`; Gurobi remains restricted from `N = 45` onward, and those outcomes are marked `LICENSE_LIMIT`. The prior Pairwise batch is retained as historical data.
+The draft uses the matched five-method results in `results/solver_comparison_matched_n8-128_repeat3.csv`. CPLEX CP and CPLEX MIP solve all tested sizes through `N = 128`; Gurobi remains restricted from `N = 45` onward, and those outcomes are marked `LICENSE_LIMIT`. The prior Pairwise batch is retained under `results/historical/`.

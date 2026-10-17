@@ -155,8 +155,12 @@ Các artifact hiện có trong `results/` gồm:
 - [x] `pilot/solver_comparison_n32.csv`
 - [x] `pilot/solver_comparison_license_boundary.csv`
 - [x] `pilot/solver_comparison_large.csv`
-- [x] `pairwise_solver_comparison_repeat3.csv` (150 dòng; 3 lần cho mỗi solver/kích thước, Pairwise SAT baseline)
-- [x] `cplex_activated_solver_comparison_repeat3.csv` (150 dòng; matched 5 phương pháp x 10 kích thước x 3 lần)
+- [x] `sat_encoding_n8-32_repeat5.csv` và `sat_encoding_n64_repeat3.csv` (các batch SAT encoding lặp)
+- [x] `pilot/solver_comparison_bitwise_n8-32.csv` và `pilot/solver_comparison_bitwise_n44-128.csv` (các batch Bitwise pilot)
+- [x] `historical/solver_comparison_pairwise_n8-128_repeat3.csv` (150 dòng; batch Pairwise cũ, CPLEX CP chưa khả dụng)
+- [x] `solver_comparison_matched_n8-128_repeat3.csv` (150 dòng; matched 5 phương pháp x 10 kích thước x 3 lần)
+- [x] Chuẩn hóa tên CSV theo loại benchmark, phạm vi N, số lần chạy; chuyển batch Pairwise cũ vào `results/historical/`.
+- [x] Rút gọn README, giữ hướng dẫn chạy và kết quả chính; bảng số liệu đầy đủ được dẫn sang report.
 - [x] Các file smoke/license test ở thư mục `results/`.
 - [x] Cập nhật summary CSV và biểu đồ solver theo batch Pairwise lặp.
 - [x] Sửa bản thảo và `report/pilot_analysis.md` theo batch matched: CPLEX CP/MIP chạy toàn dải; Gurobi bị giới hạn từ `N=45`.
@@ -170,7 +174,8 @@ Các artifact hiện có trong `results/` gồm:
 
 - [x] CPLEX Community Edition từng giới hạn batch cũ tại `N = 32`; môi trường CPLEX mới đã pass license check 1.100 biến và giải N-Queens đến `N = 128`.
 - [x] Gurobi hiện hoạt động với restricted license; repeated batch chấp nhận đến `N = 44` và báo `LICENSE_LIMIT` từ `N = 45`.
-- [x] CPLEX CP Optimizer hiện khả dụng; các lỗi không tìm executable chỉ thuộc batch lịch sử `pairwise_solver_comparison_repeat3.csv`.
+- [ ] Đang chờ phản hồi từ Gurobi về license; dự kiến nhận được ngày 18/10/2026. Nếu có license phù hợp, kiểm tra lại license và cân nhắc chạy bổ sung các cấu hình bị giới hạn.
+- [x] CPLEX CP Optimizer hiện khả dụng; các lỗi không tìm executable chỉ thuộc batch lịch sử `historical/solver_comparison_pairwise_n8-128_repeat3.csv`.
 - [x] Chọn Pairwise làm baseline SAT tạm thời cho cross-solver: nhanh nhất tại `N = 8, 32, 64`; Sequential Counter nhanh nhất tại `N = 16`.
 - [x] Ghi rõ lựa chọn hiện tại: giữ các kết quả Gurobi lớn là `LICENSE_LIMIT`; chỉ rerun nếu có Academic License.
 - [x] Xác nhận CPLEX MIP/CP có thể giải vượt các ngưỡng license cũ trong batch mới.
@@ -208,6 +213,6 @@ Các artifact hiện có trong `results/` gồm:
 
 **Đã hoàn thành:** phần triển khai solver, validation, test, benchmark framework và matched five-method batch (trừ Gurobi bị giới hạn ở kích thước lớn).
 
-**Current status:** Solver implementations, tests, benchmark protocol, matched results, analysis, and report are complete. CPLEX CP/MIP solve through `N=128`; Gurobi results from `N=45` are `LICENSE_LIMIT` and are documented. MiKTeX works; the current PDF was rebuilt and visually reviewed. No external license change is needed to finish the current report.
+**Current status:** Solver implementations, tests, benchmark protocol, matched results, analysis, and report are complete. CPLEX CP/MIP solve through `N=128`; Gurobi results from `N=45` are `LICENSE_LIMIT` and are documented. MiKTeX works; the current PDF was rebuilt and visually reviewed. README and benchmark filenames have been streamlined. The current report is complete with the available license; a Gurobi response is pending, expected 18/10/2026.
 
-**Remaining:** push the local commit when ready. Historical SAT batches lack environment metadata and are explicitly treated as historical; rerun large Gurobi cases only if an academic license becomes available.
+**Remaining:** push the local commit when ready and review Gurobi's response. Historical SAT batches lack environment metadata and are explicitly treated as historical; rerun large Gurobi cases only if an academic license becomes available.

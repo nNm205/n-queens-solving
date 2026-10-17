@@ -4,11 +4,11 @@ This note records the current repeated benchmark evidence and the earlier pilot 
 
 ## Data used
 
-- `results/final_sat_encodings_small.csv`: five runs per encoding at `N = 8, 16, 32`.
-- `results/final_sat_encodings_n64.csv`: three runs per encoding at `N = 64`.
+- `results/sat_encoding_n8-32_repeat5.csv`: five runs per encoding at `N = 8, 16, 32`.
+- `results/sat_encoding_n64_repeat3.csv`: three runs per encoding at `N = 64`.
 - `results/pilot/`: earlier exploratory data, including one run per encoding at `N = 96, 128`.
-- `results/pairwise_solver_comparison_repeat3.csv`: new three-run comparison using Pairwise SAT at `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`.
-- `results/cplex_activated_solver_comparison_repeat3.csv`: latest matched five-method batch, with three runs per method and size at the same ten board sizes.
+- `results/historical/solver_comparison_pairwise_n8-128_repeat3.csv`: earlier three-run comparison using Pairwise SAT at `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`; CPLEX CP was unavailable in this batch.
+- `results/solver_comparison_matched_n8-128_repeat3.csv`: latest matched five-method batch, with three runs per method and size at the same ten board sizes.
 - `report/sat_encodings_summary.csv`, `report/solver_comparison_summary.csv`, and `report/benchmark_summary.csv`: regenerated aggregate data. The current cross-solver summary uses the CPLEX-restored batch; both raw repeated datasets remain available for comparison.
 - `report/sat_encoding_runtime.svg` and `report/sat_encoding_runtime.pdf`: SAT encoding comparison figures.
 - `report/solver_runtime.svg` and `report/solver_runtime.pdf`: current matched five-method comparison figures.

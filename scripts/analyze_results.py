@@ -250,11 +250,11 @@ def chart_pdf(
 def main() -> None:
     REPORT_DIR.mkdir(exist_ok=True)
     sat_rows = read_rows([
-        ROOT / "results/final_sat_encodings_small.csv",
-        ROOT / "results/final_sat_encodings_n64.csv",
+        ROOT / "results/sat_encoding_n8-32_repeat5.csv",
+        ROOT / "results/sat_encoding_n64_repeat3.csv",
     ])
     solver_rows = read_rows([
-        ROOT / "results/cplex_activated_solver_comparison_repeat3.csv",
+        ROOT / "results/solver_comparison_matched_n8-128_repeat3.csv",
     ])
     summary = aggregate(sat_rows + solver_rows)
     write_summary(summary)
