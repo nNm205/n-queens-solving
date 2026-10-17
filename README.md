@@ -2,7 +2,11 @@
 
 An experimental comparison of SAT encodings and exact solving methods for the N-Queens problem, developed for Assignment 1 in Modern Problems in Computer Science.
 
-**Author:** Nguyen Nhat Minh (`23021631`)
+**Author:** Nguyen Nhat Minh
+
+**Student ID**: `23021631`
+
+**Class**: `INT3011E 3`
 
 Faculty of Information Technology, VNU University of Engineering and Technology (VNU-UET)
 
