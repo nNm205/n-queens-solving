@@ -20,6 +20,7 @@
 <text x="420.0" y="575" text-anchor="middle" font-size="12" font-family="Arial">16</text>
 <text x="740.0" y="575" text-anchor="middle" font-size="12" font-family="Arial">32</text>
 <text x="1060.0" y="575" text-anchor="middle" font-size="12" font-family="Arial">64</text>
+<text x="580.0" y="640" text-anchor="middle" font-size="13" font-family="Arial">Board size N</text>
 <polyline points="100.0,549.2 420.0,436.0 740.0,371.9 1060.0,286.0" fill="none" stroke="#2563eb" stroke-width="3"/>
 <circle cx="100.0" cy="549.2" r="4" fill="#2563eb"/>
 <circle cx="420.0" cy="436.0" r="4" fill="#2563eb"/>

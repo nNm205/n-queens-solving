@@ -13,12 +13,12 @@ pdflatex -interaction=nonstopmode manuscript.tex
 pdflatex -interaction=nonstopmode manuscript.tex
 ```
 
-The Elsevier CAS template files are present in this directory, including `cas-sc.cls`, `cas-common.sty`, and `cas-model2-names.bst`. MiKTeX has been configured with a CTAN repository and the required CAS dependencies are installed in the current User-mode setup.
+The Elsevier CAS template files are present in this directory, including `cas-sc.cls`, `cas-common.sty`, and `cas-model2-names.bst`. MiKTeX 25.12 is installed at `E:\Apps\MiKTeX`; `pdflatex.exe` and `bibtex.exe` are in `E:\Apps\MiKTeX\miktex\bin\x64`, and this directory is present in the user PATH. Terminals opened before the PATH update must be restarted.
 
 MiKTeX Console is configured to install missing packages on the fly. The manuscript source intentionally keeps `\documentclass[a4paper,fleqn]{cas-sc}` and should not be changed to a generic class for the final submission. The figures are generated as PDF files because `pdflatex` does not consume SVG directly.
 
-The earlier draft was compiled successfully to `manuscript.pdf` on 10 October 2026. The manuscript source has since been revised with a repeated Pairwise cross-solver batch, so the existing PDF is stale and should not be used to review the new text. In the current shell, `pdflatex` and `bibtex` are not discoverable, so this revision has not yet been compiled. Rebuild the PDF after restoring MiKTeX's executable path, then review the remaining layout warnings.
+The current manuscript was compiled to `manuscript.pdf` on 17 October 2026 using pdfLaTeX, BibTeX, and two final pdfLaTeX passes. The rebuilt PDF includes the matched five-method results and SAT formula-size table. Citations render in author-year format, and the custom PDF chart writer now uses valid PDF drawing operators and visible text. The six manuscript pages were visually reviewed. The log retains one `\maketitle` overfull-box warning and empty-anchor warnings from the CAS front matter; no citation, bibliography, or figure parse errors remain.
 
 The repository tracks only the CAS files required by this manuscript: `cas-sc.cls`, `cas-common.sty`, `cas-model2-names.bst`, and the CAS contact-icon thumbnails. Sample manuscripts, documentation sources, and generated build files are intentionally kept out of the project commit.
 
-The draft uses the repeated Pairwise results in `results/pairwise_solver_comparison_repeat3.csv` and retains license-limited outcomes explicitly. The Gurobi and CPLEX MIP licenses still restrict larger instances, and CPLEX CP Optimizer was not discoverable during the repeated rerun. A matched five-method comparison remains to be run after the license and executable issues are resolved.
+The draft uses the matched five-method results in `results/cplex_activated_solver_comparison_repeat3.csv`. CPLEX CP and CPLEX MIP solve all tested sizes through `N = 128`; Gurobi remains restricted from `N = 45` onward, and those outcomes are marked `LICENSE_LIMIT`. The prior Pairwise batch is retained as historical data.

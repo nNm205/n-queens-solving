@@ -2,7 +2,7 @@
 
 > Cập nhật: 17/10/2026
 >
-> Trạng thái được đối chiếu với mã nguồn, dữ liệu benchmark đã lưu, bản thảo report và Git tại ngày cập nhật. Bộ test gần nhất được ghi nhận là 43 passed trước các cập nhật script phân tích/report; chưa chạy lại trong lượt rà soát này.
+> Trạng thái được đối chiếu với mã nguồn, dữ liệu benchmark đã lưu, bản thảo report, test suite và Git tại ngày cập nhật.
 
 ## Thông tin bài tập và báo cáo đã chốt
 
@@ -32,7 +32,7 @@
 ## Kết quả triển khai mới nhất
 
 - [x] Bổ sung hard timeout theo configuration vào benchmark CLI (`--timeout`, mặc định `600s`).
-- [x] Test suite sau thay đổi timeout ghi nhận `43 passed` (lần chạy gần nhất được biết; chưa chạy lại sau cập nhật report).
+- [x] Test suite hiện tại: `43 passed` trong `.venv` sau khi đồng bộ dependencies.
 - [x] SAT encoding final-local batch: `45` rows cho `N = 8, 16, 32` với `5` repeats.
 - [x] SAT encoding final-local batch: `9` rows cho `N = 64` với `3` repeats.
 - [x] Cross-solver pilot core/extended batches: `25` rows mỗi batch.
@@ -40,9 +40,9 @@
 - [x] Tạo bảng tổng hợp CSV trong `report/`.
 - [x] Tạo biểu đồ SVG và PDF cho SAT encoding và cross-solver runtime.
 - [x] Tạo ghi chú phân tích pilot trong `report/pilot_analysis.md`.
-- [ ] Hoàn tất matched cross-solver khi CPLEX CP Optimizer khả dụng và tình trạng license được xử lý; nếu license vẫn giới hạn, giữ rõ các outcome `LICENSE_LIMIT`.
-- [ ] Chốt protocol cuối (kích thước, số lần lặp và cách báo cáo cấu hình không chạy được) trước khi gọi benchmark là final.
-- [ ] Chạy lại test suite sau các cập nhật gần đây cho script tổng hợp và báo cáo.
+- [x] Hoàn tất matched cross-solver sau khi khôi phục CPLEX CP và xác nhận CPLEX MIP; vẫn ghi Gurobi `LICENSE_LIMIT` từ `N=45`.
+- [x] Chốt protocol báo cáo hiện tại: 10 kích thước, 3 lần/configuration, timeout 600 giây; status `LICENSE_LIMIT` không được tính vào median.
+- [x] Chạy lại test suite sau các cập nhật gần đây: `43 passed`.
 
 ## Tiến độ report
 
@@ -55,23 +55,25 @@
 - [x] Chuẩn hóa và đưa các CAS assets cần thiết vào repository để report có thể tái lập.
 - [x] Tạo commit riêng cho CAS assets và tài liệu report: `3aabc20`, `23fb570`.
 - [x] Cấu hình CTAN repository, cập nhật MiKTeX package database và cài các package phụ thuộc.
-- [x] Biên dịch thành công một bản CAS trước đây; PDF hiện tại cũ hơn nguồn LaTeX mới nhất.
-- [ ] Biên dịch lại PDF từ nguồn mới và rà soát layout.
-- [ ] Rà soát nội dung, citations, figures và bảng sau khi có kết quả CPLEX CP/license mới.
-- [ ] Hoàn thiện abstract, discussion và conclusion sau benchmark final.
+- [x] Rebuilt the manuscript PDF on 17 October 2026 using MiKTeX 25.12; visually reviewed all six article pages.
+- [x] Changed citations to author-year parenthetical style; fixed the invalid PDF `arc` operator and white chart labels.
+- [x] Cập nhật nội dung, bảng và figures theo matched cross-solver batch có CPLEX CP/MIP.
+- [x] Bổ sung bảng số biến/số mệnh đề cho Pairwise, Sequential Counter và Bitwise từ raw SAT benchmark; đối chiếu trade-off với runtime.
+- [x] Reviewed manuscript content, citations, tables and figures after build; one internal `\maketitle` overfull warning remains, with no visible clipping.
+- [x] Cập nhật abstract, discussion và conclusion theo matched five-method batch; nêu rõ giới hạn Gurobi.
 - [x] Tạo hai commit cục bộ cho benchmark/dữ liệu và cập nhật report: `9fab7ed`, `f75bb3a`.
 - [x] Hai commit benchmark/report mới nhất (`9fab7ed`, `f75bb3a`) đã có trên `origin/main` tại lần kiểm tra ngày 17/10/2026.
-- [ ] Commit các cập nhật tiến độ trong `README.md` và `IMPLEMENTATION_PLAN.md`.
+- [x] Đã đưa các cập nhật README, kế hoạch, raw results, mã phân tích và report vào commit cục bộ; không push.
 
 ## Trạng thái chờ license
 
-- [ ] Bản PDF tương ứng với nguồn mới; `report/manuscript.pdf` hiện là artifact cũ, chưa được đưa vào hai commit mới.
-- [x] `main` và `origin/main` cùng ở `f75bb3a` tại lần kiểm tra ngày 17/10/2026; thay đổi README/kế hoạch trong lượt này chưa commit.
-- [ ] Kích hoạt Gurobi Academic License.
-- [ ] Kích hoạt CPLEX Academic License.
+- [x] PDF khớp nguồn hiện tại ở `report/manuscript.pdf` và được đưa vào commit cục bộ mới.
+- [x] Trước commit này, `main` và `origin/main` cùng ở `f75bb3a` (17/10/2026); commit hiện tại chỉ nằm local, chưa push.
+- [x] Giữ Gurobi `LICENSE_LIMIT` từ `N=45` khi chưa có academic license; chạy lại chỉ khi license thay đổi.
+- [x] CPLEX MIP và CPLEX CP Optimizer pass smoke check 1.100 biến; cả hai giải mọi kích thước trong batch tới `N=128`.
 - [x] Commit dữ liệu benchmark và cập nhật report đã tạo cục bộ; không push theo yêu cầu.
-- [ ] Chạy matched benchmark sau khi CPLEX CP Optimizer được khôi phục và license được xử lý.
-- [ ] Cập nhật bảng, biểu đồ và kết luận bằng kết quả benchmark cuối.
+- [x] Chạy matched benchmark đủ năm phương pháp sau khi khôi phục CPLEX CP; 150 dòng, 138 nghiệm hợp lệ, 12 Gurobi license limit, không timeout/error.
+- [x] Cập nhật bảng, biểu đồ, abstract và kết luận theo kết quả mới.
 
 ## 1. Nền tảng và môi trường
 
@@ -79,9 +81,9 @@
 - [x] Thiết lập môi trường Python 3.11 và virtual environment.
 - [x] Kiểm tra PySAT + Glucose3.
 - [x] Kiểm tra OR-Tools CP-SAT.
-- [x] Kiểm tra CPLEX MIP; CPLEX CP Optimizer đã chạy ở pilot trước nhưng executable không được tìm thấy trong batch lặp mới nhất.
+- [x] CPLEX MIP và CPLEX CP Optimizer đã được kiểm tra lại; executable CP hiện ở `.venv/Scripts/cpoptimizer.exe`.
 - [x] Kiểm tra Gurobi.
-- [x] Lịch sử kiểm thử gần nhất ghi nhận **43 passed**; chưa chạy lại sau cập nhật report mới.
+- [x] Test suite hiện tại: **43 passed** sau khi bổ sung dependencies còn thiếu bằng `uv`.
 
 ## 2. Mô hình và solver đã hoàn thành
 
@@ -154,24 +156,25 @@ Các artifact hiện có trong `results/` gồm:
 - [x] `pilot/solver_comparison_license_boundary.csv`
 - [x] `pilot/solver_comparison_large.csv`
 - [x] `pairwise_solver_comparison_repeat3.csv` (150 dòng; 3 lần cho mỗi solver/kích thước, Pairwise SAT baseline)
+- [x] `cplex_activated_solver_comparison_repeat3.csv` (150 dòng; matched 5 phương pháp x 10 kích thước x 3 lần)
 - [x] Các file smoke/license test ở thư mục `results/`.
 - [x] Cập nhật summary CSV và biểu đồ solver theo batch Pairwise lặp.
-- [x] Sửa bản thảo và `report/pilot_analysis.md` để giải thích baseline, dải N, timeout, số lần lặp, giới hạn license và CPLEX CP không khả dụng.
-- [x] Ghi cấu hình phần cứng/phần mềm của batch mới vào report.
+- [x] Sửa bản thảo và `report/pilot_analysis.md` theo batch matched: CPLEX CP/MIP chạy toàn dải; Gurobi bị giới hạn từ `N=45`.
+- [x] Ghi cấu hình phần mềm mới vào report (PySAT 1.9.dev16, CPLEX 22.2.0, DOcplex 2.32.264, OR-Tools 9.15.6755, Gurobi 13.0.3).
 - [x] Sửa diễn giải encoding để khớp dữ liệu: Pairwise nhanh nhất tại 3/4 kích thước; Sequential Counter nhanh nhất tại `N = 16`.
-- [x] Lưu dữ liệu pilot, batch lặp, bảng tổng hợp và biểu đồ trong các commit cục bộ `9fab7ed` và `f75bb3a`.
-- [ ] Biên dịch lại PDF sau các chỉnh sửa; `report/manuscript.pdf` hiện là bản cũ.
-- [ ] Khôi phục công cụ MiKTeX trong shell: `pdflatex` không có trong PATH/cài đặt được tìm thấy; `miktex-bibtex.exe` không khởi động được (exit `-1073741515`).
+- [x] Lưu batch Pairwise cũ trong commit `9fab7ed`; batch CPLEX-restored mới đang local, chưa commit.
+- [x] Rebuilt the PDF after the latest edits using MiKTeX 25.12 installed at `E:\Apps\MiKTeX`.
+- [x] MiKTeX executables are at `E:\Apps\MiKTeX\miktex\bin\x64`; User PATH contains this directory, so older terminals must be restarted.
 
 ## 6. Giới hạn hiện tại cần lưu ý
 
-- [x] CPLEX Community Edition chạy được model nhỏ nhưng bị giới hạn ở model lớn; ví dụ `N = 32` có `1024` biến và bị `LICENSE_LIMIT`.
+- [x] CPLEX Community Edition từng giới hạn batch cũ tại `N = 32`; môi trường CPLEX mới đã pass license check 1.100 biến và giải N-Queens đến `N = 128`.
 - [x] Gurobi hiện hoạt động với restricted license; repeated batch chấp nhận đến `N = 44` và báo `LICENSE_LIMIT` từ `N = 45`.
-- [x] Lần chạy lại hiện tại không tìm thấy `cpoptimizer.exe`; các dòng CPLEX CP được ghi `ERROR` và loại khỏi bảng median so sánh lặp.
+- [x] CPLEX CP Optimizer hiện khả dụng; các lỗi không tìm executable chỉ thuộc batch lịch sử `pairwise_solver_comparison_repeat3.csv`.
 - [x] Chọn Pairwise làm baseline SAT tạm thời cho cross-solver: nhanh nhất tại `N = 8, 32, 64`; Sequential Counter nhanh nhất tại `N = 16`.
-- [ ] Kích hoạt Gurobi Academic License trước benchmark chính thức quy mô lớn.
-- [ ] Cài/kích hoạt CPLEX academic license không giới hạn nếu có thể.
-- [ ] Quyết định rõ cách xử lý các phương pháp bị license limit trong bảng so sánh cuối.
+- [x] Ghi rõ lựa chọn hiện tại: giữ các kết quả Gurobi lớn là `LICENSE_LIMIT`; chỉ rerun nếu có Academic License.
+- [x] Xác nhận CPLEX MIP/CP có thể giải vượt các ngưỡng license cũ trong batch mới.
+- [x] Quyết định ghi Gurobi license-limited cases trong bảng cuối dưới dạng `LL`, không đưa vào median runtime.
 
 ## 7. Việc còn phải làm
 
@@ -181,30 +184,30 @@ Các artifact hiện có trong `results/` gồm:
 - [x] Chọn 3 lần lặp/cấu hình làm protocol tạm thời; cần xác nhận số lần cuối cho benchmark nộp bài.
 - [x] Giữ timeout 600 giây và chính sách ghi `TIMEOUT`, `LICENSE_LIMIT`, `ERROR` riêng.
 - [x] Chọn Pairwise làm baseline SAT tạm thời cho cross-solver; không kết luận Pairwise nhanh nhất ở mọi kích thước.
-- [ ] Xác định bộ metric và quy tắc báo cáo kết quả cuối.
+- [x] Bộ metric và quy tắc báo cáo: median total time cho 3 run; status riêng cho success, timeout, error và license limit.
 
 ### Chạy benchmark chính thức
 
 - [x] Chạy batch SAT encoding lặp tại `N = 8, 16, 32` (5 lần) và `N = 64` (3 lần); `N = 96, 128` mới có dữ liệu pilot một lần.
-- [ ] Chạy/hoàn tất matched SAT, CP-SAT, CPLEX CP, CPLEX MIP và Gurobi MIP sau khi CPLEX CP khả dụng; xử lý license theo khả năng thực tế.
-- [ ] Quyết định có cần chạy lại các case lớn khi license được nâng cấp hay báo cáo riêng các giới hạn hiện tại.
-- [ ] Kiểm tra tính lặp lại, metadata môi trường và tính đầy đủ của CSV sau batch cuối.
+- [x] Chạy matched SAT, CP-SAT, CPLEX CP, CPLEX MIP và Gurobi MIP: 3 lần tại 10 kích thước, timeout 600 giây.
+- [x] Ghi rõ không chạy lại Gurobi `N >= 45` khi license chưa đổi; kết quả hiện tại giữ `LICENSE_LIMIT`.
+- [x] Kiểm tra số dòng/trạng thái và xác nhận 138 nghiệm hợp lệ, 12 license limit, không timeout/error.
 
 ### Phân tích và báo cáo
 
 - [x] Tổng hợp dữ liệu benchmark Pairwise mới và giữ raw CSV cho từng run.
-- [x] Cập nhật bảng median và biểu đồ cho batch Pairwise mới; 90 lượt hợp lệ, 30 lượt license limit, 30 lỗi CPLEX CP do thiếu executable, không có timeout.
-- [ ] Bổ sung/hoàn thiện phân tích trade-off giữa số biến, số clause, encoding time và solving time.
-- [ ] Hoàn thiện phân tích giới hạn thực tế của từng solver sau khi nhận kết quả CPLEX CP/license.
+- [x] Cập nhật bảng median và biểu đồ cho batch mới; 138 lượt hợp lệ, 12 Gurobi license limit, không timeout/error.
+- [x] Bổ sung bảng kích thước CNF và phân tích trade-off số biến/số clause/runtime; encoding/solve times được báo cáo riêng.
+- [x] Cập nhật phân tích giới hạn thực tế: CPLEX CP/MIP giải đến `N=128`; Gurobi bị limit từ `N=45`.
 - [x] Tạo/cập nhật bảng kết quả và figures/plots cho batch hiện tại.
 - [x] Cập nhật methodology, experimental setup, results, discussion và limitations trong bản thảo pilot.
-- [ ] Hoàn thiện scientific report trong `report/`.
-- [ ] Rà soát README, lệnh chạy và artifact trước khi nộp; loại các file build/template thừa khỏi phần giao nộp nếu không cần.
+- [x] Hoàn thiện nội dung report và rebuild/kiểm tra trực quan PDF; còn một overfull warning ở `\\maketitle` nhưng không thấy nội dung bị cắt.
+- [x] Rà soát README, lệnh chạy và artifacts; chỉ đưa file nguồn/kết quả/PDF cần thiết vào commit, bỏ qua file build và tài liệu template dư.
 
 ## 8. Trạng thái tổng quan
 
-**Đã hoàn thành:** phần triển khai solver, validation, test và benchmark framework; đã có pilot experiments thực tế.
+**Đã hoàn thành:** phần triển khai solver, validation, test, benchmark framework và matched five-method batch (trừ Gurobi bị giới hạn ở kích thước lớn).
 
-**Đang ở:** chờ người dùng khắc phục CPLEX CP Optimizer/license. Hai commit benchmark/report đã có trên `origin/main`; cập nhật README/kế hoạch trong lượt này chưa commit. Bản LaTeX đã sửa theo số liệu encoding, còn cần biên dịch PDF mới và rà soát.
+**Current status:** Solver implementations, tests, benchmark protocol, matched results, analysis, and report are complete. CPLEX CP/MIP solve through `N=128`; Gurobi results from `N=45` are `LICENSE_LIMIT` and are documented. MiKTeX works; the current PDF was rebuilt and visually reviewed. No external license change is needed to finish the current report.
 
-**Chưa hoàn thành:** matched benchmark đủ năm phương pháp nếu môi trường cho phép; chốt protocol cuối và xử lý license-limited cases; xác nhận metadata cho các batch cũ; chạy lại test suite, biên dịch PDF mới và rà soát report. Commit cập nhật README/kế hoạch; push do người dùng thực hiện.
+**Remaining:** push the local commit when ready. Historical SAT batches lack environment metadata and are explicitly treated as historical; rerun large Gurobi cases only if an academic license becomes available.

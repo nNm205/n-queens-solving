@@ -2,6 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage[authoryear,longnamesfirst]{natbib}
 
 \begin{document}
 
@@ -19,7 +20,7 @@
 \cortext[cor1]{Corresponding author.}
 
 \begin{abstract}
-The N-Queens problem asks for a placement of $N$ queens on an $N \times N$ chessboard such that no two queens share a row, column, or diagonal. This study implements a SAT-based solver and compares pairwise, sequential-counter, and bitwise at-most-one encodings, then evaluates a provisional SAT baseline against CP-SAT and mixed-integer programming solvers. Repeated local runs show that Pairwise has the lowest median SAT runtime at three of the four repeatedly measured sizes from $N=8$ to $N=64$; Sequential Counter is fastest at $N=16$. A three-run cross-solver batch covers ten board sizes up to $N=128$: Pairwise SAT and CP-SAT solve every tested case, while restricted CPLEX and Gurobi licenses reject larger MIP models. Earlier pilot runs show CPLEX CP Optimizer solving through $N=128$, but its executable was unavailable in the repeated batch. The results support a local pilot comparison; a matched five-solver comparison remains for a later run with suitable licenses and CPLEX CP Optimizer available.
+The N-Queens problem asks for a placement of $N$ queens on an $N \times N$ chessboard such that no two queens share a row, column, or diagonal. This study implements a SAT-based solver and compares pairwise, sequential-counter, and bitwise at-most-one encodings, then evaluates a provisional SAT baseline against CP-SAT and mixed-integer programming solvers. Repeated local runs show that Pairwise has the lowest median SAT runtime at three of the four repeatedly measured sizes from $N=8$ to $N=64$; Sequential Counter is fastest at $N=16$. A matched three-run cross-solver batch covers ten board sizes up to $N=128$. SAT, CP-SAT, CPLEX CP, and CPLEX MIP solve every tested case; Gurobi solves through $N=44$ before its restricted license limits larger models. CPLEX CP has the lowest median runtime at $N=31,44,45,64,100,128$ in this local comparison. All successful solutions pass an independent validator. The results are a repeated local comparison, with conclusions limited by three runs per configuration and the remaining Gurobi license restriction.
 \end{abstract}
 
 \begin{highlights}
@@ -40,7 +41,7 @@ N-Queens \sep Boolean satisfiability \sep cardinality encoding \sep constraint p
 
 The N-Queens problem is a classical constraint satisfaction problem in which $N$ queens must be placed on an $N \times N$ board so that no two queens attack one another. Although the problem has a simple statement, it is a useful benchmark for comparing exact solving paradigms because the number of possible placements grows rapidly with $N$ and the constraints can be represented using several modelling formalisms.
 
-This study focuses on a SAT formulation and compares it with exact methods based on constraint programming and mixed integer programming. The SAT part is implemented with PySAT and the Glucose3 solver~\cite{ignatiev2018pysat}. Three at-most-one (AMO) encodings are evaluated while the underlying SAT solver and N-Queens constraints remain fixed. This design isolates the effect of the cardinality encoding~\cite{sinz2005cardinality}.
+This study focuses on a SAT formulation and compares it with exact methods based on constraint programming and mixed integer programming. The SAT part is implemented with PySAT and the Glucose3 solver~\citep{ignatiev2018pysat}. Three at-most-one (AMO) encodings are evaluated while the underlying SAT solver and N-Queens constraints remain fixed. This design isolates the effect of the cardinality encoding~\citep{sinz2005cardinality}.
 
 The contributions of this work are:
 \begin{itemize}
@@ -96,7 +97,7 @@ If the SAT instance is satisfiable, the model is decoded into the representation
 
 \section{Compared Exact Solvers}
 
-The study compares the SAT solver with four exact alternatives. OR-Tools CP-SAT~\cite{ortools} uses the integer-variable formulation and records conflicts and branches where available. CPLEX CP Optimizer~\cite{cplex} uses the same high-level all-different formulation. CPLEX MIP and Gurobi MIP~\cite{gurobi} use binary board-position variables and linear row, column, and diagonal constraints.
+The study compares the SAT solver with four exact alternatives. OR-Tools CP-SAT~\citep{ortools} uses the integer-variable formulation and records conflicts and branches where available. CPLEX CP Optimizer~\citep{cplex} uses the same high-level all-different formulation. CPLEX MIP and Gurobi MIP~\citep{gurobi} use binary board-position variables and linear row, column, and diagonal constraints.
 
 The benchmark runner normalizes all solver outputs into a common schema containing status, validity, model-size fields where available, build or encoding time, solve time, total time, raw status, and error information.
 
@@ -104,13 +105,13 @@ The benchmark runner normalizes all solver outputs into a common schema containi
 
 \subsection{Hardware and Software}
 
-The repeated cross-solver benchmark reported here was run on a Dell Inspiron 15 3511 with an 11th-generation Intel Core i5-1135G7 processor (4 cores, 8 logical processors) and 8 GB RAM, using Windows 11 Pro (build 22631) and Python 3.11.8. The installed software versions were PySAT 1.9.dev15, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. The available Gurobi and CPLEX MIP licenses were size-limited. CPLEX CP Optimizer could not be found by DOcplex in this rerun, so it is omitted from the repeated comparison; earlier one-run pilot results for CPLEX CP are reported only as pilot evidence. The earlier SAT encoding batch files do not record the software versions or machine state, so cross-batch runtime comparisons should be interpreted cautiously until that environment is confirmed. The project previously recorded 43 passing automated tests; that test count is not a result of the benchmark rerun described here.
+The matched cross-solver benchmark was run on a Dell Inspiron 15 3511 with an 11th-generation Intel Core i5-1135G7 processor (4 cores, 8 logical processors) and 8 GB RAM, using Windows 11 Pro (build 22631) and Python 3.11.8. The installed software versions were PySAT 1.9.dev16, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. CPLEX MIP and CP Optimizer both passed a separate 1,100-variable full-version license check. The Gurobi license remains restricted and rejects the $N=45$ and larger MIP models in this batch. The earlier SAT encoding CSVs do not record software versions or machine state, so cross-batch runtime comparisons should be interpreted cautiously. The current project test suite passes 43 tests in the restored environment.
 
 \subsection{Benchmark Protocol}
 
 The SAT encoding experiment uses $N=8,16,32,64,96,128$. The repeated batch uses five runs for $N=8,16,32$ and three runs for $N=64$; earlier pilot data covers $N=96$ and $N=128$ with one run per encoding. These data provide a screening comparison, not a claim of statistically stable performance.
 
-The repeated cross-solver rerun uses Pairwise SAT at $N=8,16,24,31,32,44,45,64,100,128$, with three runs per solver and size. The sizes reuse the earlier pilot coverage and include the observed license boundaries: CPLEX Community Edition rejects the $N=32$ MIP model (1,024 binary variables), while Gurobi's restricted license rejects $N=45$ (2,025 binary variables). The $N=31/32$ and $N=44/45$ pairs therefore show results immediately below and above those boundaries. $N=8,16,24$ provide small and medium reference cases; $N=64,100,128$ extend the scale where a solver can run. A 600-second per-configuration timeout is retained from the benchmark policy to bound exceptionally long cases while allowing up to ten minutes for a difficult instance. Timeouts and license rejections are retained as explicit statuses, not treated as runtimes. For successful repeated configurations, the tables report the median of the three total times; the accompanying CSV preserves every run and its status.
+The matched cross-solver batch uses Pairwise SAT at $N=8,16,24,31,32,44,45,64,100,128$, with three runs per method and size. The $N=31/32$ and $N=44/45$ pairs retain the earlier CPLEX and Gurobi license-boundary cases; after the CPLEX update, both CPLEX formulations solve these sizes, while Gurobi's restricted license rejects $N=45$ (2,025 binary variables) and larger models. $N=8,16,24$ provide small and medium reference cases; $N=64,100,128$ extend the comparison to larger instances. A 600-second per-configuration timeout is retained. Timeouts and license rejections are stored as explicit statuses, not treated as runtimes. The tables report medians of three total times for successful configurations; the raw CSV preserves all 150 outcomes.
 
 Pairwise was selected as the provisional SAT baseline for the cross-solver comparison. In the repeated encoding batch, it had the lowest median total time at $N=8,32,64$, while Sequential Counter was fastest at $N=16$ (0.0086 s versus 0.0158 s for Pairwise). Pairwise is therefore a practical choice for the larger repeatedly measured cases in this dataset, but it does not dominate every size. This choice is limited to the measured PySAT/Glucose3 implementation and does not establish that Pairwise is best at every size or with every SAT solver. Sequential Counter and Bitwise remain in the encoding comparison; the one-run pilot at $N=96,128$ is exploratory and does not change this provisional selection.
 
@@ -125,7 +126,32 @@ Source code, benchmark outputs, summary tables, and figures are maintained in th
 
 \subsection{SAT Encoding Comparison}
 
-Table~\ref{tab:sat-summary} reports median total times from the repeated local batch. Pairwise is fastest at $N=8,32,64$. Sequential Counter is fastest at $N=16$, with a median of 0.0086 s compared with 0.0158 s for Pairwise. Bitwise is substantially slower at $N=16,32,64$ in this batch. These are observed medians from one machine and should not be read as universal encoding rankings.
+Table~\ref{tab:sat-size} reports the deterministic size of each complete SAT formula. Variable counts include the $N^2$ board variables and any encoding auxiliaries; clause counts include the full N-Queens formula. The at-least-one clauses are common to all three encodings, so the size differences arise from their AMO constraints. Pairwise uses the fewest variables, while Sequential Counter produces the fewest clauses at every reported size. Bitwise lies between them on both measures at all four sizes.
+
+\begin{table}[width=.78\linewidth,cols=4,pos=ht]
+\caption{SAT formula size by encoding. Counts are deterministic for each $N$.}
+\label{tab:sat-size}
+\begin{tabular}{lrrr}
+\hline
+Encoding & $N$ & Variables & Clauses \\
+\hline
+Pairwise & 8  & 64    & 744 \\
+Sequential Counter & 8  & 270   & 600 \\
+Bitwise & 8  & 170   & 724 \\
+Pairwise & 16 & 256   & 6,352 \\
+Sequential Counter & 16 & 1,182 & 2,728 \\
+Bitwise & 16 & 568   & 3,924 \\
+Pairwise & 32 & 1,024 & 52,640 \\
+Sequential Counter & 32 & 4,926 & 11,592 \\
+Bitwise & 32 & 1,846 & 19,796 \\
+Pairwise & 64 & 4,096 & 428,864 \\
+Sequential Counter & 64 & 20,094 & 47,752 \\
+Bitwise & 64 & 6,132 & 95,572 \\
+\hline
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:sat-summary} reports median total times from the repeated local batch. Pairwise is fastest at $N=8,32,64$. Sequential Counter is fastest at $N=16$, with a median of 0.0086 s compared with 0.0158 s for Pairwise. Bitwise is substantially slower at $N=16,32,64$ in this batch. These are observed medians from one machine and should not be read as universal encoding rankings. The size and runtime results show a trade-off: Pairwise keeps the formula compact in variables but grows sharply in clauses, while Sequential Counter reduces clauses at the cost of more auxiliary variables. The runtime ordering is not determined by either count alone.
 
 \begin{table}[width=.95\linewidth,cols=5,pos=ht]
 \caption{Median total time in seconds for the repeated SAT encoding batch.}
@@ -146,30 +172,30 @@ The earlier one-run pilot results at $N=96$ and $N=128$ show that runtime does n
 
 \subsection{Cross-Solver Comparison}
 
-Table~\ref{tab:solver-summary} reports medians from the new three-run Pairwise comparison. It includes only methods available in that repeated run: SAT, CP-SAT, CPLEX MIP, and Gurobi MIP. CPLEX CP is omitted because its executable was not discoverable in the current environment. Each successful solution passed the independent validator. License-limited cells have no runtime value and are marked LL.
+Table~\ref{tab:solver-summary} reports medians from the matched three-run Pairwise comparison. It includes all five methods: SAT, CP-SAT, CPLEX CP, CPLEX MIP, and Gurobi MIP. Each successful solution passed the independent validator. Gurobi configurations limited by its license have no runtime value and are marked LL.
 
-\begin{table}[width=.98\linewidth,cols=5,pos=ht]
-\caption{Median total time (seconds) from three Pairwise cross-solver runs per configuration. LL denotes a license-limited configuration.}
+\begin{table}[width=.99\linewidth,cols=6,pos=ht]
+\caption{Median total time (seconds) from three Pairwise cross-solver runs per configuration. LL denotes a Gurobi license-limited configuration.}
 \label{tab:solver-summary}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
 \hline
-$N$ & SAT & CP-SAT & CPLEX MIP & Gurobi MIP \\
+$N$ & SAT & CP-SAT & CPLEX CP & CPLEX MIP & Gurobi MIP \\
 \hline
-8   & 0.003 & 0.041 & 0.048 & 0.004 \\
-16  & 0.034 & 0.067 & 0.034 & 0.040 \\
-24  & 0.113 & 0.118 & 0.044 & 0.011 \\
-31  & 0.325 & 0.169 & 0.050 & 0.068 \\
-32  & 0.137 & 0.227 & LL & 0.059 \\
-44  & 0.364 & 0.295 & LL & 0.185 \\
-45  & 0.498 & 0.421 & LL & LL \\
-64  & 1.315 & 0.632 & LL & LL \\
-100 & 4.619 & 1.935 & LL & LL \\
-128 & 9.929 & 2.943 & LL & LL \\
+8   & 0.001 & 0.018 & 0.028 & 0.016 & 0.002 \\
+16  & 0.016 & 0.030 & 0.029 & 0.019 & 0.020 \\
+24  & 0.068 & 0.048 & 0.029 & 0.023 & 0.005 \\
+31  & 0.079 & 0.076 & 0.030 & 0.033 & 0.037 \\
+32  & 0.084 & 0.082 & 0.031 & 0.029 & 0.040 \\
+44  & 0.205 & 0.147 & 0.032 & 0.042 & 0.069 \\
+45  & 0.212 & 0.140 & 0.033 & 0.043 & LL \\
+64  & 0.667 & 0.313 & 0.037 & 0.069 & LL \\
+100 & 2.438 & 0.874 & 0.039 & 0.146 & LL \\
+128 & 5.307 & 1.540 & 0.041 & 0.266 & LL \\
 \hline
 \end{tabular}
 \end{table}
 
-The new repeated results show that Pairwise SAT and CP-SAT both solve every tested size, while the available MIP licenses restrict the largest instances. CPLEX MIP is rejected from $N=32$ onward; Gurobi is rejected from $N=45$ onward. The observed runtime ordering varies by size: for example, CPLEX MIP is fastest among these methods at $N=16$ and $N=31$, while CP-SAT has the lowest median at $N=64,100,128$. Since only three runs were made and solver versions/license availability differ from a fully licensed comparison, these data support a local pilot comparison, not a definitive ranking. Earlier one-run CPLEX CP measurements were below five seconds through $N=128$, but they are kept separate from this matched repeated table and need to be rerun after its executable is restored.
+The matched results show that SAT, CP-SAT, CPLEX CP, and CPLEX MIP solve all ten tested sizes. Gurobi solves through $N=44$ and is license-limited from $N=45$ onward. CPLEX CP has the lowest median among the five methods at $N=31,44,45,64,100,128$; CPLEX MIP is fastest at $N=24,32$, and SAT is fastest at $N=8,16$. CP-SAT is not the fastest method in this batch, but all methods' runtimes increase at different rates with board size. Three runs on one machine do not establish a general solver ranking, and the Gurobi results remain censored by its license limit.
 
 \begin{figure}[width=.95\linewidth,pos=ht]
 \centering
@@ -187,15 +213,15 @@ The new repeated results show that Pairwise SAT and CP-SAT both solve every test
 
 \section{Limitations and Discussion}
 
-The current experiments are limited by restricted solver licenses and by the unavailable CPLEX CP Optimizer executable. CPLEX Community Edition rejects the $N=32$ MIP model because it contains 1,024 binary variables. Gurobi's restricted license rejects the tested $N=45$ and larger models; $N=45$ has 2,025 binary variables, just beyond the available restricted limit. These outcomes are reported explicitly and are not interpreted as failures of the mathematical formulations.
+The current experiments are limited by Gurobi's restricted license and by the small sample size. CPLEX MIP and CP Optimizer passed 1,100-variable license checks and solved every tested board size through $N=128$. Gurobi's restricted license rejects $N=45$ and larger models; $N=45$ has 2,025 binary variables. These license outcomes are reported explicitly and are not interpreted as failures of the mathematical formulation.
 
-The three-run cross-solver rerun is more informative than the earlier one-run pilot, but remains a small local sample. It does not control for warm-up, thermal throttling, background load, or variation across machines. The current table also cannot compare CPLEX CP under the same run protocol. Once unrestricted academic licenses and the CPLEX CP executable are available, all five methods should be run with the same sizes, repeat count, timeout, software recording, and machine conditions. The existing data remain useful for identifying license boundaries and choosing a provisional SAT baseline.
+The three-run cross-solver rerun provides a matched comparison on one laptop, but it remains a small local sample. It does not control for warm-up, thermal throttling, background load, or variation across machines. Gurobi cannot be compared at $N\ge45$ because of its license restriction. The CPLEX update makes all five methods directly comparable at $N=8,16,24,31,32,44$; conclusions for larger sizes should name the missing Gurobi results.
 
 \section{Conclusion}
 
 This paper presented a unified implementation for solving N-Queens with SAT, constraint programming, and mixed integer programming. The SAT implementation supports three AMO encodings and includes independent solution validation. The benchmark infrastructure records common performance and status fields and continues after solver-specific errors.
 
-The repeated encoding batch supports Pairwise as a provisional SAT baseline for this Glucose3 implementation: it has the lowest median at three of the four repeatedly measured sizes, while Sequential Counter is faster at $N=16$. The three-run solver comparison shows that CP-SAT solves all tested sizes and that the MIP methods are limited by licenses at larger sizes. Earlier CPLEX CP pilot measurements suggest it is practical through $N=128$, but it was not available for the matched rerun. A matched comparison with all five methods and a common repeated protocol is still needed before drawing broad performance conclusions.
+The repeated encoding batch supports Pairwise as a provisional SAT baseline for this Glucose3 implementation: it has the lowest median at three of the four repeatedly measured sizes, while Sequential Counter is faster at $N=16$. In the matched cross-solver batch, CPLEX CP, CPLEX MIP, CP-SAT, and Pairwise SAT solve all ten tested sizes; Gurobi solves through $N=44$ before its restricted license limits larger instances. CPLEX CP records the lowest median at the largest tested sizes, although the three-run, single-machine results support a local comparison rather than a general solver ranking.
 
 \printcredits
 

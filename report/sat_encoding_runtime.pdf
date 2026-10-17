@@ -12,11 +12,12 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 1731 >>
+<< /Length 1789 >>
 stream
 1 1 1 rg
 0 0 792 468 re f
 0 0 0 RG
+0 0 0 rg
 0.8 w
 72 72 m 72 414 l S
 72 72 m 764 72 l S
@@ -50,37 +51,41 @@ BT /F1 8 Tf 67.0 54.0 Td (8) Tj ET
 BT /F1 8 Tf 297.7 54.0 Td (16) Tj ET
 BT /F1 8 Tf 528.3 54.0 Td (32) Tj ET
 BT /F1 8 Tf 759.0 54.0 Td (64) Tj ET
+BT /F1 9 Tf 396.0 9.0 Td (Board size N) Tj ET
 0.145 0.388 0.922 RG
+0.145 0.388 0.922 rg
 2 w
 72.0 72.6 m 302.7 154.1 l S
 302.7 154.1 m 533.3 200.2 l S
 533.3 200.2 m 764.0 262.1 l S
-72.0 72.6 3 0 360 arc f
-302.7 154.1 3 0 360 arc f
-533.3 200.2 3 0 360 arc f
-764.0 262.1 3 0 360 arc f
+70.0 70.6 4 4 re f
+300.7 152.1 4 4 re f
+531.3 198.2 4 4 re f
+762.0 260.1 4 4 re f
 72 24 m 90 24 l S
 BT /F1 8 Tf 95.0 21.0 Td (sat/pairwise) Tj ET
 0.863 0.149 0.149 RG
+0.863 0.149 0.149 rg
 2 w
 72.0 84.9 m 302.7 136.1 l S
 302.7 136.1 m 533.3 254.9 l S
 533.3 254.9 m 764.0 346.3 l S
-72.0 84.9 3 0 360 arc f
-302.7 136.1 3 0 360 arc f
-533.3 254.9 3 0 360 arc f
-764.0 346.3 3 0 360 arc f
+70.0 82.9 4 4 re f
+300.7 134.1 4 4 re f
+531.3 252.9 4 4 re f
+762.0 344.3 4 4 re f
 207 24 m 225 24 l S
 BT /F1 8 Tf 230.0 21.0 Td (sat/seqcounter) Tj ET
 0.086 0.639 0.251 RG
+0.086 0.639 0.251 rg
 2 w
 72.0 80.7 m 302.7 210.0 l S
 302.7 210.0 m 533.3 359.2 l S
 533.3 359.2 m 764.0 331.8 l S
-72.0 80.7 3 0 360 arc f
-302.7 210.0 3 0 360 arc f
-533.3 359.2 3 0 360 arc f
-764.0 331.8 3 0 360 arc f
+70.0 78.7 4 4 re f
+300.7 208.0 4 4 re f
+531.3 357.2 4 4 re f
+762.0 329.8 4 4 re f
 342 24 m 360 24 l S
 BT /F1 8 Tf 365.0 21.0 Td (sat/bitwise) Tj ET
 endstream
@@ -96,5 +101,5 @@ xref
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-2094
+2152
 %%EOF

@@ -24,46 +24,66 @@
 <text x="846.7" y="575" text-anchor="middle" font-size="12" font-family="Arial">64</text>
 <text x="953.3" y="575" text-anchor="middle" font-size="12" font-family="Arial">100</text>
 <text x="1060.0" y="575" text-anchor="middle" font-size="12" font-family="Arial">128</text>
-<polyline points="100.0,489.4 206.7,368.3 313.3,306.0 420.0,251.7 526.7,296.2 633.3,245.9 740.0,229.7 846.7,179.6 953.3,114.8 1060.0,75.4" fill="none" stroke="#2563eb" stroke-width="3"/>
-<circle cx="100.0" cy="489.4" r="4" fill="#2563eb"/>
-<circle cx="206.7" cy="368.3" r="4" fill="#2563eb"/>
-<circle cx="313.3" cy="306.0" r="4" fill="#2563eb"/>
-<circle cx="420.0" cy="251.7" r="4" fill="#2563eb"/>
-<circle cx="526.7" cy="296.2" r="4" fill="#2563eb"/>
-<circle cx="633.3" cy="245.9" r="4" fill="#2563eb"/>
-<circle cx="740.0" cy="229.7" r="4" fill="#2563eb"/>
-<circle cx="846.7" cy="179.6" r="4" fill="#2563eb"/>
-<circle cx="953.3" cy="114.8" r="4" fill="#2563eb"/>
-<circle cx="1060.0" cy="75.4" r="4" fill="#2563eb"/>
+<text x="580.0" y="640" text-anchor="middle" font-size="13" font-family="Arial">Board size N</text>
+<polyline points="100.0,542.7 206.7,406.1 313.3,332.6 420.0,324.7 526.7,321.7 633.3,275.4 740.0,273.8 846.7,214.6 953.3,147.8 1060.0,107.7" fill="none" stroke="#2563eb" stroke-width="3"/>
+<circle cx="100.0" cy="542.7" r="4" fill="#2563eb"/>
+<circle cx="206.7" cy="406.1" r="4" fill="#2563eb"/>
+<circle cx="313.3" cy="332.6" r="4" fill="#2563eb"/>
+<circle cx="420.0" cy="324.7" r="4" fill="#2563eb"/>
+<circle cx="526.7" cy="321.7" r="4" fill="#2563eb"/>
+<circle cx="633.3" cy="275.4" r="4" fill="#2563eb"/>
+<circle cx="740.0" cy="273.8" r="4" fill="#2563eb"/>
+<circle cx="846.7" cy="214.6" r="4" fill="#2563eb"/>
+<circle cx="953.3" cy="147.8" r="4" fill="#2563eb"/>
+<circle cx="1060.0" cy="107.7" r="4" fill="#2563eb"/>
 <line x1="100" y1="615" x2="125" y2="615" stroke="#2563eb" stroke-width="3"/>
 <text x="132" y="620" font-size="13" font-family="Arial">sat/pairwise</text>
-<polyline points="100.0,359.0 206.7,332.8 313.3,304.0 420.0,285.3 526.7,270.3 633.3,256.8 740.0,238.3 846.7,217.4 953.3,159.7 1060.0,138.1" fill="none" stroke="#dc2626" stroke-width="3"/>
-<circle cx="100.0" cy="359.0" r="4" fill="#dc2626"/>
-<circle cx="206.7" cy="332.8" r="4" fill="#dc2626"/>
-<circle cx="313.3" cy="304.0" r="4" fill="#dc2626"/>
-<circle cx="420.0" cy="285.3" r="4" fill="#dc2626"/>
-<circle cx="526.7" cy="270.3" r="4" fill="#dc2626"/>
-<circle cx="633.3" cy="256.8" r="4" fill="#dc2626"/>
-<circle cx="740.0" cy="238.3" r="4" fill="#dc2626"/>
-<circle cx="846.7" cy="217.4" r="4" fill="#dc2626"/>
-<circle cx="953.3" cy="159.7" r="4" fill="#dc2626"/>
-<circle cx="1060.0" cy="138.1" r="4" fill="#dc2626"/>
+<polyline points="100.0,401.5 206.7,374.4 313.3,350.4 420.0,326.3 526.7,322.7 633.3,292.7 740.0,295.3 846.7,253.7 953.3,200.7 1060.0,171.5" fill="none" stroke="#dc2626" stroke-width="3"/>
+<circle cx="100.0" cy="401.5" r="4" fill="#dc2626"/>
+<circle cx="206.7" cy="374.4" r="4" fill="#dc2626"/>
+<circle cx="313.3" cy="350.4" r="4" fill="#dc2626"/>
+<circle cx="420.0" cy="326.3" r="4" fill="#dc2626"/>
+<circle cx="526.7" cy="322.7" r="4" fill="#dc2626"/>
+<circle cx="633.3" cy="292.7" r="4" fill="#dc2626"/>
+<circle cx="740.0" cy="295.3" r="4" fill="#dc2626"/>
+<circle cx="846.7" cy="253.7" r="4" fill="#dc2626"/>
+<circle cx="953.3" cy="200.7" r="4" fill="#dc2626"/>
+<circle cx="1060.0" cy="171.5" r="4" fill="#dc2626"/>
 <line x1="280" y1="615" x2="305" y2="615" stroke="#dc2626" stroke-width="3"/>
 <text x="312" y="620" font-size="13" font-family="Arial">cp_sat</text>
-<polyline points="100.0,349.8 206.7,369.0 313.3,355.4 420.0,348.4" fill="none" stroke="#16a34a" stroke-width="3"/>
-<circle cx="100.0" cy="349.8" r="4" fill="#16a34a"/>
-<circle cx="206.7" cy="369.0" r="4" fill="#16a34a"/>
-<circle cx="313.3" cy="355.4" r="4" fill="#16a34a"/>
-<circle cx="420.0" cy="348.4" r="4" fill="#16a34a"/>
+<polyline points="100.0,377.6 206.7,376.6 313.3,376.1 420.0,374.8 526.7,372.1 633.3,371.5 740.0,370.0 846.7,364.3 953.3,361.2 1060.0,358.0" fill="none" stroke="#16a34a" stroke-width="3"/>
+<circle cx="100.0" cy="377.6" r="4" fill="#16a34a"/>
+<circle cx="206.7" cy="376.6" r="4" fill="#16a34a"/>
+<circle cx="313.3" cy="376.1" r="4" fill="#16a34a"/>
+<circle cx="420.0" cy="374.8" r="4" fill="#16a34a"/>
+<circle cx="526.7" cy="372.1" r="4" fill="#16a34a"/>
+<circle cx="633.3" cy="371.5" r="4" fill="#16a34a"/>
+<circle cx="740.0" cy="370.0" r="4" fill="#16a34a"/>
+<circle cx="846.7" cy="364.3" r="4" fill="#16a34a"/>
+<circle cx="953.3" cy="361.2" r="4" fill="#16a34a"/>
+<circle cx="1060.0" cy="358.0" r="4" fill="#16a34a"/>
 <line x1="460" y1="615" x2="485" y2="615" stroke="#16a34a" stroke-width="3"/>
-<text x="492" y="620" font-size="13" font-family="Arial">cplex_mip</text>
-<polyline points="100.0,480.6 206.7,359.8 313.3,428.3 420.0,332.5 526.7,339.6 633.3,280.8" fill="none" stroke="#9333ea" stroke-width="3"/>
-<circle cx="100.0" cy="480.6" r="4" fill="#9333ea"/>
-<circle cx="206.7" cy="359.8" r="4" fill="#9333ea"/>
-<circle cx="313.3" cy="428.3" r="4" fill="#9333ea"/>
-<circle cx="420.0" cy="332.5" r="4" fill="#9333ea"/>
-<circle cx="526.7" cy="339.6" r="4" fill="#9333ea"/>
-<circle cx="633.3" cy="280.8" r="4" fill="#9333ea"/>
+<text x="492" y="620" font-size="13" font-family="Arial">cplex_cp</text>
+<polyline points="100.0,408.6 206.7,398.4 313.3,389.2 420.0,370.3 526.7,375.6 633.3,357.3 740.0,355.7 846.7,331.4 953.3,292.8 1060.0,262.0" fill="none" stroke="#9333ea" stroke-width="3"/>
+<circle cx="100.0" cy="408.6" r="4" fill="#9333ea"/>
+<circle cx="206.7" cy="398.4" r="4" fill="#9333ea"/>
+<circle cx="313.3" cy="389.2" r="4" fill="#9333ea"/>
+<circle cx="420.0" cy="370.3" r="4" fill="#9333ea"/>
+<circle cx="526.7" cy="375.6" r="4" fill="#9333ea"/>
+<circle cx="633.3" cy="357.3" r="4" fill="#9333ea"/>
+<circle cx="740.0" cy="355.7" r="4" fill="#9333ea"/>
+<circle cx="846.7" cy="331.4" r="4" fill="#9333ea"/>
+<circle cx="953.3" cy="292.8" r="4" fill="#9333ea"/>
+<circle cx="1060.0" cy="262.0" r="4" fill="#9333ea"/>
 <line x1="640" y1="615" x2="665" y2="615" stroke="#9333ea" stroke-width="3"/>
-<text x="672" y="620" font-size="13" font-family="Arial">gurobi_mip</text>
+<text x="672" y="620" font-size="13" font-family="Arial">cplex_mip</text>
+<polyline points="100.0,508.3 206.7,394.5 313.3,462.3 420.0,364.4 526.7,359.8 633.3,331.4" fill="none" stroke="#ea580c" stroke-width="3"/>
+<circle cx="100.0" cy="508.3" r="4" fill="#ea580c"/>
+<circle cx="206.7" cy="394.5" r="4" fill="#ea580c"/>
+<circle cx="313.3" cy="462.3" r="4" fill="#ea580c"/>
+<circle cx="420.0" cy="364.4" r="4" fill="#ea580c"/>
+<circle cx="526.7" cy="359.8" r="4" fill="#ea580c"/>
+<circle cx="633.3" cy="331.4" r="4" fill="#ea580c"/>
+<line x1="820" y1="615" x2="845" y2="615" stroke="#ea580c" stroke-width="3"/>
+<text x="852" y="620" font-size="13" font-family="Arial">gurobi_mip</text>
 </svg>

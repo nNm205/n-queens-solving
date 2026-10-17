@@ -129,6 +129,7 @@ def chart(
 
     for n, x in x_positions.items():
         svg.append(f'<text x="{x:.1f}" y="{top + plot_height + 25}" text-anchor="middle" font-size="12" font-family="Arial">{n}</text>')
+    svg.append(f'<text x="{left + plot_width / 2:.1f}" y="{height - 10}" text-anchor="middle" font-size="13" font-family="Arial">Board size N</text>')
 
     for index, (series_name, encoding) in enumerate(series_keys):
         points = []
@@ -187,7 +188,7 @@ def chart_pdf(
         return bottom + (log_value - y_min) * plot_height / (y_max - y_min)
 
     colors = [(0.145, 0.388, 0.922), (0.863, 0.149, 0.149), (0.086, 0.639, 0.251), (0.576, 0.141, 0.667), (0.918, 0.345, 0.047)]
-    commands = ["1 1 1 rg", f"0 0 {width} {height} re f", "0 0 0 RG", "0.8 w"]
+    commands = ["1 1 1 rg", f"0 0 {width} {height} re f", "0 0 0 RG", "0 0 0 rg", "0.8 w"]
     commands += [
         f"{left} {bottom} m {left} {bottom + plot_height} l S",
         f"{left} {bottom} m {left + plot_width} {bottom} l S",
@@ -204,6 +205,7 @@ def chart_pdf(
         text(left - 28, y - 3, f"10^{exponent}", 8)
     for n, x in x_positions.items():
         text(x - 5, bottom - 18, str(n), 8)
+    text(left + plot_width / 2 - 22, 9, "Board size N", 9)
 
     for index, (series_name, encoding) in enumerate(series_keys):
         points = []
@@ -216,11 +218,11 @@ def chart_pdf(
         if not points:
             continue
         red, green, blue = colors[index % len(colors)]
-        commands += [f"{red} {green} {blue} RG", "2 w"]
+        commands += [f"{red} {green} {blue} RG", f"{red} {green} {blue} rg", "2 w"]
         for (x1, y1), (x2, y2) in zip(points, points[1:]):
             commands.append(f"{x1:.1f} {y1:.1f} m {x2:.1f} {y2:.1f} l S")
         for x, y in points:
-            commands.append(f"{x:.1f} {y:.1f} 3 0 360 arc f")
+            commands.append(f"{x - 2:.1f} {y - 2:.1f} 4 4 re f")
         legend_x = left + index * 135
         commands.append(f"{legend_x} 24 m {legend_x + 18} 24 l S")
         text(legend_x + 23, 21, series_name + ("/" + encoding if encoding else ""), 8)
@@ -252,7 +254,7 @@ def main() -> None:
         ROOT / "results/final_sat_encodings_n64.csv",
     ])
     solver_rows = read_rows([
-        ROOT / "results/pairwise_solver_comparison_repeat3.csv",
+        ROOT / "results/cplex_activated_solver_comparison_repeat3.csv",
     ])
     summary = aggregate(sat_rows + solver_rows)
     write_summary(summary)
@@ -276,6 +278,7 @@ def main() -> None:
         series_keys=[
             ("sat", "pairwise"),
             ("cp_sat", ""),
+            ("cplex_cp", ""),
             ("cplex_mip", ""),
             ("gurobi_mip", ""),
         ],
@@ -287,6 +290,7 @@ def main() -> None:
         series_keys=[
             ("sat", "pairwise"),
             ("cp_sat", ""),
+            ("cplex_cp", ""),
             ("cplex_mip", ""),
             ("gurobi_mip", ""),
         ],
