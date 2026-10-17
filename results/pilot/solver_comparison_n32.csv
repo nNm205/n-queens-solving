@@ -1,0 +1,6 @@
+experiment,run,n,method,solver,encoding,status,valid,num_variables,num_clauses,num_constraints,encoding_time,build_time,solve_time,total_time,raw_status,error_type,error_message
+solver_comparison,1,32,sat,glucose3,seqcounter,SAT,True,4926,11592,,0.015340199999627657,,0.7402153000002727,0.7555554999999003,,,
+solver_comparison,1,32,cp_sat,ortools_cp_sat,,SAT,True,,,,,0.0011837999991257675,0.10129090000009455,0.10247469999922032,,,
+solver_comparison,1,32,cplex_cp,cplex_cp,,SAT,True,,,,,0.000920300000871066,0.03134440000030736,0.032264700001178426,Feasible,,
+solver_comparison,1,32,cplex_mip,,,LICENSE_LIMIT,,,,,,,,,,DOcplexLimitsExceeded,"**** Promotional version. Problem size limits (1000 vars, 1000 consts) exceeded, model has 1024 vars, 186 consts, CPLEX code=1016"
+solver_comparison,1,32,gurobi_mip,gurobi_mip,,SAT,True,1024,,186,,0.0089931999991677,0.029594499999802792,0.03858769999897049,2,,

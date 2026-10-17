@@ -56,6 +56,7 @@ def aggregate(rows: list[dict]) -> list[dict]:
                     row.get("status") == "LICENSE_LIMIT" for row in group
                 ),
                 "timeout_runs": sum(row.get("status") == "TIMEOUT" for row in group),
+                "error_runs": sum(row.get("status") == "ERROR" for row in group),
                 "median_total_time": median(times) if times else "",
                 "min_total_time": min(times) if times else "",
                 "max_total_time": max(times) if times else "",
@@ -251,8 +252,7 @@ def main() -> None:
         ROOT / "results/final_sat_encodings_n64.csv",
     ])
     solver_rows = read_rows([
-        ROOT / "results/final_solver_comparison_core.csv",
-        ROOT / "results/final_solver_comparison_extended.csv",
+        ROOT / "results/pairwise_solver_comparison_repeat3.csv",
     ])
     summary = aggregate(sat_rows + solver_rows)
     write_summary(summary)
@@ -274,9 +274,8 @@ def main() -> None:
         title="Cross-solver comparison",
         output=REPORT_DIR / "solver_runtime.svg",
         series_keys=[
-            ("sat", "bitwise"),
+            ("sat", "pairwise"),
             ("cp_sat", ""),
-            ("cplex_cp", ""),
             ("cplex_mip", ""),
             ("gurobi_mip", ""),
         ],
@@ -286,9 +285,8 @@ def main() -> None:
         title="Cross-solver comparison",
         output=REPORT_DIR / "solver_runtime.pdf",
         series_keys=[
-            ("sat", "bitwise"),
+            ("sat", "pairwise"),
             ("cp_sat", ""),
-            ("cplex_cp", ""),
             ("cplex_mip", ""),
             ("gurobi_mip", ""),
         ],

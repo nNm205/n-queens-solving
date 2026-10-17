@@ -1,0 +1,16 @@
+experiment,run,n,method,solver,encoding,status,valid,num_variables,num_clauses,num_constraints,encoding_time,build_time,solve_time,total_time,raw_status,error_type,error_message
+solver_comparison,1,64,sat,glucose3,pairwise,SAT,True,4096,428864,,0.4742294999996375,,0.17066730000078678,0.6448968000004243,,,
+solver_comparison,1,64,cp_sat,ortools_cp_sat,,SAT,True,,,,,0.008107099998596823,0.3727843999986362,0.38089149999723304,,,
+solver_comparison,1,64,cplex_cp,cplex_cp,,SAT,True,,,,,0.0011215999984415248,0.05842800000027637,0.059549599998717895,Feasible,,
+solver_comparison,1,64,cplex_mip,,,LICENSE_LIMIT,,,,,,,,,,DOcplexLimitsExceeded,"**** Promotional version. Problem size limits (1000 vars, 1000 consts) exceeded, model has 4096 vars, 378 consts, CPLEX code=1016"
+solver_comparison,1,64,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
+solver_comparison,1,100,sat,glucose3,pairwise,SAT,True,10000,1646900,,1.6694666000003053,,0.7178000999992946,2.3872666999996,,,
+solver_comparison,1,100,cp_sat,ortools_cp_sat,,SAT,True,,,,,0.002395499999693129,0.7928087000000232,0.7952041999997164,,,
+solver_comparison,1,100,cplex_cp,cplex_cp,,SAT,True,,,,,0.001328099999227561,0.054722400000173366,0.05605049999940093,Feasible,,
+solver_comparison,1,100,cplex_mip,,,LICENSE_LIMIT,,,,,,,,,,DOcplexLimitsExceeded,"**** Promotional version. Problem size limits (1000 vars, 1000 consts) exceeded, model has 10000 vars, 594 consts, CPLEX code=1016"
+solver_comparison,1,100,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
+solver_comparison,1,128,sat,glucose3,pairwise,SAT,True,16384,3462784,,3.4750078999968537,,2.204019900000276,5.6790277999971295,,,
+solver_comparison,1,128,cp_sat,ortools_cp_sat,,SAT,True,,,,,0.0299003999971319,2.1082554000022355,2.1381557999993674,,,
+solver_comparison,1,128,cplex_cp,cplex_cp,,SAT,True,,,,,0.009145900003204588,0.04817940000066301,0.057325300003867596,Feasible,,
+solver_comparison,1,128,cplex_mip,,,LICENSE_LIMIT,,,,,,,,,,DOcplexLimitsExceeded,"**** Promotional version. Problem size limits (1000 vars, 1000 consts) exceeded, model has 16384 vars, 762 consts, CPLEX code=1016"
+solver_comparison,1,128,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
