@@ -38,11 +38,12 @@ Student ID  : 23021631
 Department  : Faculty of Information Technology
 University  : VNU University of Engineering and Technology (VNU-UET)
 Deadline    : 19 October 2026
-Internal target: 16 October 2026
+Internal target: 16 October 2026 (passed; report finalization remains)
+Status last reviewed: 17 October 2026
 Repository  : https://github.com/nNm205/n-queens-solving
 ```
 
-The repository link will be included in the report's **Data Availability** section. Experiments run before unrestricted academic licenses are available will explicitly report `LICENSE_LIMIT` and `TIMEOUT` outcomes as experimental limitations.
+The repository link is included in the report's **Data Availability** section. License-limited and timed-out configurations are reported as `LICENSE_LIMIT` and `TIMEOUT` outcomes.
 
 ---
 
@@ -56,7 +57,7 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] OR-Tools CP-SAT verified.
 - [x] Gurobi verified.
 - [x] CPLEX MIP verified.
-- [x] CPLEX CP Optimizer verified.
+- [x] CPLEX CP Optimizer was verified earlier; its executable was unavailable to DOcplex during the latest repeated batch.
 - [x] Generic SAT encoding architecture implemented.
 - [x] Pairwise AMO encoding implemented.
 - [x] Sequential Counter AMO encoding implemented.
@@ -83,8 +84,8 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] Pilot SAT-encoding experiments completed for `N = 8, 16, 32, 64, 96, 128`.
 - [x] Pilot cross-solver experiments completed for small, medium, large, and license-boundary cases.
 - [x] Benchmark results exported to CSV under `results/`.
-- [x] Environment check passes for all five solver families.
-- [x] Full test suite passes: `43 passed`.
+- [x] The environment check previously passed for all five solver families; the latest repeated run could not locate the CPLEX CP executable.
+- [x] The last recorded full test run passed: `43 passed` before the latest result-analysis/report updates; rerun before final submission.
 - [x] Report language, author metadata, deadline, and repository link confirmed.
 - [x] Elsevier-style manuscript structure identified for the final report.
 - [x] Hard per-configuration timeout implemented in the benchmark CLI.
@@ -100,25 +101,26 @@ The repository link will be included in the report's **Data Availability** secti
 - [x] MiKTeX CTAN repository configured and CAS dependencies installed.
 - [x] Earlier CAS manuscript compiled successfully to `report/manuscript.pdf`; the PDF is stale after the latest source edits and must be rebuilt.
 - [x] Required Elsevier CAS class, bibliography style, thumbnails, and PDF figures tracked in the repository.
-- [x] CAS report assets and reproducibility documentation committed locally; push is pending.
-- [ ] Latest report and repeated benchmark updates committed and pushed.
+- [x] Repeated benchmark results and report updates in commits `9fab7ed` and `f75bb3a` are present on `origin/main` as of 17 October 2026.
+- [ ] Commit these README and implementation-plan progress updates; push remains with the repository owner.
 
 ### In Progress / Remaining
 
-- [ ] Activate Gurobi Academic License before large-scale experiments.
-- [ ] Install or activate an unrestricted CPLEX academic license if available.
+- [ ] Resolve Gurobi/CPLEX MIP license restrictions if academic licenses are available; otherwise report all `LICENSE_LIMIT` outcomes.
+- [ ] Restore CPLEX CP Optimizer discovery for DOcplex and rerun it under the shared protocol.
+- [ ] Rerun the test suite after the recent result-analysis changes.
 - [x] Analyze pilot experiments and define provisional board-size ranges.
 - [x] Define a provisional three-run cross-solver protocol and 600-second timeout; final repetition count remains to be confirmed.
 - [x] Define timeout and error-handling policy for final experiments.
-- [ ] Run final SAT encoding comparison experiments.
+- [x] Run a repeated SAT encoding comparison at `N = 8, 16, 32` (5 runs) and `N = 64` (3 runs); larger `N = 96, 128` remain single-run pilot data.
 - [x] Select Pairwise as the provisional SAT encoding baseline for cross-method comparison.
 - [x] Run a repeated Pairwise comparison across available solvers; CPLEX CP was unavailable in the current rerun.
-- [ ] Re-run large-instance experiments after license upgrades, if available.
+- [ ] Decide whether to rerun large instances after license updates; if unavailable, retain and clearly label the current pilot/license-limited results.
 - [x] Analyze the repeated Pairwise benchmark results.
 - [x] Regenerate experimental tables and figures for the current repeated batch.
 - [ ] Rebuild the PDF and complete final review of the scientific report.
 
-The new source draft is `report/manuscript.tex`; the checked-in local PDF is stale and should be rebuilt before review. The next experimental step is a matched all-five-solver run after unrestricted licenses are activated and CPLEX CP Optimizer is available to DOcplex.
+The source draft is `report/manuscript.tex`; its encoding comparison text now matches the table: Pairwise is fastest at three repeated sizes and Sequential Counter is fastest at `N = 16`. The local PDF is stale and needs rebuilding. The next experiment depends on restoring CPLEX CP Optimizer and resolving or documenting the MIP license limits. Commits `9fab7ed` and `f75bb3a` are present on `origin/main`; progress-document edits in this working tree are not committed yet.
 
 ---
 
@@ -663,16 +665,18 @@ results/final_sat_encodings_small.csv
 results/final_sat_encodings_n64.csv
 results/final_solver_comparison_core.csv
 results/final_solver_comparison_extended.csv
+results/pairwise_solver_comparison_repeat3.csv
 ```
 
-The current pilot coverage is:
+The current pilot and repeated coverage is:
 
 - SAT encoding comparison at `N = 8, 16, 32, 64, 96, 128`.
 - Cross-solver comparison at `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`.
+- Repeated Pairwise cross-solver batch: three runs per solver and size, 150 rows total; CPLEX CP was unavailable and MIP license limits remain recorded.
 - Repeated and smoke-test runs at smaller board sizes.
 - License-boundary cases where failed solver runs are recorded as `LICENSE_LIMIT` instead of stopping the experiment.
 
-These files are pilot data, not yet the final statistical benchmark. Final sizes, repetition counts, timeout policy, and the baseline SAT encoding still need to be selected after analysis.
+The repeated batch and current pilot data are screening results, not a final matched five-method comparison. Pairwise is the provisional SAT baseline: it is fastest at `N = 8, 32, 64`, while Sequential Counter is fastest at `N = 16`. Final cross-solver sizes and repetitions still need confirmation, and CPLEX CP needs to be rerun under the same protocol when available.
 
 The first analysis artifacts are available in `report/`:
 
@@ -685,7 +689,7 @@ report/sat_encoding_runtime.svg
 report/solver_runtime.svg
 ```
 
-The current analysis confirms that the solver implementation and benchmark pipeline are functional, but the SAT encoding baseline should not be finalized from a single large-instance run because the observed solving time varies substantially across runs and board sizes.
+The repeated measurements support a provisional Pairwise baseline for the cross-solver batch, but do not show a universal winner: Sequential Counter is faster at `N = 16`, and the `N = 96, 128` SAT encoding results are single-run pilots.
 
 ---
 
@@ -749,6 +753,8 @@ and exceeds the current license limit.
 
 An unrestricted academic license is preferred before final large-scale MIP experiments.
 
+CPLEX CP Optimizer was available in an earlier pilot, but DOcplex could not find `cpoptimizer.exe` during the latest repeated comparison. Those `ERROR` rows are retained in the raw CSV and excluded from runtime medians; a matched CPLEX CP rerun is pending.
+
 ### Gurobi
 
 Gurobi is currently functional using a restricted non-production license.
@@ -760,7 +766,7 @@ Variables   : 1024
 Constraints : 186
 ```
 
-The same restricted license rejects larger tested models such as `N = 64`. An Academic License should be activated before final large-scale benchmark experiments.
+The repeated batch is accepted through `N = 44` and rejected from `N = 45` onward under the current restricted license. An Academic License should be activated before final large-scale MIP experiments if available; otherwise these cases remain `LICENSE_LIMIT` outcomes.
 
 ---
 
@@ -945,30 +951,25 @@ Solver status
 
 ### Agreed Initial Experimental Protocol
 
-The following protocol is used for the current local-laptop phase and can be revised after license activation:
+The completed local batches used the following protocol; the final submission protocol can be adjusted after CPLEX CP and license work:
 
 ```text
-SAT encoding experiment sizes : 8, 16, 32, 64, 96, 128
-Cross-solver core sizes       : 8, 16, 24, 31, 32
-Cross-solver extended sizes   : 44, 45, 64, 100, 128
-Repeats for N <= 32           : 5
-Repeats for N = 64            : 3
-Repeats for N >= 96           : 1 initially
-Per-run timeout               : 600 seconds
-Cross-solver SAT encoding     : bitwise candidate baseline
+SAT encoding sizes            : 8, 16, 32 (5 runs); 64 (3); 96, 128 (1-run pilot)
+Repeated cross-solver sizes   : 8, 16, 24, 31, 32, 44, 45, 64, 100, 128
+Cross-solver repeats          : 3 per method and size
+Per-configuration timeout     : 600 seconds
+Cross-solver SAT encoding     : Pairwise provisional baseline
 ```
 
-The `bitwise` encoding is the current candidate baseline because the pilot results show better scalability at `N = 128` than `seqcounter`. The final choice will be justified using the completed SAT-encoding comparison rather than assumed in advance.
+Pairwise is used provisionally because it is fastest at three of the four repeatedly measured sizes (`N = 8, 32, 64`); Sequential Counter is faster at `N = 16`. This is evidence for the measured Glucose3 setup, not a universal ranking.
 
 When a solver cannot run because of the local license, the result remains in the CSV with `status = LICENSE_LIMIT`. When a solver exceeds the time limit, the result will be recorded with `status = TIMEOUT`. Neither outcome should terminate the remaining benchmark configurations.
 
 ---
 
-## Next Milestone
+## Remaining Work
 
-The solver implementations, validation layer, automated tests, benchmark infrastructure, pilot experiments, and first analysis artifacts are complete. The project is now in the **final benchmark and report-writing phase**.
-
-The next milestone is to finalize the SAT baseline, repeat the cross-solver benchmark after license activation when possible, and incorporate the analysis into the scientific report.
+The solver implementations, validation layer, benchmark infrastructure, pilot runs, repeated Pairwise comparison, result summaries, and first manuscript draft are in place. Remaining work is to restore CPLEX CP, resolve or report license restrictions, run a matched comparison if feasible, rerun tests, rebuild the current PDF, review the report and untracked report-folder artifacts, and commit the progress-document updates. The repository owner can push the resulting commits.
 
 The existing pilot runs cover candidate board sizes such as:
 
@@ -988,18 +989,16 @@ The purpose is to determine:
 - Which solvers become slow or encounter resource limits.
 - Which final board sizes should be used in the official experiments.
 - Whether explicit solver time limits are necessary.
-- Which SAT encoding should be used as the candidate baseline for the later cross-method comparison.
+- Whether to retain Pairwise as the provisional cross-method baseline after the final matched experiment (Sequential Counter currently wins at `N = 16`).
 
 The remaining workflow is:
 
 ```text
-Final SAT encoding experiments
+Restore CPLEX CP and resolve/document license limits
         ↓
-Final solver comparison experiments
+Matched final comparison (if feasible)
         ↓
-Result analysis
+Update analysis and manuscript
         ↓
-Tables and figures
-        ↓
-Scientific report
+Rebuild and review PDF; commit/push final artifacts
 ```
