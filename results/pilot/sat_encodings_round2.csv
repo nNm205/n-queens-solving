@@ -1,7 +1,0 @@
-experiment,run,n,method,solver,encoding,status,valid,num_variables,num_clauses,num_constraints,encoding_time,build_time,solve_time,total_time,raw_status,error_type,error_message
-sat_encodings,1,96,sat,glucose3,pairwise,SAT,True,9216,1456352,,1.4352400000007037,,0.5586679999996704,1.9939080000003742,,,
-sat_encodings,1,96,sat,glucose3,seqcounter,SAT,True,45502,108488,,0.17516279999927065,,512.4798345999998,512.654997399999,,,
-sat_encodings,1,96,sat,glucose3,bitwise,SAT,True,12722,247060,,0.6227987000002031,,237.35803880000003,237.98083750000023,,,
-sat_encodings,1,128,sat,glucose3,pairwise,SAT,True,16384,3462784,,6.0049958999998125,,2.834046199999648,8.83904209999946,,,
-sat_encodings,1,128,sat,glucose3,seqcounter,SAT,True,81150,193800,,0.30308549999972456,,3045.5859975000003,3045.889083,,,
-sat_encodings,1,128,sat,glucose3,bitwise,SAT,True,21234,447828,,0.43225340000026335,,0.534996800000954,0.9672502000012173,,,

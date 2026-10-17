@@ -147,19 +147,12 @@
 - [x] Chạy lại cross-solver với Pairwise, 3 lần/cấu hình ở `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`.
 - [x] Ghi nhận kết quả SAT/CP/CP-SAT và lỗi license trong cùng schema.
 
-Các artifact hiện có trong `results/` gồm:
+Các artifact benchmark hiện còn trong `results/` gồm:
 
-- [x] `pilot/sat_encodings_round1.csv`
-- [x] `pilot/sat_encodings_round2.csv`
-- [x] `pilot/solver_comparison_round1.csv`
-- [x] `pilot/solver_comparison_n32.csv`
-- [x] `pilot/solver_comparison_license_boundary.csv`
-- [x] `pilot/solver_comparison_large.csv`
-- [x] `sat_encoding_n8-32_repeat5.csv` và `sat_encoding_n64_repeat3.csv` (các batch SAT encoding lặp)
-- [x] `pilot/solver_comparison_bitwise_n8-32.csv` và `pilot/solver_comparison_bitwise_n44-128.csv` (các batch Bitwise pilot)
-- [x] `historical/solver_comparison_pairwise_n8-128_repeat3.csv` (150 dòng; batch Pairwise cũ, CPLEX CP chưa khả dụng)
-- [x] `solver_comparison_matched_n8-128_repeat3.csv` (150 dòng; matched 5 phương pháp x 10 kích thước x 3 lần)
-- [x] Chuẩn hóa tên CSV theo loại benchmark, phạm vi N, số lần chạy; chuyển batch Pairwise cũ vào `results/historical/`.
+- [x] `sat_encoding_n8-32_repeat5.csv` và `sat_encoding_n64_repeat3.csv` (các batch SAT encoding lặp).
+- [x] `solver_comparison_matched_n8-128_repeat3.csv` (150 dòng; matched 5 phương pháp x 10 kích thước x 3 lần).
+- [x] Các CSV pilot và batch Pairwise lịch sử đã được người dùng xóa sau khi hoàn tất báo cáo; chúng không còn trong thư mục `results/`.
+- [x] README ghi rõ từng lệnh benchmark chính và CSV mà lệnh tạo ra.
 - [x] Rút gọn README, giữ hướng dẫn chạy và kết quả chính; bảng số liệu đầy đủ được dẫn sang report.
 - [x] Các file smoke/license test ở thư mục `results/`.
 - [x] Cập nhật summary CSV và biểu đồ solver theo batch Pairwise lặp.
@@ -175,7 +168,7 @@ Các artifact hiện có trong `results/` gồm:
 - [x] CPLEX Community Edition từng giới hạn batch cũ tại `N = 32`; môi trường CPLEX mới đã pass license check 1.100 biến và giải N-Queens đến `N = 128`.
 - [x] Gurobi hiện hoạt động với restricted license; repeated batch chấp nhận đến `N = 44` và báo `LICENSE_LIMIT` từ `N = 45`.
 - [ ] Đang chờ phản hồi từ Gurobi về license; dự kiến nhận được ngày 18/10/2026. Nếu có license phù hợp, kiểm tra lại license và cân nhắc chạy bổ sung các cấu hình bị giới hạn.
-- [x] CPLEX CP Optimizer hiện khả dụng; các lỗi không tìm executable chỉ thuộc batch lịch sử `historical/solver_comparison_pairwise_n8-128_repeat3.csv`.
+- [x] CPLEX CP Optimizer hiện khả dụng; lỗi không tìm executable chỉ xuất hiện trong batch Pairwise lịch sử đã xóa.
 - [x] Chọn Pairwise làm baseline SAT tạm thời cho cross-solver: nhanh nhất tại `N = 8, 32, 64`; Sequential Counter nhanh nhất tại `N = 16`.
 - [x] Ghi rõ lựa chọn hiện tại: giữ các kết quả Gurobi lớn là `LICENSE_LIMIT`; chỉ rerun nếu có Academic License.
 - [x] Xác nhận CPLEX MIP/CP có thể giải vượt các ngưỡng license cũ trong batch mới.
@@ -216,3 +209,13 @@ Các artifact hiện có trong `results/` gồm:
 **Current status:** Solver implementations, tests, benchmark protocol, matched results, analysis, and report are complete. CPLEX CP/MIP solve through `N=128`; Gurobi results from `N=45` are `LICENSE_LIMIT` and are documented. MiKTeX works; the current PDF was rebuilt and visually reviewed. README and benchmark filenames have been streamlined. The current report is complete with the available license; a Gurobi response is pending, expected 18/10/2026.
 
 **Remaining:** push the local commit when ready and review Gurobi's response. Historical SAT batches lack environment metadata and are explicitly treated as historical; rerun large Gurobi cases only if an academic license becomes available.
+
+## 9. Làm mới results ngày 17/10/2026
+
+- [x] Chạy lại SAT encoding `N = 8, 16, 32` (5 lần) và `N = 64` (3 lần); cập nhật hai CSV chính và các bảng/biểu đồ tổng hợp.
+- [x] Chạy lại matched benchmark 5 phương pháp, 10 kích thước, 3 lần/cấu hình; CSV có 150 dòng gồm 138 nghiệm hợp lệ và 12 `LICENSE_LIMIT`, không có timeout hoặc lỗi solver.
+- [x] Cập nhật median trong manuscript và phân tích pilot theo raw CSV mới.
+- [x] Cập nhật README để ghi rõ lệnh benchmark tạo từng CSV nào, cùng lệnh tái tạo bảng và biểu đồ trong `report/`.
+- [x] Thử chạy lại pilot SAT `N = 96, 128`; dừng sau khi Bitwise tại `N = 96` và Pairwise tại `N = 128` đều chạm timeout 600 giây. Runner không ghi CSV nếu batch chưa hoàn tất; pilot cũ vẫn là dữ liệu exploratory.
+- [x] Người dùng đã xóa các thư mục `pilot/` và `historical/`; `results/` hiện chỉ còn ba CSV benchmark chính.
+- [ ] Chưa commit thay đổi trong lần cập nhật này; chờ người dùng xem xét và tự quyết định thời điểm commit/push.
