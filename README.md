@@ -17,9 +17,9 @@ All solutions are checked by a shared validator. The manuscript contains the met
 
 ## Latest results
 
-The matched comparison covers ten board sizes (`N = 8` to `128`) with three runs per method and size. All 150 runs produced validated solutions, with no timeouts, license limits, or solver errors. CPLEX CP/MIP and Gurobi solve all tested sizes. The 12 Gurobi runs at `N = 45, 64, 100, 128` were refreshed after activating the academic license; their raw rows are also preserved in `results/gurobi_license_refresh_n45-128_repeat3.csv`.
+The complete matched comparison was rerun as one batch after activating the Gurobi academic license. It covers ten board sizes (`N = 8` to `128`) with three runs per method and size. All 150 runs produced validated solutions, with no timeouts, license limits, or solver errors. CPLEX CP/MIP and Gurobi solve all tested sizes.
 
-In the repeated SAT encoding runs, Pairwise had the lowest median at `N = 8, 32, 64`; Sequential Counter was fastest at `N = 16`. These results describe this local setup and do not establish a general solver ranking. See the [manuscript](report/manuscript.pdf), [aggregated results](report/benchmark_summary.csv), and [runtime charts](report/solver_runtime.svg) for details.
+Across the repeated SAT encoding runs, Pairwise had the lowest median at `N = 8, 32, 64`; Sequential Counter was fastest at `N = 16`. In the matched solver batch, SAT led at `N = 8, 16`, Gurobi at `N = 24, 31, 45, 64`, CPLEX MIP at `N = 32`, and CPLEX CP at `N = 44, 100, 128`. These results describe this local setup and do not establish a general solver ranking. See the [manuscript](report/manuscript.pdf), [aggregated results](report/benchmark_summary.csv), and [runtime charts](report/solver_runtime.svg) for details.
 
 ## Setup
 
@@ -65,7 +65,7 @@ Regenerate the aggregate tables and charts from the main datasets:
 uv run python scripts/analyze_results.py
 ```
 
-This creates or updates `report/benchmark_summary.csv`, `report/sat_encodings_summary.csv`, `report/solver_comparison_summary.csv`, and the SAT and solver runtime charts (`.svg` and `.pdf`) in `report/`. These three CSVs are the benchmark datasets currently kept in `results/`; older pilot and historical CSVs have been removed. See [pilot analysis](report/pilot_analysis.md) for the current data scope and limitations.
+This creates or updates `report/benchmark_summary.csv`, `report/sat_encodings_summary.csv`, `report/solver_comparison_summary.csv`, and the SAT and solver runtime charts (`.svg` and `.pdf`) in `report/`. The analysis reads the three current raw datasets: the two repeated SAT-encoding CSVs and the matched cross-solver CSV. See [pilot analysis](report/pilot_analysis.md) for the data scope and limitations.
 
 To solve one instance directly:
 
@@ -100,7 +100,6 @@ n-queens-solving/
 ├── results/
 │   ├── sat_encoding_n8-32_repeat5.csv
 │   ├── sat_encoding_n64_repeat3.csv
-│   ├── gurobi_license_refresh_n45-128_repeat3.csv
 │   └── solver_comparison_matched_n8-128_repeat3.csv
 ├── scripts/
 │   ├── analyze_results.py
@@ -119,6 +118,14 @@ n-queens-solving/
 │       ├── encoder.py
 │       └── solver.py
 ├── tests/
+│   ├── test_benchmark.py
+│   ├── test_cp_optimizer.py
+│   ├── test_cp_optimizer_license.py
+│   ├── test_cp_solvers.py
+│   ├── test_cplex_license.py
+│   ├── test_gurobi_license.py
+│   ├── test_mip_solvers.py
+│   └── test_sat_encodings.py
 ├── IMPLEMENTATION_PLAN.md
 ├── pyproject.toml
 ├── requirements.txt

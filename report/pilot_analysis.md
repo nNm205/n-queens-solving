@@ -1,35 +1,33 @@
 # Benchmark analysis and limitations
 
-This note records the current repeated benchmark evidence. Successful solver results passed the shared independent N-Queens validator. License rejections remain statuses and are not treated as solver runtimes.
+This note summarizes the complete current benchmark refresh. The three raw datasets were rerun in the current environment after activating the Gurobi academic license. Every SAT result was checked by the shared independent N-Queens validator.
 
 ## Data used
 
-- `results/sat_encoding_n8-32_repeat5.csv`: five runs per encoding at `N = 8, 16, 32`.
-- `results/sat_encoding_n64_repeat3.csv`: three runs per encoding at `N = 64`.
-- `results/solver_comparison_matched_n8-128_repeat3.csv`: latest matched five-method batch, with three runs per method and size at the same ten board sizes.
-- `results/gurobi_license_refresh_n45-128_repeat3.csv`: the 12 Gurobi rows rerun after academic license activation and merged into the matched batch.
-- `report/sat_encodings_summary.csv`, `report/solver_comparison_summary.csv`, and `report/benchmark_summary.csv`: regenerated aggregate data based on the three raw benchmark CSVs above.
-- `report/sat_encoding_runtime.svg` and `report/sat_encoding_runtime.pdf`: SAT encoding comparison figures.
-- `report/solver_runtime.svg` and `report/solver_runtime.pdf`: current matched five-method comparison figures.
+- `results/sat_encoding_n8-32_repeat5.csv`: five runs per encoding at `N = 8, 16, 32` (45 rows).
+- `results/sat_encoding_n64_repeat3.csv`: three runs per encoding at `N = 64` (9 rows).
+- `results/solver_comparison_matched_n8-128_repeat3.csv`: five methods, three runs per method, at ten board sizes (150 rows).
+- `report/sat_encodings_summary.csv`, `report/solver_comparison_summary.csv`, and `report/benchmark_summary.csv`: aggregates regenerated from those three current raw datasets.
+- `report/sat_encoding_runtime.svg` / `.pdf` and `report/solver_runtime.svg` / `.pdf`: figures regenerated from the current aggregates.
 
-## Decisions and evidence
+The total is 204 benchmark rows. Every row has status `SAT` and `valid=True`; there are no timeout, error, or license-limit rows.
 
-### Provisional SAT baseline: Pairwise
+## SAT encoding results
 
-Pairwise is the provisional SAT baseline for the cross-solver comparison because it was fastest at three of the four repeated sizes and performed substantially better than Sequential Counter at $N=32$ and $N=64$. Sequential Counter was fastest at $N=16$:
+Pairwise is the provisional SAT baseline for the cross-solver comparison because it had the lowest median at three of four tested sizes. Sequential Counter was fastest at `N = 16`:
 
 | N | Pairwise (s) | Sequential Counter (s) | Bitwise (s) | Repeats |
 |---:|---:|---:|---:|---:|
-| 8 | 0.0013 | 0.0013 | 0.0013 | 5 |
-| 16 | 0.0171 | 0.0098 | 0.1111 | 5 |
-| 32 | 0.0886 | 0.4772 | 30.0100 | 5 |
-| 64 | 1.7194 | 37.9285 | 22.7103 | 3 |
+| 8 | 0.0013 | 0.0015 | 0.0020 | 5 |
+| 16 | 0.0169 | 0.0093 | 0.1088 | 5 |
+| 32 | 0.0891 | 0.5117 | 16.7465 | 5 |
+| 64 | 0.6686 | 12.3846 | 22.6755 | 3 |
 
-The choice is limited to the measured PySAT/Glucose3 implementation and repeated range `N = 8..64`. Pairwise adds no auxiliary variables. Sequential Counter remains a meaningful alternative and is the fastest encoding at `N = 16`. Exploratory sizes `N = 96, 128` are excluded because their earlier raw files were removed and a refreshed batch could not complete within the timeout. Pairwise should not be described as fastest at every measured size or as a universally optimal encoding.
+These are observed medians from the measured PySAT/Glucose3 implementation and one computer; they do not establish a universal encoding ranking. Pairwise adds no auxiliary variables. Sequential Counter minimizes clause count at each reported size, while Pairwise minimizes variable count. Bitwise lies between them on both counts. Earlier exploratory SAT runs at `N = 96, 128` reached the 600-second timeout and are outside the repeated comparison.
 
-### SAT formula size
+## SAT formula size
 
-Raw benchmark rows report the number of variables and clauses for each encoding. These counts are deterministic within each size; variable counts include board variables and encoder auxiliaries, and clause counts cover the full formula. ALO clauses are shared across encodings.
+Variable counts include board variables and encoder auxiliaries; clause counts cover the full formula. The at-least-one constraints are shared among encodings.
 
 | N | Encoding | Variables | Clauses |
 |---:|---|---:|---:|
@@ -46,39 +44,27 @@ Raw benchmark rows report the number of variables and clauses for each encoding.
 | 64 | Sequential Counter | 20,094 | 47,752 |
 | 64 | Bitwise | 6,132 | 95,572 |
 
-Pairwise minimizes variable count, whereas Sequential Counter minimizes clause count at each reported size. Bitwise lies between those two encodings in both variable and clause counts at all four sizes. These formula-size differences complement the runtime table; neither variable count nor clause count alone predicts the observed runtime.
+## Matched five-method results
 
-### Cross-solver sizes and repetitions
+Each value is the median total time in seconds from three runs. The current batch ran all five methods under the active licenses.
 
-`N = 8, 16, 24` provide small-to-medium reference cases. `N = 31/32` retains a boundary pair around the former CPLEX Community Edition model limit (961 versus 1,024 board variables); current CPLEX MIP accepts models above that boundary. `N = 44/45` retains the pair around the former Gurobi restricted-license limit: `N = 44` has 1,936 board variables and `N = 45` has 2,025. Following academic license activation, both sizes now solve successfully. `N = 64, 100, 128` extend the comparison to larger instances.
-
-Three runs per configuration were selected as a practical repeat batch and summaries use the median. This remains a small sample. The minimum, maximum, and all individual outcomes remain in the CSV so the median is not mistaken for a distribution estimate. A common 600-second hard timeout was retained from the benchmark policy; timeout and license-limit configurations have no runtime in the median.
-
-### Latest matched five-method results
-
-| N | SAT (s) | CP-SAT (s) | CPLEX CP (s) | CPLEX MIP (s) | Gurobi MIP (s) |
+| N | SAT | CP-SAT | CPLEX CP | CPLEX MIP | Gurobi MIP |
 |---:|---:|---:|---:|---:|---:|
-| 8 | 0.0027 | 0.0403 | 0.0559 | 0.0491 | 0.0059 |
-| 16 | 0.0392 | 0.0636 | 0.0553 | 0.0383 | 0.0448 |
-| 24 | 0.1707 | 0.0915 | 0.0593 | 0.0597 | 0.0150 |
-| 31 | 0.1966 | 0.1915 | 0.0587 | 0.0697 | 0.0792 |
-| 32 | 0.2147 | 0.2075 | 0.0623 | 0.0756 | 0.0819 |
-| 44 | 0.5256 | 0.3793 | 0.0612 | 0.1135 | 0.1471 |
-| 45 | 0.5583 | 0.3987 | 0.0623 | 0.1064 | 0.0139 |
-| 64 | 1.7175 | 0.8585 | 0.0644 | 0.1935 | 0.0238 |
-| 100 | 6.4890 | 2.6017 | 0.0773 | 0.4271 | 0.0493 |
-| 128 | 13.7358 | 1.9131 | 0.0449 | 0.2649 | 0.1037 |
+| 8 | 0.003 | 0.034 | 0.059 | 0.039 | 0.010 |
+| 16 | 0.037 | 0.074 | 0.057 | 0.046 | 0.046 |
+| 24 | 0.172 | 0.119 | 0.062 | 0.059 | 0.016 |
+| 31 | 0.197 | 0.209 | 0.090 | 0.088 | 0.084 |
+| 32 | 0.238 | 0.215 | 0.089 | 0.073 | 0.079 |
+| 44 | 0.528 | 0.427 | 0.064 | 0.122 | 0.150 |
+| 45 | 0.402 | 0.217 | 0.047 | 0.054 | 0.016 |
+| 64 | 0.727 | 0.389 | 0.036 | 0.085 | 0.036 |
+| 100 | 2.765 | 0.979 | 0.044 | 0.171 | 0.059 |
+| 128 | 6.183 | 1.935 | 0.049 | 0.312 | 0.146 |
 
-Each numeric value is the median of three successful runs. The batch contains 150 validated solver results and no timeout, error, or license-limit rows. CPLEX CP and CPLEX MIP each solved all 30 configurations, including `N = 128`; Gurobi's 12 previously license-limited rows at `N >= 45` were rerun after academic license activation and also passed validation.
+All five methods solved every size. By lowest measured median, SAT leads at `N = 8, 16`; Gurobi at `N = 24, 31, 45, 64`; CPLEX MIP at `N = 32`; and CPLEX CP at `N = 44, 100, 128`. At `N = 16`, SAT's median is 0.0368 s versus 0.0460 s for Gurobi. At `N = 64`, Gurobi and CPLEX CP are nearly tied (0.0360 s and 0.0362 s). Rankings are based on three runs and should not be generalized beyond this local setup.
 
-The 12 refreshed Gurobi runs were collected separately from the other methods after license activation. The comparison is matched by board size, run count, machine, and solver setup, but those refreshed Gurobi timings were not collected in the same session as the other solver rows.
+## Environment and limitations
 
-## Interpretation and limits
+The machine was a Dell Inspiron 15 3511 with an Intel Core i5-1135G7, 8 GB RAM, and Windows 11 Pro build 22631. The runtime reported Python 3.11.8, PySAT 1.9.dev16, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. CPLEX CP and MIP passed 1,100-variable license checks; Gurobi passed a 2,100-variable academic-license check. The last recorded full test-suite run passed 43 tests; pytest was not rerun for this benchmark refresh.
 
-The matched batch provides a local comparison of all five methods at every tested size through `N = 128`. Gurobi has the lowest median at `N = 24, 45, 64, 100`; CPLEX CP leads at `N = 31, 32, 44, 128`, CPLEX MIP at `N = 16`, and SAT at `N = 8`. These observed rankings are based on three runs on one machine and should not be generalized.
-
-The machine was a Dell Inspiron 15 3511, Intel Core i5-1135G7, 8 GB RAM, Windows 11 Pro build 22631. The current runtime reported Python 3.11.8, PySAT 1.9.dev16, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. CPLEX CP and MIP passed full-version smoke checks with 1,100 variables. After the academic license was activated, Gurobi also passed a 2,100-variable license check and solved the refreshed `N >= 45` cases. The existing full test run passed: 43 tests. All benchmark rows completed without timeout or solver errors, but power mode and concurrent background load were not recorded.
-
-A fresh exploratory refresh at `N = 96, 128` was stopped after Bitwise at `N = 96` and Pairwise at `N = 128` each reached the 600-second timeout. The benchmark runner writes its CSV only after a batch completes, so this interrupted attempt produced no new pilot CSV. The earlier pilot and historical raw CSVs have now been removed from `results/` and are not part of the reported analysis.
-
-Power mode/AC status and concurrent background load were not recorded during the refreshed runs. Keep the three-run order and 600-second timeout for any further rerun.
+All current benchmark datasets were collected in a single refresh, but the sample is still small and timings can vary with warm-up, thermal conditions, background processes, and power state. Power mode and background load were not recorded. The 600-second timeout policy remains in effect; prior exploratory SAT `N = 96, 128` runs are excluded because they reached that limit.

@@ -21,24 +21,24 @@
 <text x="740.0" y="575" text-anchor="middle" font-size="12" font-family="Arial">32</text>
 <text x="1060.0" y="575" text-anchor="middle" font-size="12" font-family="Arial">64</text>
 <text x="580.0" y="640" text-anchor="middle" font-size="13" font-family="Arial">Board size N</text>
-<polyline points="100.0,540.1 420.0,432.8 740.0,365.0 1060.0,242.6" fill="none" stroke="#2563eb" stroke-width="3"/>
-<circle cx="100.0" cy="540.1" r="4" fill="#2563eb"/>
-<circle cx="420.0" cy="432.8" r="4" fill="#2563eb"/>
-<circle cx="740.0" cy="365.0" r="4" fill="#2563eb"/>
-<circle cx="1060.0" cy="242.6" r="4" fill="#2563eb"/>
+<polyline points="100.0,540.3 420.0,433.3 740.0,364.8 1060.0,281.6" fill="none" stroke="#2563eb" stroke-width="3"/>
+<circle cx="100.0" cy="540.3" r="4" fill="#2563eb"/>
+<circle cx="420.0" cy="433.3" r="4" fill="#2563eb"/>
+<circle cx="740.0" cy="364.8" r="4" fill="#2563eb"/>
+<circle cx="1060.0" cy="281.6" r="4" fill="#2563eb"/>
 <line x1="100" y1="615" x2="125" y2="615" stroke="#2563eb" stroke-width="3"/>
 <text x="132" y="620" font-size="13" font-family="Arial">sat/pairwise</text>
-<polyline points="100.0,538.4 420.0,455.8 740.0,295.5 1060.0,115.0" fill="none" stroke="#dc2626" stroke-width="3"/>
-<circle cx="100.0" cy="538.4" r="4" fill="#dc2626"/>
-<circle cx="420.0" cy="455.8" r="4" fill="#dc2626"/>
-<circle cx="740.0" cy="295.5" r="4" fill="#dc2626"/>
-<circle cx="1060.0" cy="115.0" r="4" fill="#dc2626"/>
+<polyline points="100.0,534.1 420.0,457.8 740.0,292.6 1060.0,161.2" fill="none" stroke="#dc2626" stroke-width="3"/>
+<circle cx="100.0" cy="534.1" r="4" fill="#dc2626"/>
+<circle cx="420.0" cy="457.8" r="4" fill="#dc2626"/>
+<circle cx="740.0" cy="292.6" r="4" fill="#dc2626"/>
+<circle cx="1060.0" cy="161.2" r="4" fill="#dc2626"/>
 <line x1="280" y1="615" x2="305" y2="615" stroke="#dc2626" stroke-width="3"/>
 <text x="312" y="620" font-size="13" font-family="Arial">sat/seqcounter</text>
-<polyline points="100.0,538.2 420.0,355.7 740.0,124.7 1060.0,136.2" fill="none" stroke="#16a34a" stroke-width="3"/>
-<circle cx="100.0" cy="538.2" r="4" fill="#16a34a"/>
-<circle cx="420.0" cy="355.7" r="4" fill="#16a34a"/>
-<circle cx="740.0" cy="124.7" r="4" fill="#16a34a"/>
+<polyline points="100.0,522.3 420.0,356.5 740.0,148.7 1060.0,136.2" fill="none" stroke="#16a34a" stroke-width="3"/>
+<circle cx="100.0" cy="522.3" r="4" fill="#16a34a"/>
+<circle cx="420.0" cy="356.5" r="4" fill="#16a34a"/>
+<circle cx="740.0" cy="148.7" r="4" fill="#16a34a"/>
 <circle cx="1060.0" cy="136.2" r="4" fill="#16a34a"/>
 <line x1="460" y1="615" x2="485" y2="615" stroke="#16a34a" stroke-width="3"/>
 <text x="492" y="620" font-size="13" font-family="Arial">sat/bitwise</text>
