@@ -1,6 +1,6 @@
 # Implementation checklist – N-Queens Solving
 
-> Cập nhật: 17/10/2026
+> Cập nhật: 19/10/2026
 >
 > Trạng thái được đối chiếu với mã nguồn, dữ liệu benchmark đã lưu, bản thảo report, test suite và Git tại ngày cập nhật.
 
@@ -163,11 +163,11 @@ Các artifact benchmark hiện còn trong `results/` gồm:
 - [x] Rebuilt the PDF after the latest edits using MiKTeX 25.12 installed at `E:\Apps\MiKTeX`.
 - [x] MiKTeX executables are at `E:\Apps\MiKTeX\miktex\bin\x64`; User PATH contains this directory, so older terminals must be restarted.
 
-## 6. Giới hạn hiện tại cần lưu ý
+## 6. Giới hạn license đã ghi nhận trước ngày 19/10/2026 (đã khắc phục)
 
 - [x] CPLEX Community Edition từng giới hạn batch cũ tại `N = 32`; môi trường CPLEX mới đã pass license check 1.100 biến và giải N-Queens đến `N = 128`.
 - [x] Gurobi hiện hoạt động với restricted license; repeated batch chấp nhận đến `N = 44` và báo `LICENSE_LIMIT` từ `N = 45`.
-- [ ] Đang chờ phản hồi từ Gurobi về license; dự kiến nhận được ngày 18/10/2026. Nếu có license phù hợp, kiểm tra lại license và cân nhắc chạy bổ sung các cấu hình bị giới hạn.
+- [x] Tại lần chạy batch ngày 17/10, đang chờ phản hồi Gurobi và các cấu hình từ `N = 45` bị `LICENSE_LIMIT`; trạng thái này đã được giải quyết ngày 19/10 sau khi kích hoạt academic license, kiểm tra 2.100 biến và chạy lại đủ 12 lượt.
 - [x] CPLEX CP Optimizer hiện khả dụng; lỗi không tìm executable chỉ xuất hiện trong batch Pairwise lịch sử đã xóa.
 - [x] Chọn Pairwise làm baseline SAT tạm thời cho cross-solver: nhanh nhất tại `N = 8, 32, 64`; Sequential Counter nhanh nhất tại `N = 16`.
 - [x] Ghi rõ lựa chọn hiện tại: giữ các kết quả Gurobi lớn là `LICENSE_LIMIT`; chỉ rerun nếu có Academic License.
@@ -206,9 +206,9 @@ Các artifact benchmark hiện còn trong `results/` gồm:
 
 **Đã hoàn thành:** phần triển khai solver, validation, test, benchmark framework và matched five-method batch (trừ Gurobi bị giới hạn ở kích thước lớn).
 
-**Current status:** Solver implementations, tests, benchmark protocol, matched results, analysis, and report are complete. CPLEX CP/MIP solve through `N=128`; Gurobi results from `N=45` are `LICENSE_LIMIT` and are documented. MiKTeX works; the current PDF was rebuilt and visually reviewed. README and benchmark filenames have been streamlined. The current report is complete with the available license; a Gurobi response is pending, expected 18/10/2026.
+**Current status (updated 19/10/2026):** Solver implementations, tests, benchmark protocol, matched results, analysis, and report are complete. CPLEX CP/MIP and Gurobi solve through `N=128`. The user activated the Gurobi academic license; a 2,100-variable license check passed, and all 12 previously limited configurations (`N=45,64,100,128`, three runs each) were rerun successfully. The matched CSV now has 150 validated solutions and no license-limit, timeout, or error rows. Tables, charts, analysis, README, manuscript source, and the seven-page PDF have been refreshed. The prior pending push note was stale: `c875d2c` is already present on `origin/main`.
 
-**Remaining:** push the local commit when ready and review Gurobi's response. Historical SAT batches lack environment metadata and are explicitly treated as historical; rerun large Gurobi cases only if an academic license becomes available.
+**Remaining:** push the new local commit when ready; the user intends to push it manually. No implementation or report update remains.
 
 ## 9. Làm mới results ngày 17/10/2026
 
@@ -216,6 +216,16 @@ Các artifact benchmark hiện còn trong `results/` gồm:
 - [x] Chạy lại matched benchmark 5 phương pháp, 10 kích thước, 3 lần/cấu hình; CSV có 150 dòng gồm 138 nghiệm hợp lệ và 12 `LICENSE_LIMIT`, không có timeout hoặc lỗi solver.
 - [x] Cập nhật median trong manuscript và phân tích pilot theo raw CSV mới.
 - [x] Cập nhật README để ghi rõ lệnh benchmark tạo từng CSV nào, cùng lệnh tái tạo bảng và biểu đồ trong `report/`.
-- [x] Thử chạy lại pilot SAT `N = 96, 128`; dừng sau khi Bitwise tại `N = 96` và Pairwise tại `N = 128` đều chạm timeout 600 giây. Runner không ghi CSV nếu batch chưa hoàn tất; pilot cũ vẫn là dữ liệu exploratory.
+- [x] Thử chạy lại pilot SAT `N = 96, 128`; dừng sau khi Bitwise tại `N = 96` và Pairwise tại `N = 128` đều chạm timeout 600 giây. Runner không ghi CSV nếu batch chưa hoàn tất; các file pilot cũ đã được xóa.
 - [x] Người dùng đã xóa các thư mục `pilot/` và `historical/`; `results/` hiện chỉ còn ba CSV benchmark chính.
-- [ ] Chưa commit thay đổi trong lần cập nhật này; chờ người dùng xem xét và tự quyết định thời điểm commit/push.
+- [x] Tạo commit `c875d2c` cho dữ liệu, README, kế hoạch và báo cáo cập nhật; chưa push.
+
+## 10. Tiến độ ngày 19/10/2026
+
+- [x] Đối chiếu lại Git và thư mục `results/`: ba CSV benchmark chính ban đầu nằm trong commit `c875d2c` trên nhánh `main`.
+- [x] Cập nhật README và trạng thái tổng quan trong kế hoạch để ghi nhận license mới, dữ liệu Gurobi được chạy lại và các artifacts báo cáo.
+- [x] Kích hoạt và kiểm tra Gurobi Academic License; mô hình kiểm tra 2.100 biến tối ưu thành công.
+- [x] Chạy lại 12 cấu hình Gurobi `N = 45, 64, 100, 128`, ba lần mỗi kích thước; tất cả trả nghiệm `SAT` hợp lệ.
+- [x] Thay 12 dòng `LICENSE_LIMIT` trong matched CSV bằng kết quả mới; giữ raw refresh riêng trong `results/gurobi_license_refresh_n45-128_repeat3.csv`.
+- [x] Tái tạo các bảng/biểu đồ và cập nhật phân tích, README, report README cùng nguồn manuscript; tổng mới 150/150 nghiệm hợp lệ, không timeout/lỗi/license limit.
+- [x] Biên dịch lại `report/manuscript.pdf` từ nguồn cập nhật; PDF 7 trang sinh thành công và bảng benchmark mới đã được rà soát.

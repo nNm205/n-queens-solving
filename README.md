@@ -17,7 +17,7 @@ All solutions are checked by a shared validator. The manuscript contains the met
 
 ## Latest results
 
-The matched comparison covers ten board sizes (`N = 8` to `128`) with three runs per method and size. It contains 138 validated solutions and 12 Gurobi `LICENSE_LIMIT` outcomes, with no timeouts or solver errors. CPLEX CP and MIP solve all tested sizes; Gurobi is license-limited from `N = 45`.
+The matched comparison covers ten board sizes (`N = 8` to `128`) with three runs per method and size. All 150 runs produced validated solutions, with no timeouts, license limits, or solver errors. CPLEX CP/MIP and Gurobi solve all tested sizes. The 12 Gurobi runs at `N = 45, 64, 100, 128` were refreshed after activating the academic license; their raw rows are also preserved in `results/gurobi_license_refresh_n45-128_repeat3.csv`.
 
 In the repeated SAT encoding runs, Pairwise had the lowest median at `N = 8, 32, 64`; Sequential Counter was fastest at `N = 16`. These results describe this local setup and do not establish a general solver ranking. See the [manuscript](report/manuscript.pdf), [aggregated results](report/benchmark_summary.csv), and [runtime charts](report/solver_runtime.svg) for details.
 
@@ -100,6 +100,7 @@ n-queens-solving/
 ├── results/
 │   ├── sat_encoding_n8-32_repeat5.csv
 │   ├── sat_encoding_n64_repeat3.csv
+│   ├── gurobi_license_refresh_n45-128_repeat3.csv
 │   └── solver_comparison_matched_n8-128_repeat3.csv
 ├── scripts/
 │   ├── analyze_results.py

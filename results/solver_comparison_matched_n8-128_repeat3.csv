@@ -101,9 +101,9 @@ solver_comparison,3,45,cplex_cp,cplex_cp,,SAT,True,,,,,0.0022819000005256385,0.0
 solver_comparison,1,45,cplex_mip,cplex_mip,,SAT,True,2025,,264,,0.06351489999906335,0.05125349999980244,0.11476839999886579,integer optimal solution,,
 solver_comparison,2,45,cplex_mip,cplex_mip,,SAT,True,2025,,264,,0.05386949999956414,0.049089600001025246,0.10295910000058939,integer optimal solution,,
 solver_comparison,3,45,cplex_mip,cplex_mip,,SAT,True,2025,,264,,0.06280839999999444,0.04356489999918267,0.1063732999991771,integer optimal solution,,
-solver_comparison,1,45,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,2,45,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,3,45,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
+solver_comparison,1,45,gurobi_mip,gurobi_mip,,SAT,True,2025,,264,,0.015111999999817272,0.0006485000001248409,0.015760499999942112,2,,
+solver_comparison,2,45,gurobi_mip,gurobi_mip,,SAT,True,2025,,264,,0.013252800000145726,0.0006378000000495376,0.013890600000195263,2,,
+solver_comparison,3,45,gurobi_mip,gurobi_mip,,SAT,True,2025,,264,,0.011727199999995719,0.00072979999981726,0.012456999999812979,2,,
 solver_comparison,1,64,sat,glucose3,pairwise,SAT,True,4096,428864,,1.2399599999989732,,0.47636160000001837,1.7163215999989916,,,
 solver_comparison,2,64,sat,glucose3,pairwise,SAT,True,4096,428864,,1.2672481999998126,,0.47951149999971676,1.7467596999995294,,,
 solver_comparison,3,64,sat,glucose3,pairwise,SAT,True,4096,428864,,1.2257495000012568,,0.49179150000054506,1.7175410000018019,,,
@@ -116,9 +116,9 @@ solver_comparison,3,64,cplex_cp,cplex_cp,,SAT,True,,,,,0.00283320000016829,0.061
 solver_comparison,1,64,cplex_mip,cplex_mip,,SAT,True,4096,,378,,0.1043456999996124,0.08915479999996023,0.19350049999957264,integer optimal solution,,
 solver_comparison,2,64,cplex_mip,cplex_mip,,SAT,True,4096,,378,,0.10122290000072098,0.09298169999965467,0.19420460000037565,integer optimal solution,,
 solver_comparison,3,64,cplex_mip,cplex_mip,,SAT,True,4096,,378,,0.09913990000131889,0.08949659999962023,0.18863650000093912,integer optimal solution,,
-solver_comparison,1,64,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,2,64,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,3,64,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
+solver_comparison,1,64,gurobi_mip,gurobi_mip,,SAT,True,4096,,378,,0.02052230000003874,0.0010489999999663269,0.021571300000005067,2,,
+solver_comparison,2,64,gurobi_mip,gurobi_mip,,SAT,True,4096,,378,,0.033337300000084724,0.00255139999990206,0.035888699999986784,2,,
+solver_comparison,3,64,gurobi_mip,gurobi_mip,,SAT,True,4096,,378,,0.022449899999855916,0.0013711999999941327,0.02382109999985005,2,,
 solver_comparison,1,100,sat,glucose3,pairwise,SAT,True,10000,1646900,,4.6925651999990805,,1.7964797999993607,6.489044999998441,,,
 solver_comparison,2,100,sat,glucose3,pairwise,SAT,True,10000,1646900,,4.704185599999619,,1.7297515999998723,6.433937199999491,,,
 solver_comparison,3,100,sat,glucose3,pairwise,SAT,True,10000,1646900,,5.4868583000006765,,2.230321899998671,7.717180199999348,,,
@@ -131,9 +131,9 @@ solver_comparison,3,100,cplex_cp,cplex_cp,,SAT,True,,,,,0.0032935999988694675,0.
 solver_comparison,1,100,cplex_mip,cplex_mip,,SAT,True,10000,,594,,0.22906440000042494,0.24714500000118278,0.4762094000016077,integer optimal solution,,
 solver_comparison,2,100,cplex_mip,cplex_mip,,SAT,True,10000,,594,,0.20165190000079747,0.2165910999992775,0.41824300000007497,integer optimal solution,,
 solver_comparison,3,100,cplex_mip,cplex_mip,,SAT,True,10000,,594,,0.20455180000135442,0.22258099999999104,0.42713280000134546,integer optimal solution,,
-solver_comparison,1,100,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,2,100,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,3,100,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
+solver_comparison,1,100,gurobi_mip,gurobi_mip,,SAT,True,10000,,594,,0.0644625999998425,0.002512300000034884,0.06697489999987738,2,,
+solver_comparison,2,100,gurobi_mip,gurobi_mip,,SAT,True,10000,,594,,0.046784899999920526,0.0024687999998604937,0.04925369999978102,2,,
+solver_comparison,3,100,gurobi_mip,gurobi_mip,,SAT,True,10000,,594,,0.046833800000058545,0.002339399999982561,0.049173200000041106,2,,
 solver_comparison,1,128,sat,glucose3,pairwise,SAT,True,16384,3462784,,9.260619000000588,,6.006363799999235,15.266982799999823,,,
 solver_comparison,2,128,sat,glucose3,pairwise,SAT,True,16384,3462784,,9.449530799998684,,4.286300899999333,13.735831699998016,,,
 solver_comparison,3,128,sat,glucose3,pairwise,SAT,True,16384,3462784,,10.299721299999874,,2.9847501999993256,13.2844714999992,,,
@@ -146,6 +146,6 @@ solver_comparison,3,128,cplex_cp,cplex_cp,,SAT,True,,,,,0.0013971999997011153,0.
 solver_comparison,1,128,cplex_mip,cplex_mip,,SAT,True,16384,,762,,0.15533940000022994,0.15767890000097395,0.3130183000012039,integer optimal solution,,
 solver_comparison,2,128,cplex_mip,cplex_mip,,SAT,True,16384,,762,,0.13774969999940367,0.12711539999872912,0.2648650999981328,integer optimal solution,,
 solver_comparison,3,128,cplex_mip,cplex_mip,,SAT,True,16384,,762,,0.12073919999966165,0.12146430000029795,0.2422034999999596,integer optimal solution,,
-solver_comparison,1,128,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,2,128,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
-solver_comparison,3,128,gurobi_mip,,,LICENSE_LIMIT,,,,,,,,,,GurobiError,Model too large for size-limited license; visit https://gurobi.com/unrestricted for more information
+solver_comparison,1,128,gurobi_mip,gurobi_mip,,SAT,True,16384,,762,,0.09434030000011262,0.004395199999862598,0.09873549999997522,2,,
+solver_comparison,2,128,gurobi_mip,gurobi_mip,,SAT,True,16384,,762,,0.10274589999994532,0.004293599999982689,0.10703949999992801,2,,
+solver_comparison,3,128,gurobi_mip,gurobi_mip,,SAT,True,16384,,762,,0.09950579999986076,0.0042414000001826935,0.10374720000004345,2,,

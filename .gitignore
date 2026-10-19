@@ -6,6 +6,7 @@ __pycache__/
 .vscode/
 
 results/*.csv
+!results/gurobi_license_refresh_n45-128_repeat3.csv
 results/*.json
 
 *.log

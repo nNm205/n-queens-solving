@@ -12,7 +12,7 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 3899 >>
+<< /Length 4103 >>
 stream
 1 1 1 rg
 0 0 792 468 re f
@@ -162,12 +162,20 @@ BT /F1 8 Tf 500.0 21.0 Td (cplex_mip) Tj ET
 225.8 152.5 m 302.7 201.9 l S
 302.7 201.9 m 379.6 202.9 l S
 379.6 202.9 m 456.4 220.3 l S
+456.4 220.3 m 533.3 150.2 l S
+533.3 150.2 m 610.2 166.2 l S
+610.2 166.2 m 687.1 187.8 l S
+687.1 187.8 m 764.0 209.9 l S
 70.0 122.5 4 4 re f
 146.9 182.9 4 4 re f
 223.8 150.5 4 4 re f
 300.7 199.9 4 4 re f
 377.6 200.9 4 4 re f
 454.4 218.3 4 4 re f
+531.3 148.2 4 4 re f
+608.2 164.2 4 4 re f
+685.1 185.8 4 4 re f
+762.0 207.9 4 4 re f
 612 24 m 630 24 l S
 BT /F1 8 Tf 635.0 21.0 Td (gurobi_mip) Tj ET
 endstream
@@ -183,5 +191,5 @@ xref
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-4262
+4466
 %%EOF

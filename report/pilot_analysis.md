@@ -7,6 +7,7 @@ This note records the current repeated benchmark evidence. Successful solver res
 - `results/sat_encoding_n8-32_repeat5.csv`: five runs per encoding at `N = 8, 16, 32`.
 - `results/sat_encoding_n64_repeat3.csv`: three runs per encoding at `N = 64`.
 - `results/solver_comparison_matched_n8-128_repeat3.csv`: latest matched five-method batch, with three runs per method and size at the same ten board sizes.
+- `results/gurobi_license_refresh_n45-128_repeat3.csv`: the 12 Gurobi rows rerun after academic license activation and merged into the matched batch.
 - `report/sat_encodings_summary.csv`, `report/solver_comparison_summary.csv`, and `report/benchmark_summary.csv`: regenerated aggregate data based on the three raw benchmark CSVs above.
 - `report/sat_encoding_runtime.svg` and `report/sat_encoding_runtime.pdf`: SAT encoding comparison figures.
 - `report/solver_runtime.svg` and `report/solver_runtime.pdf`: current matched five-method comparison figures.
@@ -49,7 +50,7 @@ Pairwise minimizes variable count, whereas Sequential Counter minimizes clause c
 
 ### Cross-solver sizes and repetitions
 
-`N = 8, 16, 24` provide small-to-medium reference cases. `N = 31/32` provides a boundary pair around the former CPLEX Community Edition model limit (961 versus 1,024 board variables); current CPLEX MIP accepts models above that boundary. `N = 44/45` straddles the Gurobi restricted-license boundary: `N = 44` has 1,936 board variables and `N = 45` has 2,025. `N = 64, 100, 128` extend the comparison to larger instances.
+`N = 8, 16, 24` provide small-to-medium reference cases. `N = 31/32` retains a boundary pair around the former CPLEX Community Edition model limit (961 versus 1,024 board variables); current CPLEX MIP accepts models above that boundary. `N = 44/45` retains the pair around the former Gurobi restricted-license limit: `N = 44` has 1,936 board variables and `N = 45` has 2,025. Following academic license activation, both sizes now solve successfully. `N = 64, 100, 128` extend the comparison to larger instances.
 
 Three runs per configuration were selected as a practical repeat batch and summaries use the median. This remains a small sample. The minimum, maximum, and all individual outcomes remain in the CSV so the median is not mistaken for a distribution estimate. A common 600-second hard timeout was retained from the benchmark policy; timeout and license-limit configurations have no runtime in the median.
 
@@ -63,19 +64,21 @@ Three runs per configuration were selected as a practical repeat batch and summa
 | 31 | 0.1966 | 0.1915 | 0.0587 | 0.0697 | 0.0792 |
 | 32 | 0.2147 | 0.2075 | 0.0623 | 0.0756 | 0.0819 |
 | 44 | 0.5256 | 0.3793 | 0.0612 | 0.1135 | 0.1471 |
-| 45 | 0.5583 | 0.3987 | 0.0623 | 0.1064 | LICENSE_LIMIT |
-| 64 | 1.7175 | 0.8585 | 0.0644 | 0.1935 | LICENSE_LIMIT |
-| 100 | 6.4890 | 2.6017 | 0.0773 | 0.4271 | LICENSE_LIMIT |
-| 128 | 13.7358 | 1.9131 | 0.0449 | 0.2649 | LICENSE_LIMIT |
+| 45 | 0.5583 | 0.3987 | 0.0623 | 0.1064 | 0.0139 |
+| 64 | 1.7175 | 0.8585 | 0.0644 | 0.1935 | 0.0238 |
+| 100 | 6.4890 | 2.6017 | 0.0773 | 0.4271 | 0.0493 |
+| 128 | 13.7358 | 1.9131 | 0.0449 | 0.2649 | 0.1037 |
 
-Each numeric value is the median of three successful runs. The batch contains 138 validated solver results and 12 Gurobi `LICENSE_LIMIT` rows; it has no timeout or error rows. CPLEX CP and CPLEX MIP each solved all 30 configurations, including `N = 128`. Separate 1,100-variable license checks also passed for both CPLEX engines.
+Each numeric value is the median of three successful runs. The batch contains 150 validated solver results and no timeout, error, or license-limit rows. CPLEX CP and CPLEX MIP each solved all 30 configurations, including `N = 128`; Gurobi's 12 previously license-limited rows at `N >= 45` were rerun after academic license activation and also passed validation.
+
+The 12 refreshed Gurobi runs were collected separately from the other methods after license activation. The comparison is matched by board size, run count, machine, and solver setup, but those refreshed Gurobi timings were not collected in the same session as the other solver rows.
 
 ## Interpretation and limits
 
-The matched batch provides a local comparison of all five methods through `N = 44`; above that size, Gurobi is censored by its restricted license. CPLEX CP has the lowest median at `N = 31, 32, 44, 45, 64, 100, 128`; Gurobi leads at `N = 24`, CPLEX MIP at `N = 16`, and SAT at `N = 8`. These observed rankings are based on three runs on one machine and should not be generalized.
+The matched batch provides a local comparison of all five methods at every tested size through `N = 128`. Gurobi has the lowest median at `N = 24, 45, 64, 100`; CPLEX CP leads at `N = 31, 32, 44, 128`, CPLEX MIP at `N = 16`, and SAT at `N = 8`. These observed rankings are based on three runs on one machine and should not be generalized.
 
-The machine was a Dell Inspiron 15 3511, Intel Core i5-1135G7, 8 GB RAM, Windows 11 Pro build 22631. The current runtime reported Python 3.11.8, PySAT 1.9.dev16, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. CPLEX CP and MIP passed full-version smoke checks with 1,100 variables; Gurobi remains restricted. The existing full test run passed: 43 tests. The refreshed benchmark batch completed without timeout or solver errors, but power mode and concurrent background load were not recorded.
+The machine was a Dell Inspiron 15 3511, Intel Core i5-1135G7, 8 GB RAM, Windows 11 Pro build 22631. The current runtime reported Python 3.11.8, PySAT 1.9.dev16, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. CPLEX CP and MIP passed full-version smoke checks with 1,100 variables. After the academic license was activated, Gurobi also passed a 2,100-variable license check and solved the refreshed `N >= 45` cases. The existing full test run passed: 43 tests. All benchmark rows completed without timeout or solver errors, but power mode and concurrent background load were not recorded.
 
 A fresh exploratory refresh at `N = 96, 128` was stopped after Bitwise at `N = 96` and Pairwise at `N = 128` each reached the 600-second timeout. The benchmark runner writes its CSV only after a batch completes, so this interrupted attempt produced no new pilot CSV. The earlier pilot and historical raw CSVs have now been removed from `results/` and are not part of the reported analysis.
 
-Power mode/AC status and concurrent background load were not recorded during the refreshed runs. Keep the three-run order and 600-second timeout for any further rerun, and document the Gurobi license restriction alongside its censored rows.
+Power mode/AC status and concurrent background load were not recorded during the refreshed runs. Keep the three-run order and 600-second timeout for any further rerun.

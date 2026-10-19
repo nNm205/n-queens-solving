@@ -79,13 +79,17 @@
 <circle cx="1060.0" cy="319.8" r="4" fill="#9333ea"/>
 <line x1="640" y1="615" x2="665" y2="615" stroke="#9333ea" stroke-width="3"/>
 <text x="672" y="620" font-size="13" font-family="Arial">cplex_mip</text>
-<polyline points="100.0,477.1 206.7,393.2 313.3,438.2 420.0,369.6 526.7,368.2 633.3,344.1" fill="none" stroke="#ea580c" stroke-width="3"/>
+<polyline points="100.0,477.1 206.7,393.2 313.3,438.2 420.0,369.6 526.7,368.2 633.3,344.1 740.0,441.4 846.7,419.2 953.3,389.2 1060.0,358.5" fill="none" stroke="#ea580c" stroke-width="3"/>
 <circle cx="100.0" cy="477.1" r="4" fill="#ea580c"/>
 <circle cx="206.7" cy="393.2" r="4" fill="#ea580c"/>
 <circle cx="313.3" cy="438.2" r="4" fill="#ea580c"/>
 <circle cx="420.0" cy="369.6" r="4" fill="#ea580c"/>
 <circle cx="526.7" cy="368.2" r="4" fill="#ea580c"/>
 <circle cx="633.3" cy="344.1" r="4" fill="#ea580c"/>
+<circle cx="740.0" cy="441.4" r="4" fill="#ea580c"/>
+<circle cx="846.7" cy="419.2" r="4" fill="#ea580c"/>
+<circle cx="953.3" cy="389.2" r="4" fill="#ea580c"/>
+<circle cx="1060.0" cy="358.5" r="4" fill="#ea580c"/>
 <line x1="820" y1="615" x2="845" y2="615" stroke="#ea580c" stroke-width="3"/>
 <text x="852" y="620" font-size="13" font-family="Arial">gurobi_mip</text>
 </svg>
