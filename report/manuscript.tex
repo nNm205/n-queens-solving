@@ -64,6 +64,18 @@ The column constraints are:
 \end{equation}
 For each main diagonal and anti-diagonal, the corresponding variables satisfy an at-most-one constraint. Main diagonals are grouped by $r-c$ and anti-diagonals by $r+c$.
 
+More explicitly, for every feasible diagonal index $d$ and $s$, the linear formulation imposes:
+\begin{equation}
+\sum_{\substack{0\le r,c<N\\r-c=d}} x_{r,c} \leq 1
+\qquad \forall d\in\{-(N-1),\ldots,N-1\},
+\end{equation}
+and
+\begin{equation}
+\sum_{\substack{0\le r,c<N\\r+c=s}} x_{r,c} \leq 1
+\qquad \forall s\in\{0,\ldots,2N-2\}.
+\end{equation}
+Diagonal groups containing a single board position need no explicit constraint. Together, the row, column, and diagonal constraints give the binary SAT/MIP model; the row-indexed CP model expresses the same restrictions through three global all-different constraints.
+
 The CP and CP-SAT models use $N$ integer variables $q_r$, where $q_r$ is the column assigned to row $r$. They enforce:
 \begin{equation}
 \operatorname{AllDifferent}(q_r),\quad
@@ -120,6 +132,14 @@ $N$ & Expected status \\
 
 The study compares the SAT solver with four exact alternatives. OR-Tools CP-SAT~\citep{ortools} uses the integer-variable formulation and records conflicts and branches where available. CPLEX CP Optimizer~\citep{cplex} uses the same high-level all-different formulation. CPLEX MIP and Gurobi MIP~\citep{gurobi} use binary board-position variables and linear row, column, and diagonal constraints.
 
+At a high level, the SAT backend searches for a satisfying assignment to the CNF formula using conflict-driven Boolean search~\citep{ignatiev2018pysat}. The CP models propagate domain restrictions from the all-different constraints and branch on integer variables~\citep{ortools,cplex}. The MIP solvers apply linear-programming relaxations and branch-and-bound, with solver-managed presolve and other default techniques~\citep{cplex,gurobi}. These descriptions identify the solving paradigms; internal heuristics and detailed search settings are controlled by the respective solver libraries and are not modified by this study.
+
+\subsection{Implementation and Solution Validation}
+
+The implementation is organized by solving paradigm. The SAT encoder maps each board square to one of the first $N^2$ Boolean variables and uses a shared auxiliary-variable pool for non-pairwise cardinality encodings. It adds exactly-one constraints for rows and columns, followed by at-most-one constraints for each diagonal group. The SAT solver passes the resulting CNF to Glucose3, reads the returned model, and decodes the selected square in each row into a column vector $q$.
+
+The CP-SAT and CPLEX CP implementations create one bounded integer variable $q_r\in\{0,\ldots,N-1\}$ per row and post the three all-different constraints. The CPLEX MIP and Gurobi MIP implementations create binary variables $x_{r,c}$, add the row and column equalities and diagonal inequalities above, and extract the selected column from each row after optimization. Each implementation maps the solver's native status to a common SAT, UNSAT, or UNKNOWN status where applicable. A shared validator then independently checks that the decoded solution has one queen per row, uses each column once, and has no repeated main- or anti-diagonal index. This check is performed outside the solver model and is reported separately from the solver status.
+
 The benchmark runner normalizes all solver outputs into a common schema containing status, validity, model-size fields where available, build or encoding time, solve time, total time, raw status, and error information.
 
 \section{Experimental Setup}
@@ -133,6 +153,8 @@ The benchmarks were run on a Dell Inspiron 15 3511 with an 11th-generation Intel
 The repeated SAT encoding experiment covers $N=8,16,32,64$, with five runs for $N=8,16,32$ and three runs for $N=64$. Historical exploratory CSVs contain one run per encoding at $N=96$ and $N=128$. No row in those archived files is marked TIMEOUT. At $N=128$, Pairwise took 8.84 s, Bitwise 0.97 s, and Sequential Counter 3,045.89 s; this one Sequential Counter run exceeded the 600-second cutoff used in the later benchmark protocol but is recorded as SAT. These single exploratory observations are excluded because they are not repeated measurements under the final protocol, not because all encodings timed out. They also show why Pairwise solving $N=128$ in the matched solver table is consistent: that table uses Pairwise and is a separate experiment.
 
 The matched cross-solver batch uses Pairwise SAT at $N=8,16,24,31,32,44,45,64,100,128$, with three runs per method and size. The $N=31/32$ and $N=44/45$ pairs retain the earlier CPLEX and Gurobi license-boundary cases; all solvers now solve these sizes with the active licenses. The complete five-method batch was rerun in one session after Gurobi academic-license activation. $N=8,16,24$ provide small and medium reference cases; $N=64,100,128$ extend the comparison to larger instances. A 600-second per-configuration timeout is retained. Timeouts and license rejections are stored as explicit statuses, not treated as runtimes. The tables report medians of three total times; the raw CSV preserves all 150 outcomes.
+
+For each successful run, total time is the sum of model-construction time and solver-call time: encoding plus solve time for SAT, and build plus solve time for CP-SAT, CPLEX CP, CPLEX MIP, and Gurobi MIP. The timer excludes solution decoding and independent validation. The 600-second limit is enforced by the benchmark runner at the process level, while the reported successful-run totals use the timers inside each solver implementation. Each configuration is run three times in the matched comparison, and the reported value is the median of those three totals. Solver-specific default parameters are used; thread counts and random seeds are not explicitly standardized, so the measurements reflect the installed versions' defaults.
 
 Pairwise was selected as the provisional SAT baseline for the cross-solver comparison. In the latest repeated encoding batch, it had the lowest median total time at $N=8,32,64$, while Sequential Counter was fastest at $N=16$ (0.0093 s versus 0.0169 s for Pairwise). At $N=8$, Pairwise was fastest at 0.0013 s, with Sequential Counter at 0.0015 s and Bitwise at 0.0020 s. Pairwise is a practical choice for the larger repeatedly measured cases in this dataset, but it does not dominate every size. This choice is limited to the measured PySAT/Glucose3 implementation and does not establish that Pairwise is best at every size or with every SAT solver. Sequential Counter and Bitwise remain in the encoding comparison; exploratory $N=96,128$ observations are excluded because there is only one archived run per encoding and no matched repeated encoding batch.
 
