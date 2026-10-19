@@ -23,7 +23,7 @@
 - `results/`: three current raw benchmark CSVs.
 - `report/benchmark_summary.csv`, `report/sat_encodings_summary.csv`, and `report/solver_comparison_summary.csv`: current aggregates.
 - `report/solver_runtime.svg` / `.pdf` and `report/sat_encoding_runtime.svg` / `.pdf`: regenerated figures.
-- `report/manuscript.tex` and `report/manuscript.pdf`: updated source and compiled seven-page submission report.
+- `report/manuscript.tex` and `report/manuscript.pdf`: updated source and compiled submission report using the same Elsevier CAS article layout as the reference manuscript.
 - `report/pilot_analysis.md`, `README.md`, and this plan: updated project status and results.
 
 ## Remaining work

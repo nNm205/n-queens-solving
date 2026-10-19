@@ -23,14 +23,6 @@
 The N-Queens problem asks for a placement of $N$ queens on an $N \times N$ chessboard such that no two queens share a row, column, or diagonal. This study implements a SAT-based solver and compares pairwise, sequential-counter, and bitwise at-most-one encodings, then evaluates a provisional SAT baseline against CP-SAT and mixed-integer programming solvers. Repeated local runs show that Pairwise has the lowest median SAT runtime at three of the four repeatedly measured sizes from $N=8$ to $N=64$; Sequential Counter is fastest at $N=16$. A matched three-run cross-solver batch covers ten board sizes up to $N=128$. All five methods solve every tested case, and all 150 results pass an independent validator. In this batch, SAT has the lowest median at $N=8,16$, Gurobi at $N=24,31,45,64$, CPLEX MIP at $N=32$, and CPLEX CP at $N=44,100,128$. The results are a repeated local comparison, with conclusions limited by three runs per configuration.
 \end{abstract}
 
-\begin{highlights}
-\item A unified SAT model supports pairwise, sequential-counter, and bitwise AMO encodings.
-\item A common benchmark runner compares SAT, CP-SAT, CPLEX CP, CPLEX MIP, and Gurobi MIP.
-\item All returned solutions are checked by an independent N-Queens validator.
-\item Repeated experiments compare all five methods on boards up to $N=128$.
-\item All 150 matched runs completed successfully under the active solver licenses.
-\end{highlights}
-
 \begin{keywords}
 N-Queens \sep Boolean satisfiability \sep cardinality encoding \sep constraint programming \sep mixed integer programming \sep exact algorithms
 \end{keywords}
