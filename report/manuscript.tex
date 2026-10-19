@@ -2,7 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{url}
-\usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage[numbers,sort&compress]{natbib}
 
 \begin{document}
 
@@ -143,7 +143,7 @@ Bitwise & 64 & 6,132 & 95,572 \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:sat-summary} reports median total times from the latest repeated local batch. Pairwise is fastest at $N=8,32,64$. Sequential Counter is fastest at $N=16$, with a median of 0.0093 s compared with 0.0169 s for Pairwise. Bitwise is substantially slower at $N=16,32,64$ in this batch. These are observed medians from one machine and should not be read as universal encoding rankings. The size and runtime results show a trade-off: Pairwise keeps the formula compact in variables but grows sharply in clauses, while Sequential Counter reduces clauses at the cost of more auxiliary variables. The runtime ordering is not determined by either count alone.
+Table~\ref{tab:sat-summary} reports median total times from the latest repeated local batch. Pairwise is fastest at $N=8,32,64$, while Sequential Counter leads at $N=16$ (0.0093 s versus 0.0169 s). Bitwise is slower at $N=16,32,64$. The formula-size trade-off is clear: Pairwise uses fewer variables but more clauses, whereas Sequential Counter reduces clauses with additional auxiliary variables. Neither count alone explains runtime. These medians describe one machine and should not be read as universal rankings.
 
 \begin{table}[width=.95\linewidth,cols=5,pos=ht]
 \caption{Median total time in seconds for the repeated SAT encoding batch.}
@@ -203,6 +203,7 @@ The latest matched results show that all five methods solve all ten tested sizes
 \label{fig:solver-runtime}
 \end{figure}
 
+\clearpage
 \section{Limitations and Discussion}
 
 The current experiments are limited by the small sample size. CPLEX MIP and CP Optimizer passed 1,100-variable license checks and solved every tested board size through $N=128$. After academic license activation, Gurobi passed a 2,100-variable license check and solved the previously limited $N=45$ and larger configurations.
