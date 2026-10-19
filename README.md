@@ -19,7 +19,7 @@ All solutions are checked by a shared validator. The manuscript contains the met
 
 The complete matched comparison was rerun as one batch after activating the Gurobi academic license. It covers ten board sizes (`N = 8` to `128`) with three runs per method and size. All 150 runs produced validated solutions, with no timeouts, license limits, or solver errors. CPLEX CP/MIP and Gurobi solve all tested sizes.
 
-Across the repeated SAT encoding runs, Pairwise had the lowest median at `N = 8, 32, 64`; Sequential Counter was fastest at `N = 16`. In the matched solver batch, SAT led at `N = 8, 16`, Gurobi at `N = 24, 31, 45, 64`, CPLEX MIP at `N = 32`, and CPLEX CP at `N = 44, 100, 128`. These results describe this local setup and do not establish a general solver ranking. See the [manuscript](report/manuscript.pdf), [aggregated results](report/benchmark_summary.csv), and [runtime charts](report/solver_runtime.svg) for details.
+Across the repeated SAT encoding runs, Pairwise had the lowest median at `N = 8, 32, 64`; Sequential Counter was fastest at `N = 16`. In the matched solver batch, SAT led at `N = 8, 16`, Gurobi at `N = 24, 31, 45` and narrowly at `N = 64` (0.0359984 s versus 0.0361838 s for CPLEX CP), CPLEX MIP at `N = 32`, and CPLEX CP at `N = 44, 100, 128`. At `N = 128`, the Pairwise SAT median was 6.183 s versus 0.049 s for CPLEX CP. These results describe this local setup and do not establish a general solver ranking. See the [manuscript](report/manuscript.pdf), [aggregated results](report/benchmark_summary.csv), and [runtime charts](report/solver_runtime.svg) for details.
 
 ## Setup
 

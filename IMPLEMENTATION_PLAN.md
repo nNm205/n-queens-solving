@@ -16,7 +16,7 @@
 - Encoding comparison: `N = 8, 16, 32` with five repetitions and `N = 64` with three repetitions for each of three encodings.
 - Matched solver comparison: five methods at `N = 8, 16, 24, 31, 32, 44, 45, 64, 100, 128`, three repetitions per configuration, 600-second timeout.
 - Each table reports medians of the raw runs. The new matched results were collected in one batch with the active academic Gurobi license; the former separate Gurobi refresh file is obsolete and excluded.
-- Exploratory SAT encoding runs at `N = 96, 128` are outside the completed repeated comparison because earlier attempts hit the timeout.
+- Historical exploratory SAT encoding CSVs contain six completed runs total: one per encoding at `N = 96` and `N = 128`. None is recorded with status `TIMEOUT`; the `N = 128` Sequential Counter run took 3,045.89 s and is recorded as `SAT`. These runs are excluded because they are not repetitions under the final protocol. Pairwise and Bitwise at `N = 128` took 8.84 s and 0.97 s, respectively. This is separate from the matched Pairwise cross-solver batch.
 
 ## Current deliverables
 
@@ -28,4 +28,4 @@
 
 ## Remaining work
 
-No required implementation or benchmark work remains. The project owner should review the final PDF and commit the latest documentation/data/report changes before pushing the desired version to GitHub. The last recorded full test-suite result is 43 passed; this benchmark refresh did not rerun pytest.
+No required implementation or benchmark work remains. Before pushing, the project owner should visually review the final PDF and commit the current manuscript, analysis, bibliography, README, and status-plan changes. No raw benchmark CSVs changed in this report update. The last recorded full test-suite result is 43 passed; pytest was not rerun for this report revision.

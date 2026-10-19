@@ -23,7 +23,7 @@ Pairwise is the provisional SAT baseline for the cross-solver comparison because
 | 32 | 0.0891 | 0.5117 | 16.7465 | 5 |
 | 64 | 0.6686 | 12.3846 | 22.6755 | 3 |
 
-These are observed medians from the measured PySAT/Glucose3 implementation and one computer; they do not establish a universal encoding ranking. Pairwise adds no auxiliary variables. Sequential Counter minimizes clause count at each reported size, while Pairwise minimizes variable count. Bitwise lies between them on both counts. Earlier exploratory SAT runs at `N = 96, 128` reached the 600-second timeout and are outside the repeated comparison.
+These are observed medians from the measured PySAT/Glucose3 implementation and one computer; they do not establish a universal encoding ranking. Pairwise adds no auxiliary variables. Sequential Counter minimizes clause count at each reported size, while Pairwise minimizes variable count. Bitwise lies between them on both counts. Historical exploratory CSVs record one completed run per encoding at `N = 96` and `N = 128`; none is marked TIMEOUT. At `N = 128`, Pairwise took 8.84 s, Bitwise 0.97 s, and Sequential Counter 3,045.89 s. That Sequential Counter run exceeded the later 600-second cutoff but is recorded as SAT. These points are excluded because there is no repeated encoding batch under the final protocol. They are separate from the matched solver experiment, where Pairwise SAT solved `N = 128` in 6.183 s median.
 
 ## SAT formula size
 
@@ -61,10 +61,12 @@ Each value is the median total time in seconds from three runs. The current batc
 | 100 | 2.765 | 0.979 | 0.044 | 0.171 | 0.059 |
 | 128 | 6.183 | 1.935 | 0.049 | 0.312 | 0.146 |
 
-All five methods solved every size. By lowest measured median, SAT leads at `N = 8, 16`; Gurobi at `N = 24, 31, 45, 64`; CPLEX MIP at `N = 32`; and CPLEX CP at `N = 44, 100, 128`. At `N = 16`, SAT's median is 0.0368 s versus 0.0460 s for Gurobi. At `N = 64`, Gurobi and CPLEX CP are nearly tied (0.0360 s and 0.0362 s). Rankings are based on three runs and should not be generalized beyond this local setup.
+All five methods solved every size. By lowest measured median, SAT leads at `N = 8, 16`; Gurobi at `N = 24, 31, 45, 64`; CPLEX MIP at `N = 32`; and CPLEX CP at `N = 44, 100, 128`. At `N = 16`, SAT's median is 0.0368 s versus 0.0460 s for Gurobi. At `N = 64`, Gurobi's median is 0.0359984 s and CPLEX CP's is 0.0361838 s; Gurobi is lower by 0.0001854 s (about 0.5%), so they appear tied at the three-decimal precision used in the original table. At `N = 128`, Pairwise SAT takes 6.183 s and CPLEX CP takes 0.049 s, about 126 times less by the reported medians. This difference is consistent with CP's compact model of `N` integer variables and three global AllDifferent constraints, versus the large explicit SAT formula, but the benchmark cannot identify the cause or establish a general CP advantage. Rankings are based on three runs and should not be generalized beyond this local setup.
 
 ## Environment and limitations
 
 The machine was a Dell Inspiron 15 3511 with an Intel Core i5-1135G7, 8 GB RAM, and Windows 11 Pro build 22631. The runtime reported Python 3.11.8, PySAT 1.9.dev16, OR-Tools 9.15.6755, Gurobi 13.0.3, DOcplex 2.32.264, and CPLEX 22.2.0. CPLEX CP and MIP passed 1,100-variable license checks; Gurobi passed a 2,100-variable academic-license check. The last recorded full test-suite run passed 43 tests; pytest was not rerun for this benchmark refresh.
 
-All current benchmark datasets were collected in a single refresh, but the sample is still small and timings can vary with warm-up, thermal conditions, background processes, and power state. Power mode and background load were not recorded. The 600-second timeout policy remains in effect; prior exploratory SAT `N = 96, 128` runs are excluded because they reached that limit.
+All current benchmark datasets were collected in a single refresh, but the sample is still small and timings can vary with warm-up, thermal conditions, background processes, and power state. Power mode and background load were not recorded. The 600-second timeout policy applies to the documented current batches; the archived exploratory SAT rows at `N = 96, 128` are single completed runs, including a 3,045.89-second Sequential Counter run at `N = 128`, and are not presented as timeout results.
+
+The SAT unit tests cover the expected small-instance outcomes for all three encodings: `N=1,4` SAT and `N=2,3` UNSAT. The data support a local comparison only. Future work includes more repetitions, runtime distributions, controlled thread count and system load, other SAT backends, separate build/solve timings, and a larger repeated encoding batch.
